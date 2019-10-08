@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D8242E"
+    tools:context=".SignUpActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:padding="0dp"
+        android:src="@drawable/home_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <EditText
+        android:id="@+id/name_input"
+        android:layout_width="226dp"
+        android:layout_height="46dp"
+        android:layout_centerHorizontal="true"
+        android:hint="이름"
+        app:layout_constraintBottom_toBottomOf="@+id/id_box"
+        app:layout_constraintEnd_toEndOf="@+id/id_box"
+        app:layout_constraintHorizontal_bias="0.784"
+        app:layout_constraintStart_toStartOf="@+id/id_box"
+        app:layout_constraintTop_toTopOf="@+id/id_box" />
+
+    <EditText
+        android:id="@+id/id_input"
+        android:layout_width="226dp"
+        android:layout_height="46dp"
+        android:layout_centerHorizontal="true"
+        android:hint="아이디"
+        app:layout_constraintBottom_toBottomOf="@+id/name_box"
+        app:layout_constraintEnd_toEndOf="@+id/name_box"
+        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintStart_toStartOf="@+id/name_box"
+        app:layout_constraintTop_toTopOf="@+id/name_box" />
+
+    <EditText
+        android:id="@+id/pw_input"
+        android:layout_width="226dp"
+        android:layout_height="44dp"
+        android:layout_below="@+id/id_input"
+        android:layout_centerHorizontal="true"
+        android:hint="패스워드"
+        app:layout_constraintBottom_toBottomOf="@+id/pw_box"
+        app:layout_constraintEnd_toEndOf="@+id/pw_box"
+        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintStart_toStartOf="@+id/pw_box"
+        app:layout_constraintTop_toTopOf="@+id/pw_box" />
+
+    <ImageView
+        android:id="@+id/name_box"
+        android:layout_width="305dp"
+        android:layout_height="76dp"
+        android:src="@drawable/id_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/id_box"
+        app:layout_constraintVertical_bias="0.027" />
+
+    <ImageView
+        android:id="@+id/id_box"
+        android:layout_width="305dp"
+        android:layout_height="76dp"
+        android:src="@drawable/id_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.436" />
+
+    <ImageView
+        android:id="@+id/pw_box"
+        android:layout_width="304dp"
+        android:layout_height="78dp"
+        android:src="@drawable/pw_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name_box"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/signupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:padding="0dp"
+        android:src="@drawable/signup_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pw_box"
+        app:layout_constraintVertical_bias="0.137" />
+</android.support.constraint.ConstraintLayout>

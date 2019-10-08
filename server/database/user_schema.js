@@ -7,7 +7,7 @@ Schema.createSchema = function(mongoose) {
 	
 	// 스키마 정의
 	var UserSchema = mongoose.Schema({
-		u_id: {type: String, 'default':''}
+		email: {type: String, 'default':''}
 	    , hashed_password: {type: String, required: true, 'default':''}
 	    , name: {type: String, index: 'hashed', 'default':''}
 	    , salt: {type:String, required:true}
@@ -69,9 +69,9 @@ Schema.createSchema = function(mongoose) {
 	})
 	
 	// 입력된 칼럼의 값이 있는지 확인
-	UserSchema.path('u_id').validate(function (u_id) {
-		return u_id.length;
-	}, 'u_id 칼럼의 값이 없습니다.');
+	UserSchema.path('email').validate(function (email) {
+		return email.length;
+	}, 'email 칼럼의 값이 없습니다.');
 	
 	UserSchema.path('hashed_password').validate(function (hashed_password) {
 		return hashed_password.length;
@@ -79,13 +79,16 @@ Schema.createSchema = function(mongoose) {
 	
 	
 	// 모델 객체에서 사용할 수 있는 메소드 정의
-	UserSchema.static('findByu_id', function(u_id, callback) {
-		return this.find({u_id:u_id}, callback);
+	UserSchema.static('findByEmail', function(email, callback) {
+		return this.find({email:email}, callback);
 	});
+	
 	UserSchema.static('findAll', function(callback) {
 		return this.find({}, callback);
 	});
+	
 	console.log('UserSchema 정의함.');
+
 	return UserSchema;
 };
 
