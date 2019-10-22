@@ -47,4 +47,7 @@
         app:layout_constrainedHeight="true"
         app:layout_constraintTop_toBottomOf="@+id/seach_bar" />
 
+
+
+
 </android.support.constraint.ConstraintLayout>
