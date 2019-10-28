@@ -10,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -31,9 +32,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.ServerAddress;
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+
+import com.example.share.Data.Item;
 
 public class ItemListActivity extends AppCompatActivity {
-    private ArrayList<Item> items = null;
+    private ArrayList<Item> items_from_db = null;
     private ArrayList<Item> items_displaying = null;
     private ItemAdapter adapter = null;
     private LocationManager lm = null;
@@ -45,26 +56,70 @@ public class ItemListActivity extends AppCompatActivity {
     private EditText dateTo =null;
     private Dialog dialog;
 
+    //activityForResult
+    private int MAP_ACT = 1;
+
+    //mongoDB
+    private String MongoDB_IP = "15.164.51.129";
+    private int MongoDB_PORT = 27017;
+    private String DB_NAME = "local";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlist);
 
+        //for DB connection, replace this with proper solution later..
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        //Connect to MongoDB
+        MongoClient  mongoClient = new MongoClient(new ServerAddress(MongoDB_IP, MongoDB_PORT));
+
+        //View Database List
+        List<String> databases = mongoClient.getDatabaseNames();
+        int num =1 ;
+        for (String dbName : databases) {
+            Log.d("MONGODB", num  + ". " + dbName);
+            num++;
+        }
+
+        //Connect Database and Show Collection List in Database
+        DB db = mongoClient.getDB(DB_NAME);
+        Set<String> collections = db.getCollectionNames();
+
+        Log.d("MONGODB","Database : " + DB_NAME);
+        for (String colName : collections) {
+            Log.d("MONGODB"," + Collection: " + colName);
+        }
+        DBCollection collection = db.getCollection("users");
+
+        //Check Data in Database
+        DBCursor cursorDocBuilder = collection.find();
+        while (cursorDocBuilder.hasNext()) {
+            Log.d("MONGODB",""+cursorDocBuilder.next());
+        }
+
+
         sdf= new SimpleDateFormat("yyyy-MM-dd");
 
-        items = new ArrayList<Item>();
+        items_from_db = new ArrayList<Item>();
 
         try {
-            items.add(new Item("0", R.drawable.item_sample_ipad, "ipad", "5000", 35.811111, 128.550042, sdf.parse("2019-05-01"), sdf.parse("2019-12-31")));
-            items.add(new Item("1", R.drawable.item_sample_hammer, "hammer", "500", 35.856708, 128.590808, sdf.parse("2019-10-01"), sdf.parse("2019-11-31")));
-            items.add(new Item("2", R.drawable.item_sample_mouse, "mouse", "2000", 35.86969, 128.59367, sdf.parse("2019-10-01"), sdf.parse("2019-11-01")));
-            items.add(new Item("3", R.drawable.item_sample_longboard, "long board", "4000", 35.8947593, 128.5881245, sdf.parse("2019-10-01"), sdf.parse("2019-10-31")));
-            items.add(new Item("4", R.drawable.item_sample_handmixer, "hand mixer", "3000", 35.9051093, 128.5883257, sdf.parse("2019-10-01"), sdf.parse("2019-10-31")));
+            items_from_db.add(new Item("0", R.drawable.item_sample_ipad, "ipad", "5000", 35.811111, 128.550042, sdf.parse("2019-05-01"), sdf.parse("2019-12-31")));
+            items_from_db.add(new Item("1", R.drawable.item_sample_hammer, "hammer", "500", 35.856708, 128.590808, sdf.parse("2019-10-01"), sdf.parse("2019-11-31")));
+            items_from_db.add(new Item("2", R.drawable.item_sample_mouse, "mouse", "2000", 35.86969, 128.59367, sdf.parse("2019-10-01"), sdf.parse("2019-11-01")));
+            items_from_db.add(new Item("3", R.drawable.item_sample_longboard, "long board", "4000", 35.8947593, 128.5881245, sdf.parse("2019-10-01"), sdf.parse("2019-10-31")));
+            items_from_db.add(new Item("4", R.drawable.item_sample_handmixer, "hand mixer", "3000", 35.9051093, 128.5883257, sdf.parse("2019-10-01"), sdf.parse("2019-10-31")));
         }catch(ParseException e){
+            //handle error for the date format
             Log.d("ItemListActivity","parse Error",e);
         }
-        adapter = new ItemAdapter(this, items);
+        items_displaying = new ArrayList<Item>(items_from_db);
 
+        adapter = new ItemAdapter(this, items_from_db);
 
         gridView = (GridView) findViewById(R.id.item_grid_view);
         gridView.setAdapter(adapter);
@@ -72,7 +127,7 @@ public class ItemListActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = items.get(position);
+                Item item = items_from_db.get(position);
 
                 Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
                 intent.putExtra("item_id", item.getItem_id());
@@ -84,37 +139,38 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
-        /** location button */
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Button locationButton = (Button)findViewById(R.id.location_button);
-        locationButton.setOnClickListener(new View.OnClickListener() {
+
+
+//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                switch (actionId) {
+//                    case EditorInfo.IME_ACTION_SEARCH:
+//                        // 검색 동작
+//                        break;
+//                    default:
+//                        // 기본 엔터키 동작
+//                        return false;
+//                }
+//                return true;
+//            }
+//        });
+
+        Button mapsButton = (Button)findViewById(R.id.map_button);
+        mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), MapsMarkerActivity.class);
+                intent.putExtra("items",items_displaying);
+                startActivityForResult(intent,MAP_ACT);
 
-                Log.d("MYGPS","clicked");
-
-                if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                    Log.d("MYGPS","getting permissoin");
-                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
-                            0 );
-                }
-                else{
-                    Log.d("MYGPS","gogo");
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                }
             }
+
         });
 
 
-        /** location button */
+
+        /** Date button */
         Button dateButton = (Button)findViewById(R.id.date_button);
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,7 +220,6 @@ public class ItemListActivity extends AppCompatActivity {
                 okButton.setOnClickListener( new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        int size = items.size();
                         Date selectedDateFrom = null;
                         Date selectedDateTo = null;
                         try {
@@ -176,8 +231,8 @@ public class ItemListActivity extends AppCompatActivity {
                         Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
                         Log.d("MYPARSE","dend: "+selectedDateTo.toString());
                         items_displaying = new ArrayList<Item>();
-                        for (int i = 0; i < items.size(); i++){
-                            Item item = items.get(i);
+                        for (int i = 0; i < items_from_db.size(); i++){
+                            Item item = items_from_db.get(i);
                             Date iAvailableFrom = item.getAvailableFrom();
                             Date iAvailableTo = item.getAvailableTo();
 
@@ -205,6 +260,35 @@ public class ItemListActivity extends AppCompatActivity {
             }
 
         });
+
+        /** location button */
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Button locationButton = (Button)findViewById(R.id.location_button);
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.d("MYGPS","clicked");
+
+                if ( Build.VERSION.SDK_INT >= 23 &&
+                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                    Log.d("MYGPS","getting permissoin");
+                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
+                            0 );
+                }
+                else{
+                    Log.d("MYGPS","gogo");
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                }
+            }
+        });
     }
 
     final LocationListener gpsLocationListener = new LocationListener() {
@@ -223,7 +307,7 @@ public class ItemListActivity extends AppCompatActivity {
             if(accuracy <35.0f) {
                 Log.d("MYGPSCHK","sort~~");
 
-                for(Item i :items){
+                for(Item i : items_from_db){
                     Log.d("MYGPSCHK","dist");
                     float [] distance = new float [10];
 
@@ -231,8 +315,8 @@ public class ItemListActivity extends AppCompatActivity {
                     i.setDistanceToUser(distance);
                     Log.d("MYGPSCHK",""+distance[0]);
                 }
-                Collections.sort(items);
-                adapter = new ItemAdapter(getApplicationContext(), items);
+                Collections.sort(items_from_db);
+                adapter = new ItemAdapter(getApplicationContext(), items_from_db);
                 Log.d("MYGPSCHK", "refresh"  );
                 gridView.setAdapter(adapter);
 
@@ -253,64 +337,6 @@ public class ItemListActivity extends AppCompatActivity {
 
 }
 
-class Item implements Comparable<Item> {
-
-    private String item_id;
-    private String item_name;
-    private int item_image;
-    private String item_price_per_day;
-    private double latitude;
-    private double longitude;
-    private float[] distanceToUser;
-    private Date availableFrom;
-    private Date availableTo;
-
-    public Item(String item_id, int item_image, String item_name,String item_price_per_day,double latitude, double longitude, Date availableFrom,Date availableTo){
-        this.item_id = item_id;
-        this.item_name = item_name;
-        this.item_image = item_image;
-        this.item_price_per_day = item_price_per_day;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.availableFrom = availableFrom;
-        this.availableTo = availableTo;
-    }
-
-    public String getItem_id() {
-        return item_id;
-    }
-
-    public String getItem_name() {
-        return item_name;
-    }
-
-    public int getItem_image() {
-        return item_image;
-    }
-
-    public String getItem_price_per_day() {
-        return item_price_per_day;
-    }
-
-    public double getLatitude() { return latitude;  }
-
-    public double getLongitude() { return longitude; }
-
-    public void setDistanceToUser(float[] distanceToUser) {
-        this.distanceToUser = distanceToUser;
-    }
-
-    public float[] getDistanceToUser() {  return distanceToUser;  }
-
-    public Date getAvailableFrom() {  return availableFrom;  }
-
-    public Date getAvailableTo() {  return availableTo;  }
-
-    @Override
-    public int compareTo(Item i) {
-        return  Double.compare(this.distanceToUser[0],i.getDistanceToUser()[0]);
-    }
-}
 
 class ItemAdapter extends BaseAdapter{
     private LayoutInflater inflater;
@@ -359,11 +385,6 @@ class ItemAdapter extends BaseAdapter{
         return convertView;
 
     }
-    public void refresh(ArrayList<Item> items)
-    {
-        this.items = items;
-        this.count = items.size();
-        notifyDataSetChanged();
-    }
+
 }
 
