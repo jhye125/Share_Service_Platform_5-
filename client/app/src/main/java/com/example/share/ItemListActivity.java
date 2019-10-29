@@ -1,10 +1,13 @@
 package com.example.share;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -35,20 +38,30 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.ServerAddress;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 
 import com.example.share.Data.Item;
+import com.mongodb.client.MongoCursor;
+
+import org.bson.BsonDocument;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
 public class ItemListActivity extends AppCompatActivity {
+    //arraylist, adapter and gridview
     private ArrayList<Item> items_from_db = null;
     private ArrayList<Item> items_displaying = null;
     private ItemAdapter adapter = null;
-    private LocationManager lm = null;
     private GridView gridView = null;
+    private LocationManager lm = null;
+
+    //util
     private SimpleDateFormat sdf= null;
 
     //within the dialog
@@ -63,6 +76,7 @@ public class ItemListActivity extends AppCompatActivity {
     private String MongoDB_IP = "15.164.51.129";
     private int MongoDB_PORT = 27017;
     private String DB_NAME = "local";
+    private String COLLECTION_NAME = "items";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,57 +84,52 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_itemlist);
 
         //for DB connection, replace this with proper solution later..
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
-        //Connect to MongoDB
-        MongoClient  mongoClient = new MongoClient(new ServerAddress(MongoDB_IP, MongoDB_PORT));
-
-        //View Database List
-        List<String> databases = mongoClient.getDatabaseNames();
-        int num =1 ;
-        for (String dbName : databases) {
-            Log.d("MONGODB", num  + ". " + dbName);
-            num++;
-        }
-
-        //Connect Database and Show Collection List in Database
-        DB db = mongoClient.getDB(DB_NAME);
-        Set<String> collections = db.getCollectionNames();
-
-        Log.d("MONGODB","Database : " + DB_NAME);
-        for (String colName : collections) {
-            Log.d("MONGODB"," + Collection: " + colName);
-        }
-        DBCollection collection = db.getCollection("users");
-
-        //Check Data in Database
-        DBCursor cursorDocBuilder = collection.find();
-        while (cursorDocBuilder.hasNext()) {
-            Log.d("MONGODB",""+cursorDocBuilder.next());
-        }
-
-
         sdf= new SimpleDateFormat("yyyy-MM-dd");
-
         items_from_db = new ArrayList<Item>();
 
-        try {
-            items_from_db.add(new Item("0", R.drawable.item_sample_ipad, "ipad", "5000", 35.811111, 128.550042, sdf.parse("2019-05-01"), sdf.parse("2019-12-31")));
-            items_from_db.add(new Item("1", R.drawable.item_sample_hammer, "hammer", "500", 35.856708, 128.590808, sdf.parse("2019-10-01"), sdf.parse("2019-11-31")));
-            items_from_db.add(new Item("2", R.drawable.item_sample_mouse, "mouse", "2000", 35.86969, 128.59367, sdf.parse("2019-10-01"), sdf.parse("2019-11-01")));
-            items_from_db.add(new Item("3", R.drawable.item_sample_longboard, "long board", "4000", 35.8947593, 128.5881245, sdf.parse("2019-10-01"), sdf.parse("2019-10-31")));
-            items_from_db.add(new Item("4", R.drawable.item_sample_handmixer, "hand mixer", "3000", 35.9051093, 128.5883257, sdf.parse("2019-10-01"), sdf.parse("2019-10-31")));
-        }catch(ParseException e){
-            //handle error for the date format
-            Log.d("ItemListActivity","parse Error",e);
+        //Connect to MongoDB
+        MongoClient  mongoClient = new MongoClient(new ServerAddress(MongoDB_IP, MongoDB_PORT)); // failed here?
+        DB db = mongoClient.getDB(DB_NAME);
+        DBCollection collection = db.getCollection(COLLECTION_NAME);
+
+        //Check Data in Database
+        DBCursor cursor = collection.find();
+        while (cursor.hasNext()) {
+            DBObject dbo = (BasicDBObject)cursor.next();
+
+            String new_id = dbo.get("_id").toString();
+            //int tmpImage;
+            String newName=dbo.get("name").toString();
+            String newPPD=dbo.get("price_per_date").toString();
+            double newLatitude=Double.parseDouble(dbo.get("latitude").toString());
+            double newLongitude=Double.parseDouble(dbo.get("longitude").toString());
+            Date newDateFrom=(Date)dbo.get("available_date_start");
+            Date newDateTo=(Date)dbo.get("available_date_end");
+
+            Log.d("MONGODB",new_id);
+            Log.d("MONGODB","");
+            Log.d("MONGODB",newName);
+            Log.d("MONGODB",newPPD);
+            Log.d("MONGODB",""+newLatitude);
+            Log.d("MONGODB",""+newLongitude);
+            Log.d("MONGODB",newDateFrom.toString());
+            Log.d("MONGODB",newDateTo.toString());
+            Log.d("MONGODB","-");
+
+            //TODO: change to imagePath
+            items_from_db.add(new Item(new_id,R.drawable.item_sample_ipad, newName, newPPD,newLatitude, newLongitude,
+             newDateFrom, newDateTo));
+
         }
+
+        //arraylist, adapter and gridview
         items_displaying = new ArrayList<Item>(items_from_db);
-
         adapter = new ItemAdapter(this, items_from_db);
-
         gridView = (GridView) findViewById(R.id.item_grid_view);
         gridView.setAdapter(adapter);
 
@@ -271,9 +280,9 @@ public class ItemListActivity extends AppCompatActivity {
                 Log.d("MYGPS","clicked");
 
                 if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                        ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
                     Log.d("MYGPS","getting permissoin");
-                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
+                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
                             0 );
                 }
                 else{

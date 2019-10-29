@@ -16,7 +16,7 @@ public class Item implements Comparable<Item>,Serializable {
     private Date availableFrom;
     private Date availableTo;
 
-    public Item(String item_id, int item_image, String item_name,String item_price_per_day,double latitude, double longitude, Date availableFrom,Date availableTo){
+    public Item(String item_id, int item_image, String item_name, String item_price_per_day, double latitude, double longitude, Date availableFrom, Date availableTo){
         this.item_id = item_id;
         this.item_name = item_name;
         this.item_image = item_image;
