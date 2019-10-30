@@ -100,30 +100,36 @@ public class ItemListActivity extends AppCompatActivity {
         //Check Data in Database
         DBCursor cursor = collection.find();
         while (cursor.hasNext()) {
+
             DBObject dbo = (BasicDBObject)cursor.next();
+            try {
 
-            String new_id = dbo.get("_id").toString();
-            //int tmpImage;
-            String newName=dbo.get("name").toString();
-            String newPPD=dbo.get("price_per_date").toString();
-            double newLatitude=Double.parseDouble(dbo.get("latitude").toString());
-            double newLongitude=Double.parseDouble(dbo.get("longitude").toString());
-            Date newDateFrom=(Date)dbo.get("available_date_start");
-            Date newDateTo=(Date)dbo.get("available_date_end");
+                String new_id = dbo.get("_id").toString();
+                //int tmpImage;
+                String newName=dbo.get("name").toString();
+                String newPPD=dbo.get("price_per_date").toString();
+                double newLatitude=Double.parseDouble(dbo.get("latitude").toString());
+                double newLongitude=Double.parseDouble(dbo.get("longitude").toString());
 
-            Log.d("MONGODB",new_id);
-            Log.d("MONGODB","");
-            Log.d("MONGODB",newName);
-            Log.d("MONGODB",newPPD);
-            Log.d("MONGODB",""+newLatitude);
-            Log.d("MONGODB",""+newLongitude);
-            Log.d("MONGODB",newDateFrom.toString());
-            Log.d("MONGODB",newDateTo.toString());
-            Log.d("MONGODB","-");
+                Date newDateFrom = (Date) dbo.get("available_date_start");
+                Date newDateTo = (Date) dbo.get("available_date_end");
+                Log.d("MONGODB",new_id);
+                Log.d("MONGODB","");
+                Log.d("MONGODB",newName);
+                Log.d("MONGODB",newPPD);
+                Log.d("MONGODB",""+newLatitude);
+                Log.d("MONGODB",""+newLongitude);
+                Log.d("MONGODB",newDateFrom.toString());
+                Log.d("MONGODB",newDateTo.toString());
+                Log.d("MONGODB","-");
+                //TODO: change to imagePath
+                items_from_db.add(new Item(new_id,R.drawable.item_sample_ipad, newName, newPPD,newLatitude, newLongitude,
+                        newDateFrom, newDateTo));
 
-            //TODO: change to imagePath
-            items_from_db.add(new Item(new_id,R.drawable.item_sample_ipad, newName, newPPD,newLatitude, newLongitude,
-             newDateFrom, newDateTo));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
 
         }
 
