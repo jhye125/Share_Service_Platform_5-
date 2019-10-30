@@ -16,8 +16,6 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
-
         //get all the data passed
         String itemId = intent.getStringExtra("item_id");
         int imageResource = Integer.parseInt(intent.getStringExtra("item_image"));

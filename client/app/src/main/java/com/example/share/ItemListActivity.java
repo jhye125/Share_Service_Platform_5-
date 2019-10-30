@@ -18,9 +18,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -64,6 +66,8 @@ public class ItemListActivity extends AppCompatActivity {
     //util
     private SimpleDateFormat sdf= null;
 
+    private EditText searchBar = null;
+
     //within the dialog
     private EditText dateFrom =null;
     private EditText dateTo =null;
@@ -78,18 +82,60 @@ public class ItemListActivity extends AppCompatActivity {
     private String DB_NAME = "local";
     private String COLLECTION_NAME = "items";
 
+    //
+    private String currentCategory = "tool";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlist);
+        /*
+            //이거 불러주고
+            Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
+            //이거중에 하나 intent
+            intent.putExtra("category", "place");
+            intent.putExtra("category", "tool");
+            intent.putExtra("category", "sound_equipment");
+            intent.putExtra("category", "medical_equipment");
+            intent.putExtra("category", "baby_goods");
+            intent.putExtra("category", "etc");
+        */
+        Intent intent = getIntent();
+        currentCategory = intent.getStringExtra("category");
+
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            Log.d("MYGPS","getting permissoin");
+            ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
+                    0 );
+        }
+
+
 
         //for DB connection, replace this with proper solution later..
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
+        }else{
+            Log.d("MYGPS","gogo");
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
         }
 
+        //init date filter
         sdf= new SimpleDateFormat("yyyy-MM-dd");
+        dialog = new Dialog(ItemListActivity.this);
+        dialog.setContentView(R.layout.itemlist_date_dialog);
+        dateFrom = (EditText)dialog.findViewById(R.id.date_from);
+        dateTo = (EditText)dialog.findViewById(R.id.date_to);
+        dateFrom.setText("2019-01-01");
+        dateTo.setText("2019-12-31");
         items_from_db = new ArrayList<Item>();
 
         //Connect to MongoDB
@@ -113,6 +159,8 @@ public class ItemListActivity extends AppCompatActivity {
 
                 Date newDateFrom = (Date) dbo.get("available_date_start");
                 Date newDateTo = (Date) dbo.get("available_date_end");
+                String newCategory = dbo.get("category").toString();
+
                 Log.d("MONGODB",new_id);
                 Log.d("MONGODB","");
                 Log.d("MONGODB",newName);
@@ -121,15 +169,18 @@ public class ItemListActivity extends AppCompatActivity {
                 Log.d("MONGODB",""+newLongitude);
                 Log.d("MONGODB",newDateFrom.toString());
                 Log.d("MONGODB",newDateTo.toString());
+                Log.d("MONGODB",newCategory);
                 //Log.d("MONGODB","-");
                 //TODO: change to imagePath
-                items_from_db.add(new Item(new_id,R.drawable.item_sample_ipad, newName, newPPD,newLatitude, newLongitude,
-                        newDateFrom, newDateTo));
+
+                if(currentCategory.equals(newCategory)){
+                    items_from_db.add(new Item(new_id,R.drawable.item_sample_ipad, newName, newPPD,newLatitude, newLongitude,
+                            newDateFrom, newDateTo));
+                }
 
             }catch (Exception e){
                 e.printStackTrace();
             }
-
 
         }
 
@@ -154,22 +205,22 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
+        Log.d("search action","hihi");
+        searchBar = (EditText)findViewById(R.id.seach_bar);
+        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    filterResult();
 
-//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                switch (actionId) {
-//                    case EditorInfo.IME_ACTION_SEARCH:
-//                        // 검색 동작
-//                        break;
-//                    default:
-//                        // 기본 엔터키 동작
-//                        return false;
-//                }
-//                return true;
-//            }
-//        });
+                    Log.d("MYSEARCH","joo");
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         Button mapsButton = (Button)findViewById(R.id.map_button);
         mapsButton.setOnClickListener(new View.OnClickListener() {
@@ -182,7 +233,6 @@ public class ItemListActivity extends AppCompatActivity {
             }
 
         });
-
 
 
         /** Date button */
@@ -226,7 +276,6 @@ public class ItemListActivity extends AppCompatActivity {
                             }
                         }, 2019, 10, 30); //11월30일임. month 값이 0부터 시작함.
                         datePickerDialog.show();
-
                     }
                 });
 
@@ -235,28 +284,7 @@ public class ItemListActivity extends AppCompatActivity {
                 okButton.setOnClickListener( new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Date selectedDateFrom = null;
-                        Date selectedDateTo = null;
-                        try {
-                            selectedDateFrom = sdf.parse(""+dateFrom.getText());
-                            selectedDateTo = sdf.parse(""+dateTo.getText());
-                        } catch (ParseException e){
-                            Log.d("MYPARSE","parse Error_filter,date",e);
-                        }
-                        Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
-                        Log.d("MYPARSE","dend: "+selectedDateTo.toString());
-                        items_displaying = new ArrayList<Item>();
-                        for (int i = 0; i < items_from_db.size(); i++){
-                            Item item = items_from_db.get(i);
-                            Date iAvailableFrom = item.getAvailableFrom();
-                            Date iAvailableTo = item.getAvailableTo();
-
-                            if( (iAvailableFrom.compareTo(selectedDateFrom) <= 0) &&(selectedDateTo.compareTo(iAvailableTo) <= 0)  )
-                                items_displaying.add(item);
-
-                        }
-                        adapter = new ItemAdapter(getApplicationContext(), items_displaying);
-                        gridView.setAdapter(adapter);
+                        filterResult();
                         dialog.dismiss();
                     }
 
@@ -276,34 +304,6 @@ public class ItemListActivity extends AppCompatActivity {
 
         });
 
-        /** location button */
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Button locationButton = (Button)findViewById(R.id.location_button);
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.d("MYGPS","clicked");
-
-                if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                    Log.d("MYGPS","getting permissoin");
-                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
-                            0 );
-                }
-                else{
-                    Log.d("MYGPS","gogo");
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                }
-            }
-        });
     }
 
     final LocationListener gpsLocationListener = new LocationListener() {
@@ -349,6 +349,37 @@ public class ItemListActivity extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
         }
     };
+    private void filterResult(){
+        Date selectedDateFrom = null;
+        Date selectedDateTo = null;
+        String keyword = null;
+        try {
+            selectedDateFrom = sdf.parse(""+dateFrom.getText());
+            selectedDateTo = sdf.parse(""+dateTo.getText());
+        } catch (ParseException e){
+            Log.d("MYPARSE","parse Error_filter,date",e);
+        }
+        Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
+        Log.d("MYPARSE","dend: "+selectedDateTo.toString());
+
+        keyword = searchBar.getText().toString();
+
+        items_displaying = new ArrayList<Item>();
+        for (int i = 0; i < items_from_db.size(); i++){
+            Item item = items_from_db.get(i);
+            Date iAvailableFrom = item.getAvailableFrom();
+            Date iAvailableTo = item.getAvailableTo();
+            String itemName = item.getItem_name();
+            if(itemName.contains(keyword)) {
+                if ((iAvailableFrom.compareTo(selectedDateFrom) <= 0) && (selectedDateTo.compareTo(iAvailableTo) <= 0))
+                    items_displaying.add(item);
+            }
+        }
+        adapter = new ItemAdapter(getApplicationContext(), items_displaying);
+        gridView.setAdapter(adapter);
+
+        return;
+    }
 
 }
 
