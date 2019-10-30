@@ -4,24 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8242E"
+    android:background="#E5EBEB"
     tools:context=".LoginActivity">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="344dp"
+        android:layout_height="181dp"
         android:adjustViewBounds="true"
         android:padding="0dp"
-        android:src="@drawable/home_logo"
+        android:src="@drawable/head_logo"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055" />
+        app:layout_constraintVertical_bias="0.146" />
 
     <EditText
-        android:id="@+id/id_input"
+        android:id="@+id/email_input"
         android:layout_width="226dp"
         android:layout_height="46dp"
         android:layout_centerHorizontal="true"
@@ -65,7 +67,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="LoginCheck"
         android:padding="0dp"
         android:src="@drawable/login_button"
         app:layout_constraintBottom_toTopOf="@+id/checkBox"
@@ -80,7 +81,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="Sign_Up"
         android:padding="0dp"
         android:src="@drawable/signup_button"
         app:layout_constraintBottom_toTopOf="@+id/checkBox"

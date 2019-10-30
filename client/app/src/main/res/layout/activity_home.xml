@@ -4,21 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8242E"
+    android:background="#E5EBEB"
     tools:context=".HomeActivity">
 
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="344dp"
+        android:layout_height="181dp"
         android:adjustViewBounds="true"
         android:padding="0dp"
-        android:src="@drawable/home_logo"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        android:src="@drawable/head_logo"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.146" />
 
     <ImageButton
         android:id="@+id/place"
@@ -41,12 +42,12 @@
         android:clickable="true"
         android:padding="0dp"
         android:src="@drawable/home_tools_ic"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.204" />
 
     <ImageButton
         android:id="@+id/music"
@@ -70,7 +71,7 @@
         android:clickable="true"
         android:padding="0dp"
         android:src="@drawable/home_medical_ic"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="@+id/place"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/place"
@@ -86,7 +87,7 @@
         android:clickable="true"
         android:padding="0dp"
         android:src="@drawable/home_child_ic"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="@+id/tools"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tools"
@@ -102,7 +103,7 @@
         android:clickable="true"
         android:padding="0dp"
         android:src="@drawable/home_etc_ic"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
         app:layout_constraintEnd_toEndOf="@+id/music"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/music"
@@ -124,17 +125,19 @@
         app:layout_constraintVertical_bias="0.834" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:background="?android:attr/windowBackground"
+        android:layout_height="50dp"
+        android:background="#E5EBEB"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/menu_bottom" />
+        app:menu="@menu/menu_bottom"
+        app:labelVisibilityMode="labeled" />
 
 
 

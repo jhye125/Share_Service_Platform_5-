@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/chat_username"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:background="#E5EBEB"
+            android:text="찜 목록"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:transcriptMode="alwaysScroll"
+                android:divider="@android:color/transparent">
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

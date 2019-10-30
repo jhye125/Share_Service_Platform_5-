@@ -9,8 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
 import org.json.JSONObject;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,14 +25,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText id_input;
+    EditText email_input;
     EditText pw_input;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        id_input = (EditText)findViewById(R.id.id_input);
+        email_input = (EditText)findViewById(R.id.email_input);
         pw_input = (EditText)findViewById(R.id.pw_input);
         CheckBox checkBox = (CheckBox)findViewById(R.id.checkBox);
         ImageButton loginButton = (ImageButton)findViewById(R.id.loginButton);
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         ImageView id_box =(ImageView) findViewById(R.id.id_box);
         ImageView pw_box =(ImageView) findViewById(R.id.pw_box);
         ImageButton google_button = (ImageButton)findViewById(R.id.google_button);
-        findViewById(R.id.id_input).bringToFront();
+        findViewById(R.id.email_input).bringToFront();
         findViewById(R.id.pw_input).bringToFront();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("email",id_input.getText().toString());
+                jsonObject.accumulate("email",email_input.getText().toString());
                 jsonObject.accumulate("password", pw_input.getText().toString());
 
                 HttpURLConnection con = null;
@@ -137,15 +138,27 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if (result.equals("true")) {
+            if (result.equals("true")) {    //로그인 성공시 Home Intents 시작 메소드
                 LoginCheck();
+            }
+            else{   //로그인 실패시 에러 메시지 출력
+                AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                    }
+                });
+                alert.setMessage("ID/PW ERROR");
+                alert.show();
             }
         }
     }
-    public void LoginCheck(){ // reservetest 클릭시
+    public void LoginCheck(){ // 로그인 성공시 Home Intents 시작
 
-        Intent intents = new Intent(this, HomeActivity.class);
-        startActivity(intents);
+        Intent homeintent = new Intent(this, HomeActivity.class);
+        homeintent.putExtra("Email",email_input.getText().toString());
+        startActivity(homeintent);
 
     }
 }
