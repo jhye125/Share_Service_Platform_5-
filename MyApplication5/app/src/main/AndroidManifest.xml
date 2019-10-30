@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChattingActivity"></activity>
+        <activity android:name=".RegisterItemActivity"></activity>
+        <activity android:name=".ChattingActivity" />
         <activity android:name=".ReservationInfoActivity" />
         <activity android:name=".PayActivity" />
-        <activity android:name=".AddCardDetailActivity"/>
+        <activity android:name=".AddCardDetailActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +22,5 @@
             </intent-filter>
         </activity>
     </application>
-
 
 </manifest>
