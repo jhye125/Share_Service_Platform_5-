@@ -101,14 +101,9 @@ public class ItemListActivity extends AppCompatActivity {
             intent.putExtra("category", "etc");
         */
         Intent intent = getIntent();
-        currentCategory = intent.getStringExtra("category");
+        //currentCategory = intent.getStringExtra("category");
 
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            Log.d("MYGPS","getting permissoin");
-            ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
-                    0 );
-        }
+
 
 
 
@@ -116,16 +111,6 @@ public class ItemListActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-        }else{
-            Log.d("MYGPS","gogo");
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000,
-                    1,
-                    gpsLocationListener);
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    1000,
-                    1,
-                    gpsLocationListener);
         }
 
         //init date filter
@@ -184,6 +169,26 @@ public class ItemListActivity extends AppCompatActivity {
 
         }
 
+        //gps
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            Log.d("MYGPS","getting permissoin");
+            ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
+                    0 );
+        }else{
+            Log.d("MYGPS","gogo");
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+        }
+
+
         //arraylist, adapter and gridview
         items_displaying = new ArrayList<Item>(items_from_db);
         adapter = new ItemAdapter(this, items_from_db);
@@ -222,6 +227,7 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
+        /** map button */
         Button mapsButton = (Button)findViewById(R.id.map_button);
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,6 +424,7 @@ class ItemAdapter extends BaseAdapter{
         }
 
         Item item = items.get(position);
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 
         ImageView image = (ImageView)convertView.findViewById(R.id.item_image);
         image.setImageResource(item.getItem_image());
@@ -425,8 +432,15 @@ class ItemAdapter extends BaseAdapter{
         TextView name = (TextView)convertView.findViewById(R.id.item_name);
         name.setText(item.getItem_name());
 
-        TextView telephone = (TextView)convertView.findViewById(R.id.item_price_per_day);
-        telephone.setText(item.getItem_price_per_day() + " won per a day");
+        TextView pricePerDay = (TextView)convertView.findViewById(R.id.item_price_per_day);
+        pricePerDay.setText(item.getItem_price_per_day() + "원 / 하루");
+
+        TextView distanceToUser = (TextView)convertView.findViewById(R.id.distance_to_user);
+        if(item.getDistanceToUser() !=null)
+            distanceToUser.setText(String.format("%.0f",item.getDistanceToUser()[0])+" 미터");
+
+        TextView avilableDays = (TextView)convertView.findViewById(R.id.available_days);
+        avilableDays.setText(sdf.format(item.getAvailableFrom())+" ~ " +sdf.format(item.getAvailableTo()));
 
         return convertView;
 

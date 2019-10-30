@@ -35,7 +35,6 @@ public class MapsMarkerActivity extends AppCompatActivity
         Intent intent = getIntent();
         items = (ArrayList<Item>)intent.getSerializableExtra("items");
 
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
