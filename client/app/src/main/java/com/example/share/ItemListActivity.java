@@ -121,7 +121,7 @@ public class ItemListActivity extends AppCompatActivity {
                 Log.d("MONGODB",""+newLongitude);
                 Log.d("MONGODB",newDateFrom.toString());
                 Log.d("MONGODB",newDateTo.toString());
-                Log.d("MONGODB","-");
+                //Log.d("MONGODB","-");
                 //TODO: change to imagePath
                 items_from_db.add(new Item(new_id,R.drawable.item_sample_ipad, newName, newPPD,newLatitude, newLongitude,
                         newDateFrom, newDateTo));
