@@ -21,6 +21,7 @@
         <activity android:name=".ItemDetailActivity"/>
         <activity android:name=".MapsMarkerActivity"/>
         <activity android:name=".AddCardDetailActivity"/>
+        <activity android:name=".RegisterItemActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +31,7 @@
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB6Q8ZFLzHZDId6VlEKu3hmcr9jCoc7xrQ"/>
+            android:value="@string/google_maps_key"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

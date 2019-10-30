@@ -7,12 +7,21 @@ import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 import android.support.annotation.NonNull;
 import android.widget.ImageButton;
+import android.widget.Button;
 
 import com.example.share.Data.Item;
 
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
+
+
+    private ImageButton etcButton;
+    private ImageButton placeButton;
+    private ImageButton toolButton;
+    private ImageButton sound_equipmentButton;
+    private ImageButton medical_equimentButton;
+    private ImageButton baby_goodsButton;
 
     private String Email;
     @Override
@@ -24,13 +33,76 @@ public class HomeActivity extends AppCompatActivity {
         Email = homeintent.getExtras().getString("Email");  //LoginActivity로 부터 email 읽어오기
 
 
-        ImageButton etcButton = (ImageButton)findViewById(R.id.etc);
+        etcButton = (ImageButton)findViewById(R.id.etc);
+        placeButton = (ImageButton)findViewById(R.id.place);
+        toolButton = (ImageButton)findViewById(R.id.tools);
+        sound_equipmentButton = (ImageButton)findViewById(R.id.music);
+        medical_equimentButton = (ImageButton)findViewById(R.id.medical);
+        baby_goodsButton = (ImageButton)findViewById(R.id.child);
+
 
         etcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signupintent = new Intent(HomeActivity.this, ItemListActivity.class);
-                startActivity(signupintent);
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "etc");
+                startActivity(intent);
+            }
+
+        });
+        placeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "place");
+                startActivity(intent);
+            }
+
+        });
+        toolButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "tool");
+                startActivity(intent);
+            }
+
+        });
+        sound_equipmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "sound_equipment");
+                startActivity(intent);
+            }
+
+        });
+        medical_equimentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "medical_equipment");
+                startActivity(intent);
+            }
+
+        });
+        baby_goodsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "baby_goods");
+                startActivity(intent);
+            }
+
+        });
+
+        Button testbutton = (Button)findViewById(R.id.testbutton);
+
+        testbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, RegisterItemActivity.class);
+                startActivity(intent);
             }
 
         });
@@ -65,10 +137,4 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
-    public void ReserveTest(View view){ // reservetest 클릭시
-
-        Intent intents = new Intent(this, ReservationInfoActivity.class);
-        startActivity(intents);
-
-    }
 }

@@ -11,7 +11,6 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -19,9 +18,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -75,6 +76,8 @@ public class ItemListActivity extends AppCompatActivity {
     //util
     private SimpleDateFormat sdf= null;
 
+    private EditText searchBar = null;
+
     //within the dialog
     private EditText dateFrom =null;
     private EditText dateTo =null;
@@ -89,7 +92,10 @@ public class ItemListActivity extends AppCompatActivity {
     private String DB_NAME = "local";
     private String COLLECTION_NAME = "items";
 
-    //image file bitmap
+    //
+    private String currentCategory = "tool";
+
+    //
     private Bitmap bmimg;
     private String new_id;
     private String newName;
@@ -98,11 +104,25 @@ public class ItemListActivity extends AppCompatActivity {
     private double newLongitude;
     private Date newDateFrom;
     private Date newDateTo;
+    private String newCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlist);
+        /*
+            //이거 불러주고
+            Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
+            //이거중에 하나 intent
+            intent.putExtra("category", "place");
+            intent.putExtra("category", "tool");
+            intent.putExtra("category", "sound_equipment");
+            intent.putExtra("category", "medical_equipment");
+            intent.putExtra("category", "baby_goods");
+            intent.putExtra("category", "etc");
+        */
+        Intent intent = getIntent();
+        currentCategory = intent.getStringExtra("category");
 
         //for DB connection, replace this with proper solution later..
         if (Build.VERSION.SDK_INT > 9) {
@@ -110,7 +130,14 @@ public class ItemListActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
+        //init date filter
         sdf= new SimpleDateFormat("yyyy-MM-dd");
+        dialog = new Dialog(ItemListActivity.this);
+        dialog.setContentView(R.layout.itemlist_date_dialog);
+        dateFrom = (EditText)dialog.findViewById(R.id.date_from);
+        dateTo = (EditText)dialog.findViewById(R.id.date_to);
+        dateFrom.setText("2019-01-01");
+        dateTo.setText("2019-12-31");
         items_from_db = new ArrayList<Item>();
 
         //Connect to MongoDB
@@ -124,9 +151,9 @@ public class ItemListActivity extends AppCompatActivity {
 
             DBObject dbo = (BasicDBObject)cursor.next();
             try {
-                WaitNotify waitNotify = new WaitNotify();
 
                 new_id = dbo.get("_id").toString();
+                //int tmpImage;
                 newName=dbo.get("name").toString();
                 newPPD=dbo.get("price_per_date").toString();
                 newLatitude=Double.parseDouble(dbo.get("latitude").toString());
@@ -134,8 +161,7 @@ public class ItemListActivity extends AppCompatActivity {
                 String newImPa=dbo.get("image_path").toString();
                 newDateFrom = (Date) dbo.get("available_date_start");
                 newDateTo = (Date) dbo.get("available_date_end");
-
-
+                newCategory = dbo.get("category").toString();
 
                 Log.d("MONGODB",new_id);
                 Log.d("MONGODB","");
@@ -145,12 +171,9 @@ public class ItemListActivity extends AppCompatActivity {
                 Log.d("MONGODB",""+newLongitude);
                 Log.d("MONGODB",newDateFrom.toString());
                 Log.d("MONGODB",newDateTo.toString());
-                Log.d("MONGODB",newImPa);
-                Log.d("MONGODB","-");
-
-                //new ItemListActivity.JSONTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/get_image",newImPa);
-
-
+                Log.d("MONGODB",newCategory);
+                //Log.d("MONGODB","-");
+                //TODO: change to imagePath
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
@@ -202,16 +225,36 @@ public class ItemListActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-            } catch (Exception e) {
+                if(currentCategory.equals(newCategory)){
+                    items_from_db.add(new Item(new_id,bmimg, newName, newPPD,newLatitude, newLongitude,
+                            newDateFrom, newDateTo));
+                }
+
+            }catch (Exception e){
                 e.printStackTrace();
             }
 
-                items_from_db.add(new Item(new_id,bmimg, newName, newPPD,newLatitude, newLongitude,
-                        newDateFrom, newDateTo));
-                //Pass=false;
-
-
         }
+
+        //gps
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if ( Build.VERSION.SDK_INT >= 23 &&
+                ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+            Log.d("MYGPS","getting permissoin");
+            ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
+                    0 );
+        }else{
+            Log.d("MYGPS","gogo");
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    1,
+                    gpsLocationListener);
+        }
+
 
         //arraylist, adapter and gridview
         items_displaying = new ArrayList<Item>(items_from_db);
@@ -234,23 +277,24 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
+        Log.d("search action","hihi");
+        searchBar = (EditText)findViewById(R.id.seach_bar);
+        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    filterResult();
 
-//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                switch (actionId) {
-//                    case EditorInfo.IME_ACTION_SEARCH:
-//                        // 검색 동작
-//                        break;
-//                    default:
-//                        // 기본 엔터키 동작
-//                        return false;
-//                }
-//                return true;
-//            }
-//        });
+                    Log.d("MYSEARCH","joo");
+                    return true;
+                }
 
+                return false;
+            }
+        });
+
+        /** map button */
         Button mapsButton = (Button)findViewById(R.id.map_button);
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,7 +306,6 @@ public class ItemListActivity extends AppCompatActivity {
             }
 
         });
-
 
 
         /** Date button */
@@ -306,7 +349,6 @@ public class ItemListActivity extends AppCompatActivity {
                             }
                         }, 2019, 10, 30); //11월30일임. month 값이 0부터 시작함.
                         datePickerDialog.show();
-
                     }
                 });
 
@@ -315,28 +357,7 @@ public class ItemListActivity extends AppCompatActivity {
                 okButton.setOnClickListener( new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Date selectedDateFrom = null;
-                        Date selectedDateTo = null;
-                        try {
-                            selectedDateFrom = sdf.parse(""+dateFrom.getText());
-                            selectedDateTo = sdf.parse(""+dateTo.getText());
-                        } catch (ParseException e){
-                            Log.d("MYPARSE","parse Error_filter,date",e);
-                        }
-                        Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
-                        Log.d("MYPARSE","dend: "+selectedDateTo.toString());
-                        items_displaying = new ArrayList<Item>();
-                        for (int i = 0; i < items_from_db.size(); i++){
-                            Item item = items_from_db.get(i);
-                            Date iAvailableFrom = item.getAvailableFrom();
-                            Date iAvailableTo = item.getAvailableTo();
-
-                            if( (iAvailableFrom.compareTo(selectedDateFrom) <= 0) &&(selectedDateTo.compareTo(iAvailableTo) <= 0)  )
-                                items_displaying.add(item);
-
-                        }
-                        adapter = new ItemAdapter(getApplicationContext(), items_displaying);
-                        gridView.setAdapter(adapter);
+                        filterResult();
                         dialog.dismiss();
                     }
 
@@ -356,34 +377,6 @@ public class ItemListActivity extends AppCompatActivity {
 
         });
 
-        /** location button */
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Button locationButton = (Button)findViewById(R.id.location_button);
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Log.d("MYGPS","clicked");
-
-                if ( Build.VERSION.SDK_INT >= 23 &&
-                        ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-                    Log.d("MYGPS","getting permissoin");
-                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
-                            0 );
-                }
-                else{
-                    Log.d("MYGPS","gogo");
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                            1000,
-                            1,
-                            gpsLocationListener);
-                }
-            }
-        });
     }
 
     final LocationListener gpsLocationListener = new LocationListener() {
@@ -429,97 +422,40 @@ public class ItemListActivity extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
         }
     };
+    private void filterResult(){
+        Date selectedDateFrom = null;
+        Date selectedDateTo = null;
+        String keyword = null;
+        try {
+            selectedDateFrom = sdf.parse(""+dateFrom.getText());
+            selectedDateTo = sdf.parse(""+dateTo.getText());
+        } catch (ParseException e){
+            Log.d("MYPARSE","parse Error_filter,date",e);
+        }
+        Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
+        Log.d("MYPARSE","dend: "+selectedDateTo.toString());
 
-    public class JSONTask extends AsyncTask<String, Integer, Bitmap> {
+        keyword = searchBar.getText().toString();
 
-        private String mTitle = null;
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            try {
-                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("file_name", urls[1].toString());
-                HttpURLConnection con = null;
-                BufferedReader reader = null;
-
-                try {
-                    //URL url = new URL("http://192.168.25.16:3000/users");
-                    URL url = new URL(urls[0]);
-                    //연결을 함
-                    con = (HttpURLConnection) url.openConnection();
-
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-
-
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    con.connect();
-
-                    //서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-
-                    //서버로 부터 데이터를 받음
-                    InputStream stream = con.getInputStream();
-                    bmimg = BitmapFactory.decodeStream(stream);
-
-                    return bmimg;
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                    try {
-                        if (reader != null) {
-                            reader.close();//버퍼를 닫아줌
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        items_displaying = new ArrayList<Item>();
+        for (int i = 0; i < items_from_db.size(); i++){
+            Item item = items_from_db.get(i);
+            Date iAvailableFrom = item.getAvailableFrom();
+            Date iAvailableTo = item.getAvailableTo();
+            String itemName = item.getItem_name();
+            if(itemName.contains(keyword)) {
+                if ((iAvailableFrom.compareTo(selectedDateFrom) <= 0) && (selectedDateTo.compareTo(iAvailableTo) <= 0))
+                    items_displaying.add(item);
             }
-
-            return null;
         }
+        adapter = new ItemAdapter(getApplicationContext(), items_displaying);
+        gridView.setAdapter(adapter);
 
-        protected void onPostExecute(Bitmap img) {
-            //main_logo.setImageBitmap(bmimg);
-
-        }
+        return;
     }
 
-    private class WaitNotify{
-        synchronized public void mWait() {
-            try {
-                wait();
-            } catch (Exception e) {
-                Log.i("Debug", e.getMessage());
-            }
-        }
-        synchronized public void mNotify() {
-            try {
-                notify();
-            }
-            catch(Exception e)
-            {
-                Log.i("Debug", e.getMessage());
-            }
-        }
-    }
 }
+
 
 class ItemAdapter extends BaseAdapter{
     private LayoutInflater inflater;
@@ -555,6 +491,7 @@ class ItemAdapter extends BaseAdapter{
         }
 
         Item item = items.get(position);
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 
         ImageView image = (ImageView)convertView.findViewById(R.id.item_image);
         image.setImageBitmap(item.getItem_image());
@@ -562,11 +499,19 @@ class ItemAdapter extends BaseAdapter{
         TextView name = (TextView)convertView.findViewById(R.id.item_name);
         name.setText(item.getItem_name());
 
-        TextView telephone = (TextView)convertView.findViewById(R.id.item_price_per_day);
-        telephone.setText(item.getItem_price_per_day() + " won per a day");
+        TextView pricePerDay = (TextView)convertView.findViewById(R.id.item_price_per_day);
+        pricePerDay.setText(item.getItem_price_per_day() + "원 / 하루");
+
+        TextView distanceToUser = (TextView)convertView.findViewById(R.id.distance_to_user);
+        if(item.getDistanceToUser() !=null)
+            distanceToUser.setText(String.format("%.0f",item.getDistanceToUser()[0])+" 미터");
+
+        TextView avilableDays = (TextView)convertView.findViewById(R.id.available_days);
+        avilableDays.setText(sdf.format(item.getAvailableFrom())+" ~ " +sdf.format(item.getAvailableTo()));
 
         return convertView;
 
     }
 
 }
+
