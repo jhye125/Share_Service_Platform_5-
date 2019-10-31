@@ -3,11 +3,12 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 public class ChattingItemView extends CardView {
     TextView name;

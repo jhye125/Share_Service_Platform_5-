@@ -2,7 +2,8 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = new Intent(getApplicationContext(),RegisterItemActivity.class);
+        //Intent intent = new Intent(getApplicationContext(),MapsMarkerActivity.class);
         startActivity(intent);
 
     }

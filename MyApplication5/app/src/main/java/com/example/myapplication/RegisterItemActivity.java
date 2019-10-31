@@ -1,24 +1,30 @@
 package com.example.myapplication;
 
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,13 +35,15 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
+    private final int GET_LOCATION_INFO = 100;
     private final int GET_GALLERY_IMAGE = 200;
 
     ImageView photo;
-    ImageView category;
+    TextView category;
     EditText title;
-    ImageView location;
+    TextView location;
     EditText price;
+    TextView date;
     EditText content;
     ImageView register;
     List<Map<String, Object>> categorylist;
@@ -50,12 +58,13 @@ public class RegisterItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_item);
 
         photo = (ImageView) findViewById(R.id.register_photo);
-        category = (ImageView) findViewById(R.id.register_category);
+        category = (TextView) findViewById(R.id.register_category);
         title = (EditText) findViewById(R.id.register_title);
-        location = (ImageView) findViewById(R.id.register_location);
+        location = (TextView) findViewById(R.id.register_location);
         content = (EditText) findViewById(R.id.register_content);
         price = (EditText) findViewById(R.id.register_price);
         register = (ImageView) findViewById(R.id.btnregister);
+        date = (TextView) findViewById(R.id.register_date);
 
         categorylist = new ArrayList<>();
 
@@ -82,6 +91,8 @@ public class RegisterItemActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     public void photosetting()
@@ -99,9 +110,8 @@ public class RegisterItemActivity extends AppCompatActivity {
 
             Uri selectedImageUri = data.getData();
             photo.setImageURI(selectedImageUri);
-
-
         }
+
 
     }
 
@@ -138,6 +148,8 @@ public class RegisterItemActivity extends AppCompatActivity {
 
                 Log.d(this.getClass().getName(),text[position]);
                 send_category = text[position];
+                category.setText("   "+text[position]);
+                category.setGravity(Gravity.CENTER_VERTICAL);
                 dialog.dismiss();
             }
         });
@@ -147,5 +159,21 @@ public class RegisterItemActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    public void selectDate(View v)
+    {
+
+    }
+
+
+
+    public void selectLocation(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(),MapsMarkerActivity.class);
+        startActivity(intent);
+    }
+
+
+
 
 }
