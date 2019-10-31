@@ -40,6 +40,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,6 +64,7 @@ import com.mongodb.client.MongoCursor;
 import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ItemListActivity extends AppCompatActivity {
@@ -105,6 +107,8 @@ public class ItemListActivity extends AppCompatActivity {
     private Date newDateFrom;
     private Date newDateTo;
     private String newCategory;
+    private String newFilePath;
+    private FromServerImage newImage = new FromServerImage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,95 +149,43 @@ public class ItemListActivity extends AppCompatActivity {
         DB db = mongoClient.getDB(DB_NAME);
         DBCollection collection = db.getCollection(COLLECTION_NAME);
 
-        //Check Data in Database
-        DBCursor cursor = collection.find();
+        //Check Data in Database with query
+        BasicDBObject query = new BasicDBObject();
+        query.put("category",currentCategory);
+        DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
 
-            DBObject dbo = (BasicDBObject)cursor.next();
+            DBObject dbo = (BasicDBObject) cursor.next();
             try {
 
                 new_id = dbo.get("_id").toString();
-                //int tmpImage;
-                newName=dbo.get("name").toString();
-                newPPD=dbo.get("price_per_date").toString();
-                newLatitude=Double.parseDouble(dbo.get("latitude").toString());
-                newLongitude=Double.parseDouble(dbo.get("longitude").toString());
-                String newImPa=dbo.get("image_path").toString();
+                newName = dbo.get("name").toString();
+                newPPD = dbo.get("price_per_date").toString();
+                newLatitude = Double.parseDouble(dbo.get("latitude").toString());
+                newLongitude = Double.parseDouble(dbo.get("longitude").toString());
                 newDateFrom = (Date) dbo.get("available_date_start");
                 newDateTo = (Date) dbo.get("available_date_end");
                 newCategory = dbo.get("category").toString();
+                newFilePath = dbo.get("image_path").toString();
 
-                Log.d("MONGODB",new_id);
-                Log.d("MONGODB","");
-                Log.d("MONGODB",newName);
-                Log.d("MONGODB",newPPD);
-                Log.d("MONGODB",""+newLatitude);
-                Log.d("MONGODB",""+newLongitude);
-                Log.d("MONGODB",newDateFrom.toString());
-                Log.d("MONGODB",newDateTo.toString());
-                Log.d("MONGODB",newCategory);
+                Log.d("MONGODB", new_id);
+                Log.d("MONGODB", "");
+                Log.d("MONGODB", newName);
+                Log.d("MONGODB", newPPD);
+                Log.d("MONGODB", "" + newLatitude);
+                Log.d("MONGODB", "" + newLongitude);
+                Log.d("MONGODB", newDateFrom.toString());
+                Log.d("MONGODB", newDateTo.toString());
+                Log.d("MONGODB", newCategory);
                 //Log.d("MONGODB","-");
                 //TODO: change to imagePath
-
-                HttpURLConnection con = null;
-                BufferedReader reader = null;
-                try {
-                    //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.accumulate("file_name", newImPa);
-
-                    //URL url = new URL("http://192.168.25.16:3000/users");
-                    URL url = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/get_image");
-                    //연결을 함
-                    con = (HttpURLConnection) url.openConnection();
-
-                    con.setRequestMethod("POST");//POST방식으로 보냄
-                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
-                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-
-
-                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
-                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
-                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
-                    con.connect();
-
-                    //서버로 보내기위해서 스트림 만듬
-                    OutputStream outStream = con.getOutputStream();
-                    //버퍼를 생성하고 넣음
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
-                    writer.write(jsonObject.toString());
-                    writer.flush();
-                    writer.close();//버퍼를 받아줌
-
-                    //서버로 부터 데이터를 받음
-                    InputStream stream = con.getInputStream();
-                    bmimg = BitmapFactory.decodeStream(stream);
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    if (con != null) {
-                        con.disconnect();
-                    }
-                    try {
-                        if (reader != null) {
-                            reader.close();//버퍼를 닫아줌
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                if (currentCategory.equals(newCategory)) {
+                    items_from_db.add(new Item(new_id, newName, newPPD, newLatitude, newLongitude,
+                            newDateFrom, newDateTo, newFilePath));
                 }
-                if(currentCategory.equals(newCategory)){
-                    items_from_db.add(new Item(new_id,bmimg, newName, newPPD,newLatitude, newLongitude,
-                            newDateFrom, newDateTo));
-                }
-
-            }catch (Exception e){
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-
         }
 
         //gps
@@ -267,9 +219,9 @@ public class ItemListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = items_from_db.get(position);
 
-                Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
+                Intent intent = new Intent(ItemListActivity.this, ItemDetailActivity.class);
                 intent.putExtra("item_id", item.getItem_id());
-                intent.putExtra("item_image", item.getItem_image());
+                intent.putExtra("item_path", item.getFilepath());
                 intent.putExtra("item_name", item.getItem_name());
                 intent.putExtra("item_price_per_day", item.getItem_price_per_day());
 
@@ -289,7 +241,6 @@ public class ItemListActivity extends AppCompatActivity {
                     Log.d("MYSEARCH","joo");
                     return true;
                 }
-
                 return false;
             }
         });
@@ -456,11 +407,11 @@ public class ItemListActivity extends AppCompatActivity {
 
 }
 
-
 class ItemAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private ArrayList<Item> items = null;
     private int count = 0;
+    private FromServerImage newImage = new FromServerImage();
 
     public ItemAdapter(Context context, ArrayList<Item> items) {
         this.items = items;
@@ -494,7 +445,7 @@ class ItemAdapter extends BaseAdapter{
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 
         ImageView image = (ImageView)convertView.findViewById(R.id.item_image);
-        image.setImageBitmap(item.getItem_image());
+        image.setImageBitmap(newImage.getImage(item.getFilepath()));
 
         TextView name = (TextView)convertView.findViewById(R.id.item_name);
         name.setText(item.getItem_name());

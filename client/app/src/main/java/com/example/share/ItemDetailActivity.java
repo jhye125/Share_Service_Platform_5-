@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory;
 public class ItemDetailActivity extends AppCompatActivity {
 
     ImageButton pay_button;
+    private FromServerImage newImage = new FromServerImage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         //get all the data passed
         String itemId = intent.getStringExtra("item_id");
-        Bitmap imageResource = (Bitmap)intent.getParcelableExtra("item_image");
+        String ImagePath = intent.getStringExtra("item_path");
         String itemName = intent.getStringExtra("item_name");
         String itemPricePerDay = intent.getStringExtra("item_price_per_day");
 
@@ -53,7 +54,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         TextView owner_rating = (TextView)findViewById(R.id.item_detail_owner_rating);
 
         //set all the layout contents
-        item_image.setImageBitmap(imageResource);
+        item_image.setImageBitmap(newImage.getImage(ImagePath));
         item_name.setText(itemName);
         item_price_per_day.setText(itemPricePerDay);
         //set this according to the database values, TODO
