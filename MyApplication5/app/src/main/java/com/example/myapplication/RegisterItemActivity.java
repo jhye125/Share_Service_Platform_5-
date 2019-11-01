@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,6 +38,7 @@ public class RegisterItemActivity extends AppCompatActivity {
     private static final String TAG_IMAGE = "image";
     private final int GET_LOCATION_INFO = 100;
     private final int GET_GALLERY_IMAGE = 200;
+    private final int GET_DATE_INFO = 300;
 
     ImageView photo;
     TextView category;
@@ -65,7 +67,6 @@ public class RegisterItemActivity extends AppCompatActivity {
         price = (EditText) findViewById(R.id.register_price);
         register = (ImageView) findViewById(R.id.btnregister);
         date = (TextView) findViewById(R.id.register_date);
-
         categorylist = new ArrayList<>();
 
         for (int i = 0; i < image.length; i++) {
@@ -95,6 +96,7 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     }
 
+
     public void photosetting()
     {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -110,6 +112,13 @@ public class RegisterItemActivity extends AppCompatActivity {
 
             Uri selectedImageUri = data.getData();
             photo.setImageURI(selectedImageUri);
+        } else if (requestCode == GET_LOCATION_INFO) {
+            String address = "   " + data.getStringExtra("address");
+            location.setText(address);
+        } else if (requestCode == GET_DATE_INFO)
+        {
+            String selectdate = "   "+data.getStringExtra("date");
+            date.setText(selectdate);
         }
 
 
@@ -121,10 +130,10 @@ public class RegisterItemActivity extends AppCompatActivity {
     }
 
     public void selectCategory(View v){
-        CreateListDialog();
+        CreateListDialogCategory();
     }
 
-    public void CreateListDialog(){
+    public void CreateListDialogCategory(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.alert_dialog, null);
@@ -162,7 +171,8 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     public void selectDate(View v)
     {
-
+        Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
+        startActivityForResult(intent,GET_DATE_INFO);
     }
 
 
@@ -170,7 +180,7 @@ public class RegisterItemActivity extends AppCompatActivity {
     public void selectLocation(View v)
     {
         Intent intent = new Intent(getApplicationContext(),MapsMarkerActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,GET_LOCATION_INFO);
     }
 
 

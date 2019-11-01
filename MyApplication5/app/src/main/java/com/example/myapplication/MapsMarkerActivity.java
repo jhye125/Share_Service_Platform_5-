@@ -21,6 +21,8 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -60,8 +62,13 @@ public class MapsMarkerActivity extends AppCompatActivity implements OnMapReadyC
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationRequest locationRequest;
     private Location location;
+    String send_location;
     private View mLayout;
     List<Marker> mlist;
+    Double la;
+    Double lg;
+    TextView locationText;
+    ImageView send;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -80,6 +87,18 @@ public class MapsMarkerActivity extends AppCompatActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mlist = new ArrayList<Marker>();
+        locationText = (TextView)findViewById(R.id.location);
+        send = (ImageView)findViewById(R.id.mapsend);
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("address",send_location);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
 
@@ -146,6 +165,8 @@ public class MapsMarkerActivity extends AppCompatActivity implements OnMapReadyC
                 MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng).title("");
                 mlist.add(mMap.addMarker(markerOptions));
+                send_location = getCurrentAddress(latLng);
+                locationText.setText(send_location);
                 Log.d( TAG, "onMapClick :");
             }
         });
@@ -185,7 +206,8 @@ public class MapsMarkerActivity extends AppCompatActivity implements OnMapReadyC
                 currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
 
 
-                String markerTitle = getCurrentAddress(currentPosition);
+                send_location = getCurrentAddress(currentPosition);
+                locationText.setText(send_location);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
 
@@ -193,7 +215,7 @@ public class MapsMarkerActivity extends AppCompatActivity implements OnMapReadyC
 
 
                 //현재 위치에 마커 생성하고 이동
-                setCurrentLocation(location, markerTitle, markerSnippet);
+                setCurrentLocation(location, send_location, markerSnippet);
 
                 mCurrentLocatiion = location;
             }

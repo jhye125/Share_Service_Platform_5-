@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent intent = new Intent(getApplicationContext(),RegisterItemActivity.class);
+        //Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
         //Intent intent = new Intent(getApplicationContext(),MapsMarkerActivity.class);
         startActivity(intent);
 
