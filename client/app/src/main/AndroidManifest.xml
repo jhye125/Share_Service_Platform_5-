@@ -22,6 +22,9 @@
         <activity android:name=".MapsMarkerActivity"/>
         <activity android:name=".AddCardDetailActivity"/>
         <activity android:name=".RegisterItemActivity"/>
+        <activity android:name=".SelectDateActivity"
+            android:theme="@style/Theme.MyDialog"/>
+        <activity android:name=".MapsMarkerRegiActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

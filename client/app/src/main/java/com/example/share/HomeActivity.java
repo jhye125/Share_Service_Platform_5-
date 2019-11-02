@@ -1,15 +1,16 @@
 package com.example.share;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
-import android.support.annotation.NonNull;
 import android.widget.ImageButton;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.share.Data.Item;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 

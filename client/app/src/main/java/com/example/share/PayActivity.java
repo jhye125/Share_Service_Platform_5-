@@ -2,11 +2,14 @@ package com.example.share;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public class PayActivity extends AppCompatActivity {
 
@@ -51,12 +54,12 @@ public class PayActivity extends AppCompatActivity {
 
     private class pagerAdapter extends FragmentStatePagerAdapter
     {
-        public pagerAdapter(android.support.v4.app.FragmentManager fm)
+        public pagerAdapter(FragmentManager fm)
         {
             super(fm);
         }
 
-        public android.support.v4.app.Fragment getItem(int position)
+        public Fragment getItem(int position)
         {
             switch(position)
             {

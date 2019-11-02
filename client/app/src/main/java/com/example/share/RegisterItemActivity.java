@@ -1,5 +1,7 @@
 package com.example.share;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,20 +9,25 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
-import android.os.StrictMode;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 
@@ -43,17 +50,24 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
+    private final int GET_LOCATION_INFO = 100;
     private final int GET_GALLERY_IMAGE = 200;
+    private final int GET_DATE_INFO = 300;
 
     ImageView photo;
-    ImageView category;
+    TextView category;
     EditText title;
-    ImageView location;
+    TextView location;
     EditText price;
+    TextView date;
     EditText content;
     ImageView register;
     List<Map<String, Object>> categorylist;
     String send_category;
+    String latitude;
+    String longitude;
+    String start_date;
+    String end_date;
 
 
     int[] image = {R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select};
@@ -64,13 +78,13 @@ public class RegisterItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_item);
 
         photo = (ImageView) findViewById(R.id.register_photo);
-        category = (ImageView) findViewById(R.id.register_category);
+        category = (TextView) findViewById(R.id.register_category);
         title = (EditText) findViewById(R.id.register_title);
-        location = (ImageView) findViewById(R.id.register_location);
+        location = (TextView) findViewById(R.id.register_location);
         content = (EditText) findViewById(R.id.register_content);
         price = (EditText) findViewById(R.id.register_price);
         register = (ImageView) findViewById(R.id.btnregister);
-
+        date = (TextView) findViewById(R.id.register_date);
         categorylist = new ArrayList<>();
 
         for (int i = 0; i < image.length; i++) {
@@ -96,7 +110,10 @@ public class RegisterItemActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
+
 
     public void photosetting()
     {
@@ -106,16 +123,27 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     }
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             Uri selectedImageUri = data.getData();
             photo.setImageURI(selectedImageUri);
-
-
+        } else if (requestCode == GET_LOCATION_INFO) {
+            String address = "   " + data.getStringExtra("address");
+            location.setText(address);
+            latitude = data.getStringExtra("latitude");
+            longitude = data.getStringExtra("longitude");
+            Log.d("위치",latitude + longitude);
+        } else if (requestCode == GET_DATE_INFO) {
+            String selectdate = "   " + data.getStringExtra("date");
+            start_date = data.getStringExtra("startdate");
+            end_date = data.getStringExtra("enddate");
+            Log.d("날짜",start_date + end_date);
+            date.setText(selectdate);
         }
+
 
     }
 
@@ -132,10 +160,11 @@ public class RegisterItemActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("name",title.getText().toString());
             jsonObject.accumulate("price_per_date",price.getText().toString());
-            jsonObject.accumulate("latitude","35.89270621122815");
-            jsonObject.accumulate("longitude","128.62514225293165");
-            jsonObject.accumulate("available_date_start","2019-10-29");
-            jsonObject.accumulate("available_date_end","2019-11-04");
+            jsonObject.accumulate("latitude",latitude);
+            jsonObject.accumulate("longitude",longitude);
+            jsonObject.accumulate("available_date_start",start_date);
+            jsonObject.accumulate("available_date_end",end_date);
+            Log.d("패킷 송신",start_date + end_date);
             jsonObject.accumulate("category",send_category);
             jsonObject.accumulate("contents",content.getText().toString());
             jsonObject.accumulate("owner_email","admin");
@@ -204,10 +233,10 @@ public class RegisterItemActivity extends AppCompatActivity {
     }
 
     public void selectCategory(View v){
-        CreateListDialog();
+        CreateListDialogCategory();
     }
 
-    public void CreateListDialog(){
+    public void CreateListDialogCategory(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.alert_dialog, null);
@@ -231,6 +260,8 @@ public class RegisterItemActivity extends AppCompatActivity {
 
                 Log.d(this.getClass().getName(),text[position]);
                 send_category = text[position];
+                category.setText("   "+text[position]);
+                category.setGravity(Gravity.CENTER_VERTICAL);
                 dialog.dismiss();
             }
         });
@@ -240,5 +271,22 @@ public class RegisterItemActivity extends AppCompatActivity {
         dialog.show();
 
     }
+
+    public void selectDate(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
+        startActivityForResult(intent,GET_DATE_INFO);
+    }
+
+
+
+    public void selectLocation(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(),MapsMarkerRegiActivity.class);
+        startActivityForResult(intent,GET_LOCATION_INFO);
+    }
+
+
+
 
 }
