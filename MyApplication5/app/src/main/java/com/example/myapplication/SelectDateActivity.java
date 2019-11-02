@@ -1,17 +1,16 @@
 package com.example.myapplication;
 
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
 
-
-import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.OrientationHelper;
 import com.applikeysolutions.cosmocalendar.utils.SelectionType;
 import com.applikeysolutions.cosmocalendar.view.CalendarView;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -34,9 +32,7 @@ public class SelectDateActivity extends AppCompatActivity  {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_date);
-
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-
         initViews();
     }
 

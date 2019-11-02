@@ -39,7 +39,7 @@ public class RegisterItemActivity extends AppCompatActivity {
     private final int GET_LOCATION_INFO = 100;
     private final int GET_GALLERY_IMAGE = 200;
     private final int GET_DATE_INFO = 300;
-
+    private Dialog dateDialog;
     ImageView photo;
     TextView category;
     EditText title;
@@ -108,6 +108,7 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             Uri selectedImageUri = data.getData();
@@ -115,9 +116,8 @@ public class RegisterItemActivity extends AppCompatActivity {
         } else if (requestCode == GET_LOCATION_INFO) {
             String address = "   " + data.getStringExtra("address");
             location.setText(address);
-        } else if (requestCode == GET_DATE_INFO)
-        {
-            String selectdate = "   "+data.getStringExtra("date");
+        } else if (requestCode == GET_DATE_INFO) {
+            String selectdate = "   " + data.getStringExtra("date");
             date.setText(selectdate);
         }
 

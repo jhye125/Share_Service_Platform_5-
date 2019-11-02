@@ -24,12 +24,7 @@ public class PayActivity extends AppCompatActivity {
 
         complete = (ImageView)findViewById(R.id.complete);
         cardlist = (ViewPager)findViewById(R.id.cardlist);
-        /*cardlist.setOnItemClickListener(new ClickableViewPager.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Toast.makeText(getApplicationContext(),"kkkk",Toast.LENGTH_SHORT).show();
-            }
-        });*/
+
         cardlist.setAdapter(new pagerAdapter(getSupportFragmentManager()));
 
         cardlist.setCurrentItem(0);

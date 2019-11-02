@@ -12,8 +12,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       // Intent intent = new Intent(getApplicationContext(),PayActivity.class);
         Intent intent = new Intent(getApplicationContext(),RegisterItemActivity.class);
-        //Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
         //Intent intent = new Intent(getApplicationContext(),MapsMarkerActivity.class);
         startActivity(intent);
 

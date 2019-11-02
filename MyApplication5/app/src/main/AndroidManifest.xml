@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectDateActivity"/>
+        <activity android:name=".SelectDateActivity" android:theme="@style/Theme.MyDialog" />
         <activity android:name=".RegisterItemActivity" />
         <activity android:name=".ChattingActivity" />
         <activity android:name=".ReservationInfoActivity" />

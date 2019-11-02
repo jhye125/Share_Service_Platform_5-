@@ -65,8 +65,6 @@ public class MapsMarkerActivity extends AppCompatActivity implements OnMapReadyC
     String send_location;
     private View mLayout;
     List<Marker> mlist;
-    Double la;
-    Double lg;
     TextView locationText;
     ImageView send;
 
