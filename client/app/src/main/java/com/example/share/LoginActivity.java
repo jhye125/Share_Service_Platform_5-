@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
     public void LoginCheck(){ // 로그인 성공시 Home Intents 시작
 
         Intent homeintent = new Intent(this, HomeActivity.class);
-        homeintent.putExtra("Email",email_input.getText().toString());
+        homeintent.putExtra("UserEmail",email_input.getText().toString());
         startActivity(homeintent);
 
     }

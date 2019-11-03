@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
 MERGED from [com.github.applikeysolutions:cosmocalendar:1.0.4] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-cosmocalendar-1.0.4.aar\a30422d566d2497b0e2b102826bbb4d1\AndroidManifest.xml:2:1-12:12
 MERGED from [com.google.android.material:material:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\material-1.0.0-rc01.aar\daaff3294f7ecca9a62800dd0c5ea82e\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\appcompat-1.0.0-rc01.aar\18c15baca9ba0fd0f49cddb15687c2b3\AndroidManifest.xml:17:1-22:12
@@ -13,6 +13,9 @@ MERGED from [androidx.vectordrawable:vectordrawable-animated:1.0.0-rc01] C:\User
 MERGED from [androidx.vectordrawable:vectordrawable:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\vectordrawable-1.0.0-rc01.aar\df8e31f02578760553918cd07963618c\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.transition:transition:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\transition-1.0.0-rc01.aar\ecc197c3efcbb1ce83545c5c1e1aa419\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cardview:cardview:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0-rc01.aar\2f2a55c4fe1c7e4a4c7d7d1576a38c9b\AndroidManifest.xml:17:1-22:12
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:2:1-16:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0.aar\541b7dfda1323aac2267fa48dd98dc18\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.media:media:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\6604180c679bf6a580fa629cd5f58829\AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:17:1-38:12
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-location-17.0.0.aar\c2091f96319b57f02af3f74568d022c3\AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-base:17.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-base-17.0.0.aar\bc748f0691ad03df05e9cd0d3a09a0b4\AndroidManifest.xml:17:1-29:12
@@ -36,44 +39,51 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\PC
 MERGED from [androidx.lifecycle:lifecycle-process:2.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-process-2.0.0-rc01.aar\606be259eb57551b1accc0c0aefa9175\AndroidManifest.xml:17:1-30:12
 MERGED from [androidx.lifecycle:lifecycle-service:2.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-service-2.0.0-rc01.aar\83272599f1563bac7df6c7571e52281f\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\521d5e893f79eec6320ead6bfb6ae16b\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\7bfad15e79ef62250998054ceb45576f\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\42f27785b80e8f593b248a4821c0cc13\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\487fbba01626392045ba9df90ba8c632\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\38adfeee11d5572bf0a695cffe5c3d75\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\6b592ba77974bfb81a9d8be7580dd6aa\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\3703e735df743eac8a4d6e49facd5d15\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\2bdc792ada3a96ee1fcde22c090ed5b3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\ee80ff21b1f5ece8df0942c771827f09\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\f7c63c339ac1eaa1022f8b6fcc2bd250\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\38adfeee11d5572bf0a695cffe5c3d75\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\6b592ba77974bfb81a9d8be7580dd6aa\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\7bfad15e79ef62250998054ceb45576f\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\42f27785b80e8f593b248a4821c0cc13\AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.print:print:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\487fbba01626392045ba9df90ba8c632\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:2:1-16:12
+INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
 	package
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:3:5-32
 		INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
 		INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
 		INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-46:12
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:1-48:12
 		INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
 ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:4:5-66
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:11:5-67
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:11:5-67
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:24:5-67
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:11:5-67
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:11:5-67
 	android:name
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:4:22-64
 application
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:5:5-42:19
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:5:5-43:19
 MERGED from [com.google.android.material:material:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\material-1.0.0-rc01.aar\daaff3294f7ecca9a62800dd0c5ea82e\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\material-1.0.0-rc01.aar\daaff3294f7ecca9a62800dd0c5ea82e\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.2.aar\d9274a1e6233404ca3d2865fca0ee011\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.2] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\constraintlayout-1.1.2.aar\d9274a1e6233404ca3d2865fca0ee011\AndroidManifest.xml:9:5-20
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:13:5-14:19
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:13:5-14:19
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:30:5-36:19
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:30:5-36:19
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-location-17.0.0.aar\c2091f96319b57f02af3f74568d022c3\AndroidManifest.xml:7:5-20
@@ -94,6 +104,8 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\PC
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\versionedparcelable-1.0.0.aar\6b6d2bcdc8c915b60bbdb585ff3deb61\AndroidManifest.xml:22:5-23:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-process-2.0.0-rc01.aar\606be259eb57551b1accc0c0aefa9175\AndroidManifest.xml:22:5-28:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-process-2.0.0-rc01.aar\606be259eb57551b1accc0c0aefa9175\AndroidManifest.xml:22:5-28:19
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:13:5-14:19
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:13:5-14:19
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\core-1.0.0.aar\cf4cb6af65578f25394240a97899e0ae\AndroidManifest.xml:22:18-86
 	android:supportsRtl
@@ -108,104 +120,110 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.0.0-rc01] C:\Users\PC\.gradl
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:11:9-40
+	android:usesCleartextTraffic
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:12:9-44
 activity#com.example.share.HomeActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:12:9-50
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:13:9-50
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:12:19-47
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:13:19-47
 activity#com.example.share.ChattingActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:13:9-54
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:14:9-54
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:13:19-51
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:14:19-51
 activity#com.example.share.PayActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:14:9-49
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:15:9-49
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:14:19-46
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:15:19-46
 activity#com.example.share.ReservationInfoActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:15:9-61
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:16:9-61
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:15:19-58
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:16:19-58
 activity#com.example.share.LoginActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:16:9-51
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:17:9-51
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:16:19-48
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:17:19-48
 activity#com.example.share.SignUpActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:17:9-52
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:18:9-52
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:17:19-49
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:18:19-49
 activity#com.example.share.ChatListActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:18:9-54
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:19:9-54
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:18:19-51
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:19:19-51
 activity#com.example.share.BucketListActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:19:9-56
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:20:9-56
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:19:19-53
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:20:19-53
 activity#com.example.share.ItemListActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:20:9-54
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:21:9-54
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:20:19-51
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:21:19-51
 activity#com.example.share.ItemDetailActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:21:9-55
-	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:21:19-53
-activity#com.example.share.MapsMarkerActivity
 ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:22:9-55
 	android:name
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:22:19-53
+activity#com.example.share.MapsMarkerActivity
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:23:9-55
+	android:name
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:23:19-53
 activity#com.example.share.AddCardDetailActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:23:9-58
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:24:9-58
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:23:19-56
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:24:19-56
 activity#com.example.share.RegisterItemActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:24:9-57
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:25:9-57
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:24:19-55
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:25:19-55
 activity#com.example.share.SelectDateActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:25:9-26:52
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:26:9-27:52
 	android:theme
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:26:13-50
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:27:13-50
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:25:19-53
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:26:19-53
 activity#com.example.share.MapsMarkerRegiActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:27:9-59
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:28:9-59
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:27:19-57
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:28:19-57
 activity#com.example.share.MainActivity
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:28:9-34:20
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:29:9-35:20
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:28:19-47
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:29:19-47
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:29:13-33:29
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:30:13-34:29
 action#android.intent.action.MAIN
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:30:17-69
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:31:17-69
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:30:25-66
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:31:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:32:17-77
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:33:17-77
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:32:27-74
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:33:27-74
 meta-data#com.google.android.geo.API_KEY
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:35:9-37:54
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:36:9-38:54
 	android:value
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:37:13-52
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:38:13-52
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:36:13-58
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:37:13-58
 meta-data#com.google.android.gms.version
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:38:9-40:69
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:39:9-41:69
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-basement-17.0.0.aar\6b6eb420b8e203084f762bd444062149\AndroidManifest.xml:23:9-25:69
 MERGED from [com.google.android.gms:play-services-basement:17.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-basement-17.0.0.aar\6b6eb420b8e203084f762bd444062149\AndroidManifest.xml:23:9-25:69
 	android:value
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:40:13-66
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:41:13-66
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:39:13-58
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:40:13-58
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:45:5-80
+	android:name
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:45:22-77
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:44:5-81
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:46:5-80
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:44:22-78
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:46:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:45:5-79
+ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:47:5-79
 	android:name
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:45:22-76
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:47:22-76
 uses-sdk
 INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
@@ -228,6 +246,12 @@ MERGED from [androidx.transition:transition:1.0.0-rc01] C:\Users\PC\.gradle\cach
 MERGED from [androidx.transition:transition:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\transition-1.0.0-rc01.aar\ecc197c3efcbb1ce83545c5c1e1aa419\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0-rc01.aar\2f2a55c4fe1c7e4a4c7d7d1576a38c9b\AndroidManifest.xml:20:5-44
 MERGED from [androidx.cardview:cardview:1.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cardview-1.0.0-rc01.aar\2f2a55c4fe1c7e4a4c7d7d1576a38c9b\AndroidManifest.xml:20:5-44
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:7:5-9:41
+MERGED from [com.koushikdutta.ion:ion:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\ion-3.0.8.aar\3f1db43d4d81117ebcfe26d1fee61ccc\AndroidManifest.xml:7:5-9:41
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0.aar\541b7dfda1323aac2267fa48dd98dc18\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\legacy-support-v4-1.0.0.aar\541b7dfda1323aac2267fa48dd98dc18\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\6604180c679bf6a580fa629cd5f58829\AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\media-1.0.0.aar\6604180c679bf6a580fa629cd5f58829\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-maps:16.1.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\jetified-play-services-maps-16.1.0.aar\f99b93439b9b7b4964ab7a6d57a1c8f3\AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-location:17.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\play-services-location-17.0.0.aar\c2091f96319b57f02af3f74568d022c3\AndroidManifest.xml:5:5-44
@@ -274,6 +298,16 @@ MERGED from [androidx.lifecycle:lifecycle-service:2.0.0-rc01] C:\Users\PC\.gradl
 MERGED from [androidx.lifecycle:lifecycle-service:2.0.0-rc01] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-service-2.0.0-rc01.aar\83272599f1563bac7df6c7571e52281f\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\521d5e893f79eec6320ead6bfb6ae16b\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-runtime-2.0.0.aar\521d5e893f79eec6320ead6bfb6ae16b\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\7bfad15e79ef62250998054ceb45576f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\7bfad15e79ef62250998054ceb45576f\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\42f27785b80e8f593b248a4821c0cc13\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\42f27785b80e8f593b248a4821c0cc13\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\487fbba01626392045ba9df90ba8c632\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\487fbba01626392045ba9df90ba8c632\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\38adfeee11d5572bf0a695cffe5c3d75\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\38adfeee11d5572bf0a695cffe5c3d75\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\6b592ba77974bfb81a9d8be7580dd6aa\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\6b592ba77974bfb81a9d8be7580dd6aa\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\3703e735df743eac8a4d6e49facd5d15\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-viewmodel-2.0.0.aar\3703e735df743eac8a4d6e49facd5d15\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-2.0.0.aar\2bdc792ada3a96ee1fcde22c090ed5b3\AndroidManifest.xml:20:5-44
@@ -282,16 +316,8 @@ MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\PC\.grad
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\lifecycle-livedata-core-2.0.0.aar\ee80ff21b1f5ece8df0942c771827f09\AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\f7c63c339ac1eaa1022f8b6fcc2bd250\AndroidManifest.xml:20:5-44
 MERGED from [androidx.arch.core:core-runtime:2.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\core-runtime-2.0.0.aar\f7c63c339ac1eaa1022f8b6fcc2bd250\AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\38adfeee11d5572bf0a695cffe5c3d75\AndroidManifest.xml:20:5-44
-MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\interpolator-1.0.0.aar\38adfeee11d5572bf0a695cffe5c3d75\AndroidManifest.xml:20:5-44
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\6b592ba77974bfb81a9d8be7580dd6aa\AndroidManifest.xml:20:5-44
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\cursoradapter-1.0.0.aar\6b592ba77974bfb81a9d8be7580dd6aa\AndroidManifest.xml:20:5-44
-MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\7bfad15e79ef62250998054ceb45576f\AndroidManifest.xml:20:5-44
-MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\documentfile-1.0.0.aar\7bfad15e79ef62250998054ceb45576f\AndroidManifest.xml:20:5-44
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\42f27785b80e8f593b248a4821c0cc13\AndroidManifest.xml:20:5-44
-MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\localbroadcastmanager-1.0.0.aar\42f27785b80e8f593b248a4821c0cc13\AndroidManifest.xml:20:5-44
-MERGED from [androidx.print:print:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\487fbba01626392045ba9df90ba8c632\AndroidManifest.xml:20:5-44
-MERGED from [androidx.print:print:1.0.0] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\print-1.0.0.aar\487fbba01626392045ba9df90ba8c632\AndroidManifest.xml:20:5-44
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:7:5-9:41
+MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\caches\transforms-1\files-1.1\androidasync-3.0.8.aar\177b840fcb5dbaa7ea8cb879c692c82b\AndroidManifest.xml:7:5-9:41
 INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
 INJECTED from C:\K1SS\app\src\main\AndroidManifest.xml
 	android:targetSdkVersion

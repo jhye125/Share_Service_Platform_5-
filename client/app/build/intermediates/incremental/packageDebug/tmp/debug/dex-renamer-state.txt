@@ -1,4 +1,4 @@
-#Sat Nov 02 15:59:39 KST 2019
+#Sun Nov 03 13:49:39 KST 2019
 base.0=C\:\\K1SS\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
 path.1=classes.dex
 renamed.1=classes2.dex

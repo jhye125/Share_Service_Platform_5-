@@ -24,14 +24,14 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton medical_equimentButton;
     private ImageButton baby_goodsButton;
 
-    private String Email;
+    private String UserEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Intent homeintent = getIntent();
 
-        Email = homeintent.getExtras().getString("Email");  //LoginActivity로 부터 email 읽어오기
+        UserEmail = homeintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
 
 
         etcButton = (ImageButton)findViewById(R.id.etc);
@@ -47,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
                 intent.putExtra("category", "etc");
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 
@@ -56,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
                 intent.putExtra("category", "place");
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 
@@ -65,6 +67,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
                 intent.putExtra("category", "tool");
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 
@@ -74,6 +77,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
                 intent.putExtra("category", "sound_equipment");
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 
@@ -83,6 +87,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
                 intent.putExtra("category", "medical_equipment");
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 
@@ -92,6 +97,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
                 intent.putExtra("category", "baby_goods");
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 
@@ -103,6 +109,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, RegisterItemActivity.class);
+                intent.putExtra("UserEmail",UserEmail);
                 startActivity(intent);
             }
 

@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -82,12 +83,12 @@ public class ItemListActivity extends AppCompatActivity {
     private EditText searchBar = null;
 
     //within the dialog
-    private EditText dateFrom =null;
-    private EditText dateTo =null;
-    private Dialog dialog;
+    private String dateFrom =null;
+    private String dateTo =null;
 
     //activityForResult
     private int MAP_ACT = 1;
+    private int DATE_INFO = 2;
 
     //mongoDB
     private String MongoDB_IP = "15.164.51.129";
@@ -137,12 +138,6 @@ public class ItemListActivity extends AppCompatActivity {
 
         //init date filter
         sdf= new SimpleDateFormat("yyyy-MM-dd");
-        dialog = new Dialog(ItemListActivity.this);
-        dialog.setContentView(R.layout.itemlist_date_dialog);
-        dateFrom = (EditText)dialog.findViewById(R.id.date_from);
-        dateTo = (EditText)dialog.findViewById(R.id.date_to);
-        dateFrom.setText("2019-01-01");
-        dateTo.setText("2019-12-31");
         items_from_db = new ArrayList<Item>();
 
         //Connect to MongoDB
@@ -266,64 +261,8 @@ public class ItemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("MYDIALOG","start date filtering");
-                dialog = new Dialog(ItemListActivity.this);
-                dialog.setContentView(R.layout.itemlist_date_dialog);
-                dialog.show();
-
-                /** start date */
-                dateFrom = (EditText)dialog.findViewById(R.id.date_from);
-                dateFrom.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // DatePickerDialog
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(ItemListActivity.this, new DatePickerDialog.OnDateSetListener() {
-                            public void onDateSet(DatePicker view,
-                                                  int year, int month,int day) {
-                                dateFrom.setText(year+"-"+(month+1)+"-"+day);
-                            }
-                        }, 2019, 10, 1);//11월 1일임. month 값이 0부터 시작함.
-                        datePickerDialog.show();
-
-                    }
-                });
-
-                /** end date */
-                dateTo = (EditText)dialog.findViewById(R.id.date_to);
-                dateTo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // DatePickerDialog
-                        DatePickerDialog datePickerDialog = new DatePickerDialog(ItemListActivity.this, new DatePickerDialog.OnDateSetListener() {
-                            public void onDateSet(DatePicker view,
-                                                  int year, int month,int day) {
-                                dateTo.setText(year+"-"+(month+1)+"-"+day);
-
-                            }
-                        }, 2019, 10, 30); //11월30일임. month 값이 0부터 시작함.
-                        datePickerDialog.show();
-                    }
-                });
-
-                /** ok button */
-                Button okButton = (Button)dialog.findViewById(R.id.date_ok_button);
-                okButton.setOnClickListener( new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        filterResult();
-                        dialog.dismiss();
-                    }
-
-                } );
-
-                /** cancel button */
-                Button cancelButton = (Button)dialog.findViewById(R.id.date_cancel_button);
-                cancelButton.setOnClickListener( new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v){
-                        dialog.dismiss();
-                    }
-
-                } );
+                Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
+                startActivityForResult(intent,DATE_INFO);
 
             }
 
@@ -331,6 +270,20 @@ public class ItemListActivity extends AppCompatActivity {
 
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == DATE_INFO) {
+
+           /* dateFrom=data.getStringExtra("syear")+"-"+data.getStringExtra("smonth")+"-"+data.getStringExtra("sday");
+            dateTo=data.getStringExtra("eyear")+"-"+data.getStringExtra("emonth")+"-"+data.getStringExtra("eday");*/
+            dateFrom = data.getStringExtra("startdate");
+            dateTo = data.getStringExtra("enddate");
+        }
+
+
+    }
     final LocationListener gpsLocationListener = new LocationListener() {
 
         public void onLocationChanged(Location location) {
@@ -379,8 +332,8 @@ public class ItemListActivity extends AppCompatActivity {
         Date selectedDateTo = null;
         String keyword = null;
         try {
-            selectedDateFrom = sdf.parse(""+dateFrom.getText());
-            selectedDateTo = sdf.parse(""+dateTo.getText());
+            selectedDateFrom = sdf.parse(""+dateFrom);
+            selectedDateTo = sdf.parse(""+dateTo);
         } catch (ParseException e){
             Log.d("MYPARSE","parse Error_filter,date",e);
         }
@@ -466,4 +419,3 @@ class ItemAdapter extends BaseAdapter{
     }
 
 }
-

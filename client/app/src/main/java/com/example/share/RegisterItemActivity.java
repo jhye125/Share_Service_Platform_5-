@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 
 import org.json.JSONObject;
 
@@ -47,6 +50,8 @@ import java.util.List;
 import java.util.Map;
 
 public class RegisterItemActivity extends AppCompatActivity {
+
+    String UserEmail;
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
@@ -68,14 +73,20 @@ public class RegisterItemActivity extends AppCompatActivity {
     String longitude;
     String start_date;
     String end_date;
-
+    Uri selectedImageUri;
+    String path;
 
     int[] image = {R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select};
     String[] text = {"장소", "공구", "음향기기", "의료", "유아용품", "기타"};
+    String[] text_send = {"place", "tool", "sound_equipment", "medical_equipment", "baby_goods", "etc"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_item);
+        Intent Registerintent = getIntent();
+
+        UserEmail = Registerintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
+
 
         photo = (ImageView) findViewById(R.id.register_photo);
         category = (TextView) findViewById(R.id.register_category);
@@ -127,8 +138,8 @@ public class RegisterItemActivity extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GET_GALLERY_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            Uri selectedImageUri = data.getData();
+            path = getPathFromURI(data.getData());
+            selectedImageUri = data.getData();
             photo.setImageURI(selectedImageUri);
         } else if (requestCode == GET_LOCATION_INFO) {
             String address = "   " + data.getStringExtra("address");
@@ -149,6 +160,8 @@ public class RegisterItemActivity extends AppCompatActivity {
 
     public void register_content_send()
     {
+        String result="false";
+
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -164,10 +177,9 @@ public class RegisterItemActivity extends AppCompatActivity {
             jsonObject.accumulate("longitude",longitude);
             jsonObject.accumulate("available_date_start",start_date);
             jsonObject.accumulate("available_date_end",end_date);
-            Log.d("패킷 송신",start_date + end_date);
             jsonObject.accumulate("category",send_category);
             jsonObject.accumulate("contents",content.getText().toString());
-            jsonObject.accumulate("owner_email","admin");
+            jsonObject.accumulate("owner_email",UserEmail);
             jsonObject.accumulate("image_path","admin"+title.getText().toString()+"2019-10-29"+".png");
 
             HttpURLConnection con = null;
@@ -198,7 +210,6 @@ public class RegisterItemActivity extends AppCompatActivity {
 
                 //서버로 부터 데이터를 받음
                 InputStream stream = con.getInputStream();
-
                 reader = new BufferedReader(new InputStreamReader(stream));
 
                 StringBuffer buffer = new StringBuffer();
@@ -207,8 +218,7 @@ public class RegisterItemActivity extends AppCompatActivity {
                 while((line = reader.readLine()) != null){
                     buffer.append(line);
                 }
-                Log.d("true or false : ",buffer.toString());
-
+                result = buffer.toString();
 
             } catch (MalformedURLException e){
                 e.printStackTrace();
@@ -229,6 +239,18 @@ public class RegisterItemActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Log.d("전송 요청",result);
+        if(result.equals("true")) {
+            android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(RegisterItemActivity.this);
+            alert.setPositiveButton("물품 등록 완료", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();     //닫기
+                    finish();
+                }
+            });
+        }
+
 
     }
 
@@ -259,7 +281,7 @@ public class RegisterItemActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Log.d(this.getClass().getName(),text[position]);
-                send_category = text[position];
+                send_category = text_send[position];
                 category.setText("   "+text[position]);
                 category.setGravity(Gravity.CENTER_VERTICAL);
                 dialog.dismiss();
@@ -284,6 +306,15 @@ public class RegisterItemActivity extends AppCompatActivity {
     {
         Intent intent = new Intent(getApplicationContext(),MapsMarkerRegiActivity.class);
         startActivityForResult(intent,GET_LOCATION_INFO);
+    }
+
+    private String getPathFromURI(Uri contentUri) {
+        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader loader = new CursorLoader(getApplicationContext(), contentUri, proj, null, null, null);
+        Cursor cursor = loader.loadInBackground();
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 
 
