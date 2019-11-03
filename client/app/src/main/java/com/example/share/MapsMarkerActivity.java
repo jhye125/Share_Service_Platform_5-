@@ -54,7 +54,7 @@ public class MapsMarkerActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng daegu = new LatLng(35.86969,  128.59367);
+        LatLng daegu = new LatLng(35.888836,  128.6102997);
 
         for(int i =0; i < items.size();i++){
             Item item = items.get(i);
@@ -74,7 +74,7 @@ public class MapsMarkerActivity extends AppCompatActivity
         }
 //        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint,16));
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(daegu,12));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(daegu,14));
     }
 
     public Bitmap resizeMapIcons(int id, int width, int height){

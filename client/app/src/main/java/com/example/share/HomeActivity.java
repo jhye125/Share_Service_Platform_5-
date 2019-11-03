@@ -103,18 +103,6 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
-        Button testbutton = (Button)findViewById(R.id.testbutton);
-
-        testbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, RegisterItemActivity.class);
-                intent.putExtra("UserEmail",UserEmail);
-                startActivity(intent);
-            }
-
-        });
-
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigation);  //bottom navigation bar 에서 메뉴 클릭 리스너
 
         bottomNavigationView.setOnNavigationItemSelectedListener(

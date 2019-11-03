@@ -97,6 +97,7 @@ public class MapsMarkerRegiActivity extends AppCompatActivity implements OnMapRe
                 intent.putExtra("address",send_location);
                 intent.putExtra("latitude",la);
                 intent.putExtra("longitude",lg);
+
                 setResult(RESULT_OK, intent);
                 finish();
             }
@@ -169,6 +170,9 @@ public class MapsMarkerRegiActivity extends AppCompatActivity implements OnMapRe
                 markerOptions.position(latLng).title("");
                 mlist.add(mMap.addMarker(markerOptions));
                 send_location = getCurrentAddress(latLng);
+                la = String.valueOf(latLng.latitude);
+                lg = String.valueOf(latLng.longitude);
+                Log.d("위치 ",la+" / "+lg);
                 locationText.setText(send_location);
                 Log.d( TAG, "onMapClick :");
             }
@@ -213,8 +217,9 @@ public class MapsMarkerRegiActivity extends AppCompatActivity implements OnMapRe
                 locationText.setText(send_location);
                 String markerSnippet = "위도:" + String.valueOf(location.getLatitude())
                         + " 경도:" + String.valueOf(location.getLongitude());
-                la = String.valueOf(location.getLatitude());
-                lg = String.valueOf(location.getLongitude());
+               /// la = String.valueOf(location.getLatitude());
+                //lg = String.valueOf(location.getLongitude());
+
 
                 Log.d(TAG, "onLocationResult : " + markerSnippet);
 

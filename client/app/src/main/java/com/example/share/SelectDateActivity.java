@@ -61,10 +61,10 @@ public class SelectDateActivity extends AppCompatActivity {
                 Calendar start_date = days.get(0);
                 Calendar end_date = days.get(days.size()-1);
                 int sday = start_date.get(Calendar.DAY_OF_MONTH);
-                int smonth = start_date.get(Calendar.MONTH);
+                int smonth = start_date.get(Calendar.MONTH) + 1;
                 int syear = start_date.get(Calendar.YEAR);
                 int eday = end_date.get(Calendar.DAY_OF_MONTH);
-                int emonth = end_date.get(Calendar.MONTH);
+                int emonth = end_date.get(Calendar.MONTH) + 1;
                 int eyear = end_date.get(Calendar.YEAR);
 
                 String send_s = syear+"-"+smonth+"-"+sday;

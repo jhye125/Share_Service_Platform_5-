@@ -80,6 +80,10 @@
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-hdpi-v4\\abc_ic_star_black_48dp.png"
     },
     {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_appic.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\appic.png"
+    },
+    {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_hint_foreground_material_dark.xml.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\color\\abc_hint_foreground_material_dark.xml"
     },
@@ -144,16 +148,16 @@
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\material-1.0.0-rc01.aar\\daaff3294f7ecca9a62800dd0c5ea82e\\res\\animator\\mtrl_fab_transformation_sheet_expand_spec.xml"
     },
     {
-        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",
-        "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_seekbar_tick_mark_material.xml.flat",
+        "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_textfield_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-hdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
     },
     {
-        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_seekbar_tick_mark_material.xml.flat",
-        "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable\\abc_seekbar_tick_mark_material.xml"
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",
+        "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-xhdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_ic_chevron_left_gray.png.flat",
@@ -454,6 +458,10 @@
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_list_selector_disabled_holo_light.9.png.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-hdpi-v4\\abc_list_selector_disabled_holo_light.9.png"
+    },
+    {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_logogo_round.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\logogo_round.png"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_returnbtn.png.flat",
@@ -844,12 +852,20 @@
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable\\abc_item_background_holo_light.xml"
     },
     {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_listmapbtn.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\listmapbtn.png"
+    },
+    {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_btn_default_mtrl_shape.xml.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable\\abc_btn_default_mtrl_shape.xml"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_paybtn.png.flat",
         "source": "C:\\K1SS\\app\\src\\main\\res\\drawable-v24\\paybtn.png"
+    },
+    {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_listdatebtn.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\listdatebtn.png"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\layout_support_simple_spinner_dropdown_item.xml.flat",
@@ -1086,6 +1102,10 @@
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_btn_switch_to_on_mtrl_00001.9.png.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-hdpi-v4\\abc_btn_switch_to_on_mtrl_00001.9.png"
+    },
+    {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_appic_round.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\appic_round.png"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\layout-v21_notification_action.xml.flat",
@@ -1526,6 +1546,10 @@
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light.xml.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-17.0.0.aar\\bc748f0691ad03df05e9cd0d3a09a0b4\\res\\drawable\\common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_registerbtn.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\registerbtn.png"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_design_ic_visibility_off.png.flat",
@@ -2586,6 +2610,10 @@
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
         "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\drawable-mdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
+    },
+    {
+        "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable_listlocationbtn.png.flat",
+        "source": "C:\\K1SS\\app\\src\\main\\res\\drawable\\listlocationbtn.png"
     },
     {
         "merged": "C:\\K1SS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",

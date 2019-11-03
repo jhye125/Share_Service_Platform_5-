@@ -113,9 +113,9 @@ MERGED from [com.koushikdutta.async:androidasync:3.0.8] C:\Users\PC\.gradle\cach
 	android:label
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:8:9-41
 	android:roundIcon
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:9:9-54
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:9:9-50
 	android:icon
-		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:7:9-43
+		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:7:9-39
 	android:allowBackup
 		ADDED from C:\K1SS\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme

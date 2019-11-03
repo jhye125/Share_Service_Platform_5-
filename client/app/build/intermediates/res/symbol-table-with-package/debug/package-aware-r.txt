@@ -1100,6 +1100,8 @@ drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable addcard
 drawable addphoto
+drawable appic
+drawable appic_round
 drawable avd_hide_password
 drawable avd_show_password
 drawable border
@@ -1164,8 +1166,12 @@ drawable item_sample_handmixer
 drawable item_sample_ipad
 drawable item_sample_longboard
 drawable item_sample_mouse
+drawable listdatebtn
+drawable listlocationbtn
+drawable listmapbtn
 drawable login_button
 drawable logo
+drawable logogo_round
 drawable maain
 drawable main
 drawable menu_bucket
@@ -1195,6 +1201,7 @@ drawable pw_box
 drawable pw_icon
 drawable register_btn
 drawable register_item_title
+drawable registerbtn
 drawable reservation_info_title
 drawable resv_info_cate
 drawable resv_info_date
@@ -1387,7 +1394,6 @@ id list_item
 id listview_alterdialog_list
 id ll_month_header
 id location
-id location_button
 id loginButton
 id map
 id map_button
@@ -1422,6 +1428,7 @@ id notification_main_column
 id notification_main_column_container
 id outline
 id packed
+id page_header
 id parallax
 id parent
 id parentPanel
@@ -1437,6 +1444,7 @@ id pw_box
 id pw_input
 id radio
 id range
+id register_button
 id register_category
 id register_content
 id register_date
@@ -1507,7 +1515,6 @@ id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners
 id terrain
-id testbutton
 id text
 id text2
 id textSpacerNoButtons

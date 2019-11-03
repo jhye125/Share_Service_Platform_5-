@@ -76,6 +76,10 @@ public class ItemListActivity extends AppCompatActivity {
     private ItemAdapter adapter = null;
     private GridView gridView = null;
     private LocationManager lm = null;
+    private TextView page_header = null;
+    String[] text = {"장소", "공구", "음향기기", "의료", "유아용품", "기타"};
+    String[] text_send = {"place", "tool", "sound_equipment", "medical_equipment", "baby_goods", "etc"};
+    String UserEmail;
 
     //util
     private SimpleDateFormat sdf= null;
@@ -127,8 +131,15 @@ public class ItemListActivity extends AppCompatActivity {
             intent.putExtra("category", "baby_goods");
             intent.putExtra("category", "etc");
         */
+
+
         Intent intent = getIntent();
         currentCategory = intent.getStringExtra("category");
+
+        page_header = (TextView) findViewById(R.id.page_header);
+        page_header.setText(currentCategory);
+
+        UserEmail = intent.getExtras().getString("UserEmail");
 
         //for DB connection, replace this with proper solution later..
         if (Build.VERSION.SDK_INT > 9) {
@@ -225,24 +236,20 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
-        Log.d("search action","hihi");
         searchBar = (EditText)findViewById(R.id.seach_bar);
-        searchBar.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        searchBar.setOnEditorActionListener((v, actionId, event) -> {
 
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    filterResult();
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                filterResult();
 
-                    Log.d("MYSEARCH","joo");
-                    return true;
-                }
-                return false;
+                Log.d("MYSEARCH","joo");
+                return true;
             }
+            return false;
         });
 
         /** map button */
-        Button mapsButton = (Button)findViewById(R.id.map_button);
+        ImageView mapsButton = findViewById(R.id.map_button);
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -256,13 +263,26 @@ public class ItemListActivity extends AppCompatActivity {
 
 
         /** Date button */
-        Button dateButton = (Button)findViewById(R.id.date_button);
+        ImageView dateButton = findViewById(R.id.date_button);
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("MYDIALOG","start date filtering");
                 Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
                 startActivityForResult(intent,DATE_INFO);
+
+            }
+
+        });
+
+        /** register button */
+        ImageView regiButton = findViewById(R.id.register_button);
+        regiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(getApplicationContext(), RegisterItemActivity.class);
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
 
             }
 
@@ -276,10 +296,14 @@ public class ItemListActivity extends AppCompatActivity {
 
         if (requestCode == DATE_INFO) {
 
+            if(data != null) {
            /* dateFrom=data.getStringExtra("syear")+"-"+data.getStringExtra("smonth")+"-"+data.getStringExtra("sday");
             dateTo=data.getStringExtra("eyear")+"-"+data.getStringExtra("emonth")+"-"+data.getStringExtra("eday");*/
-            dateFrom = data.getStringExtra("startdate");
-            dateTo = data.getStringExtra("enddate");
+                dateFrom = data.getStringExtra("startdate");
+                dateTo = data.getStringExtra("enddate");
+
+                filterResult();
+            }
         }
 
 
@@ -331,16 +355,23 @@ public class ItemListActivity extends AppCompatActivity {
         Date selectedDateFrom = null;
         Date selectedDateTo = null;
         String keyword = null;
+        boolean dateFiltered = true;
+
         try {
             selectedDateFrom = sdf.parse(""+dateFrom);
             selectedDateTo = sdf.parse(""+dateTo);
         } catch (ParseException e){
-            Log.d("MYPARSE","parse Error_filter,date",e);
+            Log.d("DATECHK","parse Error_filter,date",e);
         }
-        Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
-        Log.d("MYPARSE","dend: "+selectedDateTo.toString());
+        if( selectedDateFrom ==null || selectedDateTo ==null) {
+            dateFiltered = false;
+        }else{
+            Log.d("DATECHK", "dstart: " + selectedDateFrom.toString());
+            Log.d("DATECHK", "dend: " + selectedDateTo.toString());
+        }
 
         keyword = searchBar.getText().toString();
+        Log.d("DATECHK","keyword: "+keyword);
 
         items_displaying = new ArrayList<Item>();
         for (int i = 0; i < items_from_db.size(); i++){
@@ -349,7 +380,10 @@ public class ItemListActivity extends AppCompatActivity {
             Date iAvailableTo = item.getAvailableTo();
             String itemName = item.getItem_name();
             if(itemName.contains(keyword)) {
-                if ((iAvailableFrom.compareTo(selectedDateFrom) <= 0) && (selectedDateTo.compareTo(iAvailableTo) <= 0))
+                if(dateFiltered) {
+                    if ((iAvailableFrom.compareTo(selectedDateFrom) <= 0) && (selectedDateTo.compareTo(iAvailableTo) <= 0))
+                        items_displaying.add(item);
+                }else
                     items_displaying.add(item);
             }
         }

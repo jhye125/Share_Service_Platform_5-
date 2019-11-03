@@ -10,17 +10,16 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="344dp"
-        android:layout_height="181dp"
+        android:layout_width="321dp"
+        android:layout_height="142dp"
         android:adjustViewBounds="true"
         android:padding="0dp"
         android:src="@drawable/head_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintVertical_bias="0.22" />
 
     <EditText
         android:id="@+id/email_input"
@@ -97,10 +96,9 @@
         android:src="@drawable/id_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.197" />
+        app:layout_constraintVertical_bias="0.143" />
 
     <ImageView
         android:id="@+id/pw_box"

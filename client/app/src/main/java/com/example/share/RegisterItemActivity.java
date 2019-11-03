@@ -242,13 +242,15 @@ public class RegisterItemActivity extends AppCompatActivity {
         Log.d("전송 요청",result);
         if(result.equals("true")) {
             android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(RegisterItemActivity.this);
-            alert.setPositiveButton("물품 등록 완료", new DialogInterface.OnClickListener() {
+            alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();     //닫기
                     finish();
                 }
             });
+            alert.setMessage("물품 등록 완료");
+            alert.show();
         }
 
 
