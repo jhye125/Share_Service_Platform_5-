@@ -11,16 +11,17 @@ import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -30,10 +31,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -42,7 +39,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,7 +62,6 @@ import com.mongodb.client.MongoCursor;
 import org.bson.BsonDocument;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ItemListActivity extends AppCompatActivity {
@@ -76,23 +71,17 @@ public class ItemListActivity extends AppCompatActivity {
     private ItemAdapter adapter = null;
     private GridView gridView = null;
     private LocationManager lm = null;
-    private TextView page_header = null;
-    String[] text = {"장소", "공구", "음향기기", "의료", "유아용품", "기타"};
-    String[] text_send = {"place", "tool", "sound_equipment", "medical_equipment", "baby_goods", "etc"};
-    String UserEmail;
 
     //util
     private SimpleDateFormat sdf= null;
 
-    private EditText searchBar = null;
-
     //within the dialog
-    private String dateFrom =null;
-    private String dateTo =null;
+    private EditText dateFrom =null;
+    private EditText dateTo =null;
+    private Dialog dialog;
 
     //activityForResult
     private int MAP_ACT = 1;
-    private int DATE_INFO = 2;
 
     //mongoDB
     private String MongoDB_IP = "15.164.51.129";
@@ -100,10 +89,7 @@ public class ItemListActivity extends AppCompatActivity {
     private String DB_NAME = "local";
     private String COLLECTION_NAME = "items";
 
-    //
-    private String currentCategory = "tool";
-
-    //
+    //image file bitmap
     private Bitmap bmimg;
     private String new_id;
     private String newName;
@@ -112,34 +98,11 @@ public class ItemListActivity extends AppCompatActivity {
     private double newLongitude;
     private Date newDateFrom;
     private Date newDateTo;
-    private String newCategory;
-    private String newFilePath;
-    private FromServerImage newImage = new FromServerImage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlist);
-        /*
-            //이거 불러주고
-            Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
-            //이거중에 하나 intent
-            intent.putExtra("category", "place");
-            intent.putExtra("category", "tool");
-            intent.putExtra("category", "sound_equipment");
-            intent.putExtra("category", "medical_equipment");
-            intent.putExtra("category", "baby_goods");
-            intent.putExtra("category", "etc");
-        */
-
-
-        Intent intent = getIntent();
-        currentCategory = intent.getStringExtra("category");
-
-        page_header = (TextView) findViewById(R.id.page_header);
-        page_header.setText(currentCategory);
-
-        UserEmail = intent.getExtras().getString("UserEmail");
 
         //for DB connection, replace this with proper solution later..
         if (Build.VERSION.SDK_INT > 9) {
@@ -147,7 +110,6 @@ public class ItemListActivity extends AppCompatActivity {
             StrictMode.setThreadPolicy(policy);
         }
 
-        //init date filter
         sdf= new SimpleDateFormat("yyyy-MM-dd");
         items_from_db = new ArrayList<Item>();
 
@@ -156,64 +118,100 @@ public class ItemListActivity extends AppCompatActivity {
         DB db = mongoClient.getDB(DB_NAME);
         DBCollection collection = db.getCollection(COLLECTION_NAME);
 
-        //Check Data in Database with query
-        BasicDBObject query = new BasicDBObject();
-        query.put("category",currentCategory);
-        DBCursor cursor = collection.find(query);
+        //Check Data in Database
+        DBCursor cursor = collection.find();
         while (cursor.hasNext()) {
 
-            DBObject dbo = (BasicDBObject) cursor.next();
+            DBObject dbo = (BasicDBObject)cursor.next();
             try {
+                WaitNotify waitNotify = new WaitNotify();
 
                 new_id = dbo.get("_id").toString();
-                newName = dbo.get("name").toString();
-                newPPD = dbo.get("price_per_date").toString();
-                newLatitude = Double.parseDouble(dbo.get("latitude").toString());
-                newLongitude = Double.parseDouble(dbo.get("longitude").toString());
+                newName=dbo.get("name").toString();
+                newPPD=dbo.get("price_per_date").toString();
+                newLatitude=Double.parseDouble(dbo.get("latitude").toString());
+                newLongitude=Double.parseDouble(dbo.get("longitude").toString());
+                String newImPa=dbo.get("image_path").toString();
                 newDateFrom = (Date) dbo.get("available_date_start");
                 newDateTo = (Date) dbo.get("available_date_end");
-                newCategory = dbo.get("category").toString();
-                newFilePath = dbo.get("image_path").toString();
 
-                Log.d("MONGODB", new_id);
-                Log.d("MONGODB", "");
-                Log.d("MONGODB", newName);
-                Log.d("MONGODB", newPPD);
-                Log.d("MONGODB", "" + newLatitude);
-                Log.d("MONGODB", "" + newLongitude);
-                Log.d("MONGODB", newDateFrom.toString());
-                Log.d("MONGODB", newDateTo.toString());
-                Log.d("MONGODB", newCategory);
-                //Log.d("MONGODB","-");
-                //TODO: change to imagePath
-                if (currentCategory.equals(newCategory)) {
-                    items_from_db.add(new Item(new_id, newName, newPPD, newLatitude, newLongitude,
-                            newDateFrom, newDateTo, newFilePath));
+
+
+                Log.d("MONGODB",new_id);
+                Log.d("MONGODB","");
+                Log.d("MONGODB",newName);
+                Log.d("MONGODB",newPPD);
+                Log.d("MONGODB",""+newLatitude);
+                Log.d("MONGODB",""+newLongitude);
+                Log.d("MONGODB",newDateFrom.toString());
+                Log.d("MONGODB",newDateTo.toString());
+                Log.d("MONGODB",newImPa);
+                Log.d("MONGODB","-");
+
+                //new ItemListActivity.JSONTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/get_image",newImPa);
+
+
+
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
+                try {
+                    //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.accumulate("file_name", newImPa);
+
+                    //URL url = new URL("http://192.168.25.16:3000/users");
+                    URL url = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/get_image");
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+                    bmimg = BitmapFactory.decodeStream(stream);
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
 
-        //gps
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            Log.d("MYGPS","getting permissoin");
-            ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
-                    0 );
-        }else{
-            Log.d("MYGPS","gogo");
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    1000,
-                    1,
-                    gpsLocationListener);
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                    1000,
-                    1,
-                    gpsLocationListener);
-        }
+                items_from_db.add(new Item(new_id,bmimg, newName, newPPD,newLatitude, newLongitude,
+                        newDateFrom, newDateTo));
+                //Pass=false;
 
+
+        }
 
         //arraylist, adapter and gridview
         items_displaying = new ArrayList<Item>(items_from_db);
@@ -226,9 +224,9 @@ public class ItemListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Item item = items_from_db.get(position);
 
-                Intent intent = new Intent(ItemListActivity.this, ItemDetailActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
                 intent.putExtra("item_id", item.getItem_id());
-                intent.putExtra("item_path", item.getFilepath());
+                intent.putExtra("item_image", item.getItem_image());
                 intent.putExtra("item_name", item.getItem_name());
                 intent.putExtra("item_price_per_day", item.getItem_price_per_day());
 
@@ -236,20 +234,24 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
-        searchBar = (EditText)findViewById(R.id.seach_bar);
-        searchBar.setOnEditorActionListener((v, actionId, event) -> {
 
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                filterResult();
 
-                Log.d("MYSEARCH","joo");
-                return true;
-            }
-            return false;
-        });
+//        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                switch (actionId) {
+//                    case EditorInfo.IME_ACTION_SEARCH:
+//                        // 검색 동작
+//                        break;
+//                    default:
+//                        // 기본 엔터키 동작
+//                        return false;
+//                }
+//                return true;
+//            }
+//        });
 
-        /** map button */
-        ImageView mapsButton = findViewById(R.id.map_button);
+        Button mapsButton = (Button)findViewById(R.id.map_button);
         mapsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -262,52 +264,128 @@ public class ItemListActivity extends AppCompatActivity {
         });
 
 
+
         /** Date button */
-        ImageView dateButton = findViewById(R.id.date_button);
+        Button dateButton = (Button)findViewById(R.id.date_button);
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("MYDIALOG","start date filtering");
-                Intent intent = new Intent(getApplicationContext(),SelectDateActivity.class);
-                startActivityForResult(intent,DATE_INFO);
+                dialog = new Dialog(ItemListActivity.this);
+                dialog.setContentView(R.layout.itemlist_date_dialog);
+                dialog.show();
+
+                /** start date */
+                dateFrom = (EditText)dialog.findViewById(R.id.date_from);
+                dateFrom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // DatePickerDialog
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(ItemListActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            public void onDateSet(DatePicker view,
+                                                  int year, int month,int day) {
+                                dateFrom.setText(year+"-"+(month+1)+"-"+day);
+                            }
+                        }, 2019, 10, 1);//11월 1일임. month 값이 0부터 시작함.
+                        datePickerDialog.show();
+
+                    }
+                });
+
+                /** end date */
+                dateTo = (EditText)dialog.findViewById(R.id.date_to);
+                dateTo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // DatePickerDialog
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(ItemListActivity.this, new DatePickerDialog.OnDateSetListener() {
+                            public void onDateSet(DatePicker view,
+                                                  int year, int month,int day) {
+                                dateTo.setText(year+"-"+(month+1)+"-"+day);
+
+                            }
+                        }, 2019, 10, 30); //11월30일임. month 값이 0부터 시작함.
+                        datePickerDialog.show();
+
+                    }
+                });
+
+                /** ok button */
+                Button okButton = (Button)dialog.findViewById(R.id.date_ok_button);
+                okButton.setOnClickListener( new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Date selectedDateFrom = null;
+                        Date selectedDateTo = null;
+                        try {
+                            selectedDateFrom = sdf.parse(""+dateFrom.getText());
+                            selectedDateTo = sdf.parse(""+dateTo.getText());
+                        } catch (ParseException e){
+                            Log.d("MYPARSE","parse Error_filter,date",e);
+                        }
+                        Log.d("MYPARSE","dstart: "+selectedDateFrom.toString());
+                        Log.d("MYPARSE","dend: "+selectedDateTo.toString());
+                        items_displaying = new ArrayList<Item>();
+                        for (int i = 0; i < items_from_db.size(); i++){
+                            Item item = items_from_db.get(i);
+                            Date iAvailableFrom = item.getAvailableFrom();
+                            Date iAvailableTo = item.getAvailableTo();
+
+                            if( (iAvailableFrom.compareTo(selectedDateFrom) <= 0) &&(selectedDateTo.compareTo(iAvailableTo) <= 0)  )
+                                items_displaying.add(item);
+
+                        }
+                        adapter = new ItemAdapter(getApplicationContext(), items_displaying);
+                        gridView.setAdapter(adapter);
+                        dialog.dismiss();
+                    }
+
+                } );
+
+                /** cancel button */
+                Button cancelButton = (Button)dialog.findViewById(R.id.date_cancel_button);
+                cancelButton.setOnClickListener( new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        dialog.dismiss();
+                    }
+
+                } );
 
             }
 
         });
 
-        /** register button */
-        ImageView regiButton = findViewById(R.id.register_button);
-        regiButton.setOnClickListener(new View.OnClickListener() {
+        /** location button */
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Button locationButton = (Button)findViewById(R.id.location_button);
+        locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                Intent intent = new Intent(getApplicationContext(), RegisterItemActivity.class);
-                intent.putExtra("UserEmail",UserEmail);
-                startActivity(intent);
+            public void onClick(View v) {
 
+                Log.d("MYGPS","clicked");
+
+                if ( Build.VERSION.SDK_INT >= 23 &&
+                        ContextCompat.checkSelfPermission( getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
+                    Log.d("MYGPS","getting permissoin");
+                    ActivityCompat.requestPermissions( ItemListActivity.this, new String[] {  Manifest.permission.ACCESS_FINE_LOCATION  },
+                            0 );
+                }
+                else{
+                    Log.d("MYGPS","gogo");
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                            1000,
+                            1,
+                            gpsLocationListener);
+                }
             }
-
         });
-
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == DATE_INFO) {
-
-            if(data != null) {
-           /* dateFrom=data.getStringExtra("syear")+"-"+data.getStringExtra("smonth")+"-"+data.getStringExtra("sday");
-            dateTo=data.getStringExtra("eyear")+"-"+data.getStringExtra("emonth")+"-"+data.getStringExtra("eday");*/
-                dateFrom = data.getStringExtra("startdate");
-                dateTo = data.getStringExtra("enddate");
-
-                filterResult();
-            }
-        }
-
-
-    }
     final LocationListener gpsLocationListener = new LocationListener() {
 
         public void onLocationChanged(Location location) {
@@ -351,55 +429,102 @@ public class ItemListActivity extends AppCompatActivity {
         public void onProviderDisabled(String provider) {
         }
     };
-    private void filterResult(){
-        Date selectedDateFrom = null;
-        Date selectedDateTo = null;
-        String keyword = null;
-        boolean dateFiltered = true;
 
-        try {
-            selectedDateFrom = sdf.parse(""+dateFrom);
-            selectedDateTo = sdf.parse(""+dateTo);
-        } catch (ParseException e){
-            Log.d("DATECHK","parse Error_filter,date",e);
-        }
-        if( selectedDateFrom ==null || selectedDateTo ==null) {
-            dateFiltered = false;
-        }else{
-            Log.d("DATECHK", "dstart: " + selectedDateFrom.toString());
-            Log.d("DATECHK", "dend: " + selectedDateTo.toString());
-        }
+    public class JSONTask extends AsyncTask<String, Integer, Bitmap> {
 
-        keyword = searchBar.getText().toString();
-        Log.d("DATECHK","keyword: "+keyword);
+        private String mTitle = null;
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.accumulate("file_name", urls[1].toString());
+                HttpURLConnection con = null;
+                BufferedReader reader = null;
 
-        items_displaying = new ArrayList<Item>();
-        for (int i = 0; i < items_from_db.size(); i++){
-            Item item = items_from_db.get(i);
-            Date iAvailableFrom = item.getAvailableFrom();
-            Date iAvailableTo = item.getAvailableTo();
-            String itemName = item.getItem_name();
-            if(itemName.contains(keyword)) {
-                if(dateFiltered) {
-                    if ((iAvailableFrom.compareTo(selectedDateFrom) <= 0) && (selectedDateTo.compareTo(iAvailableTo) <= 0))
-                        items_displaying.add(item);
-                }else
-                    items_displaying.add(item);
+                try {
+                    //URL url = new URL("http://192.168.25.16:3000/users");
+                    URL url = new URL(urls[0]);
+                    //연결을 함
+                    con = (HttpURLConnection) url.openConnection();
+
+                    con.setRequestMethod("POST");//POST방식으로 보냄
+                    con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                    con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+
+                    con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                    con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                    con.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                    con.connect();
+
+                    //서버로 보내기위해서 스트림 만듬
+                    OutputStream outStream = con.getOutputStream();
+                    //버퍼를 생성하고 넣음
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outStream));
+                    writer.write(jsonObject.toString());
+                    writer.flush();
+                    writer.close();//버퍼를 받아줌
+
+                    //서버로 부터 데이터를 받음
+                    InputStream stream = con.getInputStream();
+                    bmimg = BitmapFactory.decodeStream(stream);
+
+                    return bmimg;
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (con != null) {
+                        con.disconnect();
+                    }
+                    try {
+                        if (reader != null) {
+                            reader.close();//버퍼를 닫아줌
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        }
-        adapter = new ItemAdapter(getApplicationContext(), items_displaying);
-        gridView.setAdapter(adapter);
 
-        return;
+            return null;
+        }
+
+        protected void onPostExecute(Bitmap img) {
+            //main_logo.setImageBitmap(bmimg);
+
+        }
     }
 
+    private class WaitNotify{
+        synchronized public void mWait() {
+            try {
+                wait();
+            } catch (Exception e) {
+                Log.i("Debug", e.getMessage());
+            }
+        }
+        synchronized public void mNotify() {
+            try {
+                notify();
+            }
+            catch(Exception e)
+            {
+                Log.i("Debug", e.getMessage());
+            }
+        }
+    }
 }
 
 class ItemAdapter extends BaseAdapter{
     private LayoutInflater inflater;
     private ArrayList<Item> items = null;
     private int count = 0;
-    private FromServerImage newImage = new FromServerImage();
 
     public ItemAdapter(Context context, ArrayList<Item> items) {
         this.items = items;
@@ -430,23 +555,15 @@ class ItemAdapter extends BaseAdapter{
         }
 
         Item item = items.get(position);
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 
         ImageView image = (ImageView)convertView.findViewById(R.id.item_image);
-        image.setImageBitmap(newImage.getImage(item.getFilepath()));
+        image.setImageBitmap(item.getItem_image());
 
         TextView name = (TextView)convertView.findViewById(R.id.item_name);
         name.setText(item.getItem_name());
 
-        TextView pricePerDay = (TextView)convertView.findViewById(R.id.item_price_per_day);
-        pricePerDay.setText(item.getItem_price_per_day() + "원 / 하루");
-
-        TextView distanceToUser = (TextView)convertView.findViewById(R.id.distance_to_user);
-        if(item.getDistanceToUser() !=null)
-            distanceToUser.setText(String.format("%.0f",item.getDistanceToUser()[0])+" 미터");
-
-        TextView avilableDays = (TextView)convertView.findViewById(R.id.available_days);
-        avilableDays.setText(sdf.format(item.getAvailableFrom())+" ~ " +sdf.format(item.getAvailableTo()));
+        TextView telephone = (TextView)convertView.findViewById(R.id.item_price_per_day);
+        telephone.setText(item.getItem_price_per_day() + " won per a day");
 
         return convertView;
 

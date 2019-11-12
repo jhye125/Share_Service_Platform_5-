@@ -2,6 +2,7 @@ package com.example.share;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,12 +11,9 @@ import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 public class ItemDetailActivity extends AppCompatActivity {
 
     ImageButton pay_button;
-    private FromServerImage newImage = new FromServerImage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +35,7 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         //get all the data passed
         String itemId = intent.getStringExtra("item_id");
-        String ImagePath = intent.getStringExtra("item_path");
+        Bitmap imageResource = (Bitmap)intent.getParcelableExtra("item_image");
         String itemName = intent.getStringExtra("item_name");
         String itemPricePerDay = intent.getStringExtra("item_price_per_day");
 
@@ -55,7 +53,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         TextView owner_rating = (TextView)findViewById(R.id.item_detail_owner_rating);
 
         //set all the layout contents
-        item_image.setImageBitmap(newImage.getImage(ImagePath));
+        item_image.setImageBitmap(imageResource);
         item_name.setText(itemName);
         item_price_per_day.setText(itemPricePerDay);
         //set this according to the database values, TODO

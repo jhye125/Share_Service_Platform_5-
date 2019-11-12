@@ -3,28 +3,30 @@ package com.example.share.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 public class Item implements Comparable<Item>,Serializable {
 
     private String item_id;
     private String item_name;
+    private Bitmap item_image;
     private String item_price_per_day;
     private double latitude;
     private double longitude;
     private float[] distanceToUser;
     private Date availableFrom;
     private Date availableTo;
-    private String file_path;
 
-    public Item(String item_id,String item_name, String item_price_per_day, double latitude, double longitude, Date availableFrom, Date availableTo, String FilePath){
-            this.item_id = item_id;
+    public Item(String item_id, Bitmap item_image, String item_name, String item_price_per_day, double latitude, double longitude, Date availableFrom, Date availableTo){
+        this.item_id = item_id;
         this.item_name = item_name;
+        this.item_image = item_image;
         this.item_price_per_day = item_price_per_day;
         this.latitude = latitude;
         this.longitude = longitude;
         this.availableFrom = availableFrom;
         this.availableTo = availableTo;
-        this.file_path = FilePath;
     }
 
     public String getItem_id() {
@@ -33,6 +35,10 @@ public class Item implements Comparable<Item>,Serializable {
 
     public String getItem_name() {
         return item_name;
+    }
+
+    public Bitmap getItem_image() {
+        return item_image;
     }
 
     public String getItem_price_per_day() {
@@ -52,8 +58,6 @@ public class Item implements Comparable<Item>,Serializable {
     public Date getAvailableFrom() {  return availableFrom;  }
 
     public Date getAvailableTo() {  return availableTo;  }
-
-    public String getFilepath() {  return file_path;  }
 
     @Override
     public int compareTo(Item i) {

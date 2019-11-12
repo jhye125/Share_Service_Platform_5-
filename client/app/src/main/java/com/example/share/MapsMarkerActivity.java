@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.share.Data.Item;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +34,7 @@ public class MapsMarkerActivity extends AppCompatActivity
         Intent intent = getIntent();
         items = (ArrayList<Item>)intent.getSerializableExtra("items");
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -54,7 +53,7 @@ public class MapsMarkerActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         // Add a marker in Sydney, Australia,
         // and move the map's camera to the same location.
-        LatLng daegu = new LatLng(35.888836,  128.6102997);
+        LatLng daegu = new LatLng(35.86969,  128.59367);
 
         for(int i =0; i < items.size();i++){
             Item item = items.get(i);
@@ -62,19 +61,19 @@ public class MapsMarkerActivity extends AppCompatActivity
             double longitude = item.getLongitude();
             //Log.d("MYGOOGLEMAP",""+latitude+" "+longitude);
             googleMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(latitude, longitude))
-                            .anchor(0.5f, 0.5f)
-                            .title(item.getItem_name())
-                            .snippet(item.getItem_price_per_day()+" won per a day")
+                    .position(new LatLng(latitude, longitude))
+                    .anchor(0.5f, 0.5f)
+                    .title(item.getItem_name())
+                    .snippet(item.getItem_price_per_day()+" won per a day")
                     //.flat(true)
                     //.alpha(0.7f)//투명도
                     //.icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(item.getItem_image(),100,100)))
-            );
+                    );
 
         }
 //        gmap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint,16));
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(daegu,14));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(daegu,12));
     }
 
     public Bitmap resizeMapIcons(int id, int width, int height){
