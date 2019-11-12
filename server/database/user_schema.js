@@ -4,15 +4,18 @@ var crypto = require('crypto');
 var Schema = {};
 
 Schema.createSchema = function(mongoose) {
-	
 	// 스키마 정의
 	var UserSchema = mongoose.Schema({
 		email: {type: String, 'default':''}
 	    , hashed_password: {type: String, required: true, 'default':''}
 	    , name: {type: String, index: 'hashed', 'default':''}
+		, phone_number : {type:String,'default':'000-0000-0000'}
+		, credit_card_number : {type:String,'default':'0000-0000-0000-0000'}
 	    , salt: {type:String, required:true}
 	    , created_at: {type: Date, index: {unique: false}, 'default': Date.now}
-	    , updated_at: {type: Date, index: {unique: false}, 'default': Date.now} 
+	    , updated_at: { type: Date, index: { unique: false }, 'default': Date.now }
+		, authentication : {type: String, 'default':'false'}
+		//, randomvalue : {type:String,'default':'000000'}
 	});
 	
 	// password를 virtual 메소드로 정의 : MongoDB에 저장되지 않는 편리한 속성임. 특정 속성을 지정하고 set, get 메소드를 정의함
