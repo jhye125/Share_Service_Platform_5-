@@ -1,36 +1,104 @@
 package com.example.share;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
-import android.support.annotation.NonNull;
 import android.widget.ImageButton;
+import android.widget.Button;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.share.Data.Item;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
-    private String Email;
+
+    private ImageButton etcButton;
+    private ImageButton placeButton;
+    private ImageButton toolButton;
+    private ImageButton sound_equipmentButton;
+    private ImageButton medical_equimentButton;
+    private ImageButton baby_goodsButton;
+
+    private String UserEmail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Intent homeintent = getIntent();
 
-        Email = homeintent.getExtras().getString("Email");  //LoginActivity로 부터 email 읽어오기
+        UserEmail = homeintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
 
 
-        ImageButton etcButton = (ImageButton)findViewById(R.id.etc);
+        etcButton = (ImageButton)findViewById(R.id.etc);
+        placeButton = (ImageButton)findViewById(R.id.place);
+        toolButton = (ImageButton)findViewById(R.id.tools);
+        sound_equipmentButton = (ImageButton)findViewById(R.id.music);
+        medical_equimentButton = (ImageButton)findViewById(R.id.medical);
+        baby_goodsButton = (ImageButton)findViewById(R.id.child);
+
 
         etcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signupintent = new Intent(HomeActivity.this, ItemListActivity.class);
-                startActivity(signupintent);
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "etc");
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
+            }
+
+        });
+        placeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "place");
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
+            }
+
+        });
+        toolButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "tool");
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
+            }
+
+        });
+        sound_equipmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "sound_equipment");
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
+            }
+
+        });
+        medical_equimentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "medical_equipment");
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
+            }
+
+        });
+        baby_goodsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, ItemListActivity.class);
+                intent.putExtra("category", "baby_goods");
+                intent.putExtra("UserEmail",UserEmail);
+                startActivity(intent);
             }
 
         });
@@ -65,10 +133,4 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
-    public void ReserveTest(View view){ // reservetest 클릭시
-
-        Intent intents = new Intent(this, ReservationInfoActivity.class);
-        startActivity(intents);
-
-    }
 }

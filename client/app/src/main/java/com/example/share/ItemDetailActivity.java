@@ -2,7 +2,6 @@ package com.example.share;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -10,10 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import com.example.share.Data.Item;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ItemDetailActivity extends AppCompatActivity {
 
     ImageButton pay_button;
+    private FromServerImage newImage = new FromServerImage();
+
+    Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,22 +27,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        pay_button = findViewById(R.id.pay);
-
-        pay_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
-                startActivity(intent);
-            }
-
-        });
-
         //get all the data passed
-        String itemId = intent.getStringExtra("item_id");
-        Bitmap imageResource = (Bitmap)intent.getParcelableExtra("item_image");
-        String itemName = intent.getStringExtra("item_name");
-        String itemPricePerDay = intent.getStringExtra("item_price_per_day");
+        item = (Item)intent.getSerializableExtra("item_object");
 
         //get all the layout
         ImageView item_image = (ImageView)findViewById(R.id.item_detail_item_image);
@@ -53,9 +44,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         TextView owner_rating = (TextView)findViewById(R.id.item_detail_owner_rating);
 
         //set all the layout contents
-        item_image.setImageBitmap(imageResource);
-        item_name.setText(itemName);
-        item_price_per_day.setText(itemPricePerDay);
+        item_image.setImageBitmap(newImage.getImage(item.getFilepath()));
+        item_name.setText(item.getItem_name());
+        item_price_per_day.setText(item.getItem_price_per_day());
         //set this according to the database values, TODO
         item_detail.setText("굿노트 어플 사용 가능\n" +
                 "프로크리에이트 어플 사용 가능\n" +
@@ -65,6 +56,18 @@ public class ItemDetailActivity extends AppCompatActivity {
         owner_image.setImageResource(R.drawable.owner_sample);
         owner_name.setText("지혜");
         owner_rating.setText("4.5 / 5");
+
+        pay_button = findViewById(R.id.pay);
+
+        pay_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
+                intent.putExtra("item_object",item);
+                startActivity(intent);
+            }
+
+        });
 
         return;
     }

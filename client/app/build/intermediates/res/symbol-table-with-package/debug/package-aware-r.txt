@@ -117,6 +117,7 @@ attr buttonStyle
 attr buttonStyleSmall
 attr buttonTint
 attr buttonTintMode
+attr calendarBackgroundColor
 attr cameraBearing
 attr cameraMaxZoomPreference
 attr cameraMinZoomPreference
@@ -183,6 +184,9 @@ attr colorScheme
 attr colorSecondary
 attr colorSwitchThumbNormal
 attr commitIcon
+attr connectedDayIconPosition
+attr connectedDayIconRes
+attr connectedDaySelectedIconRes
 attr constraintSet
 attr constraint_referenced_ids
 attr content
@@ -206,11 +210,16 @@ attr counterEnabled
 attr counterMaxLength
 attr counterOverflowTextAppearance
 attr counterTextAppearance
+attr currentDayIconRes
+attr currentDaySelectedIconRes
+attr currentDayTextColor
 attr customNavigationLayout
+attr dayTextColor
 attr defaultQueryHint
 attr dialogCornerRadius
 attr dialogPreferredPadding
 attr dialogTheme
+attr disabledDayTextColor
 attr displayOptions
 attr divider
 attr dividerHorizontal
@@ -250,6 +259,7 @@ attr fastScrollHorizontalTrackDrawable
 attr fastScrollVerticalThumbDrawable
 attr fastScrollVerticalTrackDrawable
 attr firstBaselineToTopHeight
+attr firstDayOfTheWeek
 attr floatingActionButtonStyle
 attr font
 attr fontFamily
@@ -401,12 +411,16 @@ attr maxButtonHeight
 attr maxImageSize
 attr measureWithLargestChild
 attr menu
+attr monthTextColor
 attr multiChoiceItemLayout
 attr navigationContentDescription
 attr navigationIcon
 attr navigationMode
 attr navigationViewStyle
+attr nextMonthIconRes
 attr numericModifiers
+attr orientation
+attr otherDayTextColor
 attr overlapAnchor
 attr paddingBottomNoButtons
 attr paddingEnd
@@ -425,6 +439,7 @@ attr popupTheme
 attr popupWindowStyle
 attr preserveIconSpacing
 attr pressedTranslationZ
+attr previousMonthIconRes
 attr progressBarPadding
 attr progressBarStyle
 attr queryBackground
@@ -445,6 +460,12 @@ attr searchViewStyle
 attr seekBarStyle
 attr selectableItemBackground
 attr selectableItemBackgroundBorderless
+attr selectedDayBackgroundColor
+attr selectedDayBackgroundEndColor
+attr selectedDayBackgroundStartColor
+attr selectedDayTextColor
+attr selectionBarMonthTextColor
+attr selectionType
 attr showAsAction
 attr showDividers
 attr showMotionSpec
@@ -578,6 +599,9 @@ attr useCompatPadding
 attr useViewLifecycle
 attr viewInflaterClass
 attr voiceIcon
+attr weekDayTitleTextColor
+attr weekendDayTextColor
+attr weekendDays
 attr windowActionBar
 attr windowActionBarOverlay
 attr windowActionModeOverlay
@@ -651,6 +675,21 @@ color common_google_signin_btn_text_light_disabled
 color common_google_signin_btn_text_light_focused
 color common_google_signin_btn_text_light_pressed
 color common_google_signin_btn_tint
+color default_border_color
+color default_calendar_background_color
+color default_connected_day_selected_text_color
+color default_connected_day_text_color
+color default_day_text_color
+color default_disabled_day_text_color
+color default_month_text_color
+color default_other_day_text_color
+color default_selected_day_background_color
+color default_selected_day_background_end_color
+color default_selected_day_background_start_color
+color default_selected_day_text_color
+color default_selection_bar_month_title_text_color
+color default_week_day_title_text_color
+color default_weekend_day_text_color
 color design_bottom_navigation_shadow_color
 color design_default_color_primary
 color design_default_color_primary_dark
@@ -824,6 +863,10 @@ dimen compat_button_padding_vertical_material
 dimen compat_control_corner_material
 dimen compat_notification_large_icon_max_height
 dimen compat_notification_large_icon_max_width
+dimen day_of_week_padding_vertical
+dimen day_padding_vertical
+dimen day_text_padding
+dimen day_text_size
 dimen design_appbar_elevation
 dimen design_bottom_navigation_active_item_max_width
 dimen design_bottom_navigation_active_item_min_width
@@ -883,6 +926,7 @@ dimen hint_pressed_alpha_material_light
 dimen item_touch_helper_max_drag_scroll_per_frame
 dimen item_touch_helper_swipe_escape_max_velocity
 dimen item_touch_helper_swipe_escape_velocity
+dimen month_name_padding
 dimen mtrl_bottomappbar_fabOffsetEndMode
 dimen mtrl_bottomappbar_fab_cradle_margin
 dimen mtrl_bottomappbar_fab_cradle_rounded_corner_radius
@@ -946,6 +990,22 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+dimen space_1x
+dimen space_2x
+dimen space_3x
+dimen space_4x
+dimen space_5x
+dimen space_6x
+dimen space_7x
+dimen space_8x
+dimen subtitle_corner_radius
+dimen subtitle_outline_width
+dimen subtitle_shadow_offset
+dimen subtitle_shadow_radius
+dimen text_big
+dimen text_large
+dimen text_medium
+dimen text_small
 dimen tooltip_corner_radius
 dimen tooltip_horizontal_padding
 dimen tooltip_margin
@@ -1039,8 +1099,13 @@ drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
 drawable addcard
+drawable addphoto
+drawable appic
+drawable appic_round
 drawable avd_hide_password
 drawable avd_show_password
+drawable border
+drawable border_top_bottom
 drawable btn_add
 drawable card
 drawable chatting_background_blue
@@ -1082,11 +1147,17 @@ drawable home_medical_ic
 drawable home_music_ic
 drawable home_place_ic
 drawable home_tools_ic
+drawable ic_chevron_left_gray
+drawable ic_chevron_right_gray
+drawable ic_close_gray
+drawable ic_done_gray
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_triangle_green
+drawable ic_triangle_white
 drawable id_box
 drawable id_icon
 drawable item_list_box
@@ -1095,8 +1166,12 @@ drawable item_sample_handmixer
 drawable item_sample_ipad
 drawable item_sample_longboard
 drawable item_sample_mouse
+drawable listdatebtn
+drawable listlocationbtn
+drawable listmapbtn
 drawable login_button
 drawable logo
+drawable logogo_round
 drawable maain
 drawable main
 drawable menu_bucket
@@ -1124,6 +1199,9 @@ drawable pay_title
 drawable paybtn
 drawable pw_box
 drawable pw_icon
+drawable register_btn
+drawable register_item_title
+drawable registerbtn
 drawable reservation_info_title
 drawable resv_info_cate
 drawable resv_info_date
@@ -1132,6 +1210,11 @@ drawable resv_info_price
 drawable returnbtn
 drawable reviewbtn
 drawable sample_pro
+drawable savedate
+drawable select
+drawable select_category
+drawable select_location
+drawable selected_bg
 drawable send
 drawable signup_button
 drawable test
@@ -1168,18 +1251,23 @@ id add_btn
 id addcard
 id adjust_height
 id adjust_width
+id alertDialogItemImageView
+id alertDialogItemTextView
 id alertTitle
 id all
+id alterdialog_title
 id always
 id async
 id auto
+id available_days
 id barrier
 id beginning
 id blocking
 id bottom
 id bottomNavigation
-id button
+id btnregister
 id buttonPanel
+id calendar_view
 id cancel_action
 id cardlist
 id cardnumber1
@@ -1187,6 +1275,10 @@ id cardnumber2
 id cardnumber3
 id cardnumber4
 id category
+id catv_day
+id catv_end
+id catv_middle
+id catv_start
 id center
 id center_horizontal
 id center_vertical
@@ -1197,6 +1289,7 @@ id checkBox
 id checkbox
 id child
 id chronometer
+id clear_selections
 id clip_horizontal
 id clip_vertical
 id collapseActionView
@@ -1223,6 +1316,7 @@ id design_navigation_view
 id dimensions
 id direct
 id disableHome
+id distance_to_user
 id divider1
 id divider2
 id edit_query
@@ -1240,14 +1334,16 @@ id fill_horizontal
 id fill_vertical
 id filled
 id fixed
+id fl_navigation_buttons_bar
 id forever
+id friday
 id ghost_view
 id gone
 id google_button
 id group_divider
-id groups
 id home
 id homeAsUp
+id horizontal
 id hybrid
 id icon
 id icon_group
@@ -1280,9 +1376,14 @@ id item_reservation_date
 id item_reservation_price
 id item_title
 id item_touch_helper_previous_elevation
+id iv_cancel
+id iv_done
+id iv_next_month
+id iv_previous_month
 id labeled
 id largeLabel
 id layoutForAlign
+id layout_main
 id left
 id light
 id line1
@@ -1290,19 +1391,24 @@ id line3
 id listMode
 id listView
 id list_item
+id listview_alterdialog_list
+id ll_month_header
 id location
-id location_button
 id loginButton
 id map
 id map_button
+id mapsend
 id masked
 id media_actions
 id medical
 id message
 id middle
 id mini
+id monday
+id month_view
 id mtrl_child_content_container
 id mtrl_internal_children_alpha_tag
+id multiple
 id multiply
 id music
 id name
@@ -1322,6 +1428,7 @@ id notification_main_column
 id notification_main_column_container
 id outline
 id packed
+id page_header
 id parallax
 id parent
 id parentPanel
@@ -1336,6 +1443,15 @@ id progress_horizontal
 id pw_box
 id pw_input
 id radio
+id range
+id register_button
+id register_category
+id register_content
+id register_date
+id register_location
+id register_photo
+id register_price
+id register_title
 id return_btn
 id review_btn
 id review_number
@@ -1343,6 +1459,7 @@ id right
 id right_icon
 id right_side
 id satellite
+id saturday
 id save_image_matrix
 id save_non_transition_alpha
 id save_scale_type
@@ -1366,11 +1483,13 @@ id search_voice_btn
 id select_dialog_listview
 id selected
 id send
+id send_selections
 id shortcut
 id showCustom
 id showHome
 id showTitle
 id signupButton
+id single
 id smallLabel
 id snackbar_action
 id snackbar_text
@@ -1390,6 +1509,7 @@ id status_bar_latest_event_content
 id stretch
 id submenuarrow
 id submit_area
+id sunday
 id tabMode
 id tag_transition_group
 id tag_unhandled_key_event_manager
@@ -1404,10 +1524,12 @@ id text_input_password_toggle
 id textinput_counter
 id textinput_error
 id textinput_helper_text
+id thursday
 id time
 id title
 id titleDividerNoCustom
 id title_template
+id toolbar
 id tools
 id top
 id topPanel
@@ -1417,14 +1539,25 @@ id transition_layout_save
 id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
+id tuesday
+id tv_day_name
+id tv_day_number
+id tv_month_name
+id tv_range_end_date
+id tv_range_start_date
+id tv_title
 id uniform
 id unlabeled
 id up
 id useLogo
 id user_name
 id user_photo
+id vertical
+id view_left_line
 id view_offset_helper
+id view_right_line
 id visible
+id wednesday
 id wide
 id withText
 id wrap
@@ -1487,11 +1620,17 @@ layout activity_itemlist
 layout activity_login
 layout activity_main
 layout activity_maps
+layout activity_maps_regi
 layout activity_mypage
 layout activity_pay
+layout activity_register_item
 layout activity_reservation_info
+layout activity_select_date
 layout activity_signup
 layout addcard
+layout alert_dialog
+layout alert_dialog_row
+layout calendar_navigation_buttons
 layout card
 layout chatting_item
 layout design_bottom_navigation_item
@@ -1508,6 +1647,9 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout dialog_calendar
+layout item_multiple_selection_bar_content
+layout item_multiple_selection_bar_title
 layout itemlist_date_dialog
 layout itemlist_item
 layout mtrl_layout_snackbar
@@ -1531,6 +1673,12 @@ layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
+layout view_day
+layout view_day_of_week
+layout view_month
+layout view_other_day
+layout view_selection_bar_range
+menu menu
 menu menu_bottom
 mipmap captone_ic
 mipmap ic_launcher
@@ -1601,6 +1749,7 @@ string common_signin_button_text
 string common_signin_button_text_long
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string google_maps_key
 string hide_bottom_view_on_scroll_behavior
 string invalid_password
 string invalid_username
@@ -1979,6 +2128,7 @@ style Theme_MaterialComponents_Light_NoActionBar
 style Theme_MaterialComponents_Light_NoActionBar_Bridge
 style Theme_MaterialComponents_NoActionBar
 style Theme_MaterialComponents_NoActionBar_Bridge
+style Theme_MyDialog
 style ThemeOverlay_AppCompat
 style ThemeOverlay_AppCompat_ActionBar
 style ThemeOverlay_AppCompat_Dark
@@ -2141,6 +2291,7 @@ styleable BottomAppBar backgroundTint fabAlignmentMode fabCradleMargin fabCradle
 styleable BottomNavigationView elevation itemBackground itemHorizontalTranslationEnabled itemIconSize itemIconTint itemTextAppearanceActive itemTextAppearanceInactive itemTextColor labelVisibilityMode menu
 styleable BottomSheetBehavior_Layout behavior_fitToContents behavior_hideable behavior_peekHeight behavior_skipCollapsed
 styleable ButtonBarLayout allowStacking
+styleable CalendarView calendarBackgroundColor connectedDayIconPosition connectedDayIconRes connectedDaySelectedIconRes currentDayIconRes currentDaySelectedIconRes currentDayTextColor dayTextColor disabledDayTextColor firstDayOfTheWeek monthTextColor nextMonthIconRes orientation otherDayTextColor previousMonthIconRes selectedDayBackgroundColor selectedDayBackgroundEndColor selectedDayBackgroundStartColor selectedDayTextColor selectionBarMonthTextColor selectionType weekDayTitleTextColor weekendDayTextColor weekendDays
 styleable CardView android_minWidth android_minHeight cardBackgroundColor cardCornerRadius cardElevation cardMaxElevation cardPreventCornerOverlap cardUseCompatPadding contentPadding contentPaddingBottom contentPaddingLeft contentPaddingRight contentPaddingTop
 styleable Chip android_textAppearance android_ellipsize android_maxWidth android_text android_checkable checkedIcon checkedIconEnabled checkedIconVisible chipBackgroundColor chipCornerRadius chipEndPadding chipIcon chipIconEnabled chipIconSize chipIconTint chipIconVisible chipMinHeight chipStartPadding chipStrokeColor chipStrokeWidth closeIcon closeIconEnabled closeIconEndPadding closeIconSize closeIconStartPadding closeIconTint closeIconVisible hideMotionSpec iconEndPadding iconStartPadding rippleColor showMotionSpec textEndPadding textStartPadding
 styleable ChipGroup checkedChip chipSpacing chipSpacingHorizontal chipSpacingVertical singleLine singleSelection
@@ -2150,7 +2301,7 @@ styleable ColorStateListItem android_color android_alpha alpha
 styleable CompoundButton android_button buttonTint buttonTintMode
 styleable ConstraintLayout_Layout android_orientation android_maxWidth android_maxHeight android_minWidth android_minHeight barrierAllowsGoneWidgets barrierDirection chainUseRtl constraintSet constraint_referenced_ids layout_constrainedHeight layout_constrainedWidth layout_constraintBaseline_creator layout_constraintBaseline_toBaselineOf layout_constraintBottom_creator layout_constraintBottom_toBottomOf layout_constraintBottom_toTopOf layout_constraintCircle layout_constraintCircleAngle layout_constraintCircleRadius layout_constraintDimensionRatio layout_constraintEnd_toEndOf layout_constraintEnd_toStartOf layout_constraintGuide_begin layout_constraintGuide_end layout_constraintGuide_percent layout_constraintHeight_default layout_constraintHeight_max layout_constraintHeight_min layout_constraintHeight_percent layout_constraintHorizontal_bias layout_constraintHorizontal_chainStyle layout_constraintHorizontal_weight layout_constraintLeft_creator layout_constraintLeft_toLeftOf layout_constraintLeft_toRightOf layout_constraintRight_creator layout_constraintRight_toLeftOf layout_constraintRight_toRightOf layout_constraintStart_toEndOf layout_constraintStart_toStartOf layout_constraintTop_creator layout_constraintTop_toBottomOf layout_constraintTop_toTopOf layout_constraintVertical_bias layout_constraintVertical_chainStyle layout_constraintVertical_weight layout_constraintWidth_default layout_constraintWidth_max layout_constraintWidth_min layout_constraintWidth_percent layout_editor_absoluteX layout_editor_absoluteY layout_goneMarginBottom layout_goneMarginEnd layout_goneMarginLeft layout_goneMarginRight layout_goneMarginStart layout_goneMarginTop layout_optimizationLevel
 styleable ConstraintLayout_placeholder content emptyVisibility
-styleable ConstraintSet android_orientation android_id android_visibility android_layout_width android_layout_height android_layout_marginLeft android_layout_marginTop android_layout_marginRight android_layout_marginBottom android_maxWidth android_maxHeight android_minWidth android_minHeight android_alpha android_transformPivotX android_transformPivotY android_translationX android_translationY android_scaleX android_scaleY android_rotation android_rotationX android_rotationY android_layout_marginStart android_layout_marginEnd android_translationZ android_elevation barrierAllowsGoneWidgets barrierDirection chainUseRtl constraint_referenced_ids layout_constrainedHeight layout_constrainedWidth layout_constraintBaseline_creator layout_constraintBaseline_toBaselineOf layout_constraintBottom_creator layout_constraintBottom_toBottomOf layout_constraintBottom_toTopOf layout_constraintCircle layout_constraintCircleAngle layout_constraintCircleRadius layout_constraintDimensionRatio layout_constraintEnd_toEndOf layout_constraintEnd_toStartOf layout_constraintGuide_begin layout_constraintGuide_end layout_constraintGuide_percent layout_constraintHeight_default layout_constraintHeight_max layout_constraintHeight_min layout_constraintHeight_percent layout_constraintHorizontal_bias layout_constraintHorizontal_chainStyle layout_constraintHorizontal_weight layout_constraintLeft_creator layout_constraintLeft_toLeftOf layout_constraintLeft_toRightOf layout_constraintRight_creator layout_constraintRight_toLeftOf layout_constraintRight_toRightOf layout_constraintStart_toEndOf layout_constraintStart_toStartOf layout_constraintTop_creator layout_constraintTop_toBottomOf layout_constraintTop_toTopOf layout_constraintVertical_bias layout_constraintVertical_chainStyle layout_constraintVertical_weight layout_constraintWidth_default layout_constraintWidth_max layout_constraintWidth_min layout_constraintWidth_percent layout_editor_absoluteX layout_editor_absoluteY layout_goneMarginBottom layout_goneMarginEnd layout_goneMarginLeft layout_goneMarginRight layout_goneMarginStart layout_goneMarginTop
+styleable ConstraintSet android_orientation android_id android_visibility android_layout_width android_layout_height android_layout_marginLeft android_layout_marginTop android_layout_marginRight android_layout_marginBottom android_alpha android_transformPivotX android_transformPivotY android_translationX android_translationY android_scaleX android_scaleY android_rotation android_rotationX android_rotationY android_layout_marginStart android_layout_marginEnd android_translationZ android_elevation layout_constrainedHeight layout_constrainedWidth layout_constraintBaseline_creator layout_constraintBaseline_toBaselineOf layout_constraintBottom_creator layout_constraintBottom_toBottomOf layout_constraintBottom_toTopOf layout_constraintCircle layout_constraintCircleAngle layout_constraintCircleRadius layout_constraintDimensionRatio layout_constraintEnd_toEndOf layout_constraintEnd_toStartOf layout_constraintGuide_begin layout_constraintGuide_end layout_constraintGuide_percent layout_constraintHeight_default layout_constraintHeight_max layout_constraintHeight_min layout_constraintHeight_percent layout_constraintHorizontal_bias layout_constraintHorizontal_chainStyle layout_constraintHorizontal_weight layout_constraintLeft_creator layout_constraintLeft_toLeftOf layout_constraintLeft_toRightOf layout_constraintRight_creator layout_constraintRight_toLeftOf layout_constraintRight_toRightOf layout_constraintStart_toEndOf layout_constraintStart_toStartOf layout_constraintTop_creator layout_constraintTop_toBottomOf layout_constraintTop_toTopOf layout_constraintVertical_bias layout_constraintVertical_chainStyle layout_constraintVertical_weight layout_constraintWidth_default layout_constraintWidth_max layout_constraintWidth_min layout_constraintWidth_percent layout_editor_absoluteX layout_editor_absoluteY layout_goneMarginBottom layout_goneMarginEnd layout_goneMarginLeft layout_goneMarginRight layout_goneMarginStart layout_goneMarginTop
 styleable CoordinatorLayout keylines statusBarBackground
 styleable CoordinatorLayout_Layout android_layout_gravity layout_anchor layout_anchorGravity layout_behavior layout_dodgeInsetEdges layout_insetEdge layout_keyline
 styleable DesignTheme bottomSheetDialogTheme bottomSheetStyle

@@ -1,9 +1,10 @@
 package com.example.share;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ChatListActivity extends AppCompatActivity{
+import androidx.appcompat.app.AppCompatActivity;
+
+public class ChatListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

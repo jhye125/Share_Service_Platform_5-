@@ -5,13 +5,14 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.CheckBox;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import org.json.JSONObject;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -149,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                         dialog.dismiss();     //닫기
                     }
                 });
-                alert.setMessage("ID/PW ERROR");
+                alert.setMessage(result);
                 alert.show();
             }
         }
@@ -157,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
     public void LoginCheck(){ // 로그인 성공시 Home Intents 시작
 
         Intent homeintent = new Intent(this, HomeActivity.class);
-        homeintent.putExtra("Email",email_input.getText().toString());
+        homeintent.putExtra("UserEmail",email_input.getText().toString());
         startActivity(homeintent);
 
     }
