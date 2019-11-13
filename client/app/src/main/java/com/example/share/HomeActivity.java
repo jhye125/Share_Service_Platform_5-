@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         sound_equipmentButton = (ImageButton)findViewById(R.id.music);
         medical_equimentButton = (ImageButton)findViewById(R.id.medical);
         baby_goodsButton = (ImageButton)findViewById(R.id.child);
-
+        etcButton = (ImageButton)findViewById(R.id.etc);
 
         etcButton.setOnClickListener(new View.OnClickListener() {
             @Override
