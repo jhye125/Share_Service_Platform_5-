@@ -1,7 +1,9 @@
 package com.example.share;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.CheckBox;
@@ -28,6 +30,9 @@ import java.net.URL;
 public class LoginActivity extends AppCompatActivity {
     EditText email_input;
     EditText pw_input;
+
+    private SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +161,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void LoginCheck(){ // 로그인 성공시 Home Intents 시작
+
+        pref = getSharedPreferences("pref", AppCompatActivity.MODE_PRIVATE);
+        SharedPreferences.Editor email_edit = pref.edit();
+        email_edit.putString("user_email",email_input.getText().toString());
+        email_edit.commit();
 
         Intent homeintent = new Intent(this, HomeActivity.class);
         homeintent.putExtra("UserEmail",email_input.getText().toString());

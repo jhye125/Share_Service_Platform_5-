@@ -120,18 +120,6 @@ public class ItemListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlist);
-        /*
-            //이거 불러주고
-            Intent intent = new Intent(getApplicationContext(), ItemDetailActivity.class);
-            //이거중에 하나 intent
-            intent.putExtra("category", "place");
-            intent.putExtra("category", "tool");
-            intent.putExtra("category", "sound_equipment");
-            intent.putExtra("category", "medical_equipment");
-            intent.putExtra("category", "baby_goods");
-            intent.putExtra("category", "etc");
-        */
-
 
         Intent intent = getIntent();
         currentCategory = intent.getStringExtra("category");

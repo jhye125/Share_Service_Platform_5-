@@ -34,7 +34,6 @@ public class HomeActivity extends AppCompatActivity {
         UserEmail = homeintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
 
 
-        etcButton = (ImageButton)findViewById(R.id.etc);
         placeButton = (ImageButton)findViewById(R.id.place);
         toolButton = (ImageButton)findViewById(R.id.tools);
         sound_equipmentButton = (ImageButton)findViewById(R.id.music);

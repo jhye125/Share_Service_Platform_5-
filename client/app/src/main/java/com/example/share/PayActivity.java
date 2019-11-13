@@ -1,7 +1,9 @@
 package com.example.share;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -10,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import com.example.share.Data.Item;
 
 public class PayActivity extends AppCompatActivity {
@@ -18,6 +19,7 @@ public class PayActivity extends AppCompatActivity {
     private ImageView complete;
     ViewPager cardlist;
     Item item;
+    String item_id ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class PayActivity extends AppCompatActivity {
 
         //get all the data passed
         item = (Item)intent.getSerializableExtra("item_object");
+        item_id = item.getItem_id();
 
         complete = (ImageView)findViewById(R.id.complete);
         cardlist = (ViewPager)findViewById(R.id.cardlist);
@@ -43,7 +46,14 @@ public class PayActivity extends AppCompatActivity {
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ChattingActivity.class);
+                //Intent intent = new Intent(getApplicationContext(),ChattingActivity.class);
+
+                SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                Log.d("EMAILCHK","useremail : "+pref.getString("user_email",null));
+
+
+
+
                 startActivity(intent);
             }
         });
