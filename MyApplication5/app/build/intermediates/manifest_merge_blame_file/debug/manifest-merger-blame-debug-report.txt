@@ -1,0 +1,125 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.myapplication"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="17"
+8-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:5:5-67
+11-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:5:22-64
+12    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+12-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:6:5-79
+12-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:6:22-76
+13    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+13-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:7:5-81
+13-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:7:22-78
+14    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+14-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:8:5-98
+14-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:8:22-95
+15
+16    <!-- Include required permissions for Google Maps API to run. -->
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+17-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
+17-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
+18
+19    <uses-feature
+19-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+20        android:glEsVersion="0x00020000"
+20-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+21        android:required="true" />
+21-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+22
+23    <application
+23-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:10:5-38:19
+24        android:allowBackup="true"
+24-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:11:9-35
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.1.0-rc02] /Users/jihye/.gradle/caches/transforms-2/files-2.1/d23ca375c576c4f77f42c729153a7f8a/core-1.1.0-rc02/AndroidManifest.xml:24:18-86
+26        android:debuggable="true"
+27        android:icon="@mipmap/ic_launcher"
+27-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:12:9-43
+28        android:label="share"
+28-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:13:9-30
+29        android:roundIcon="@mipmap/ic_launcher_round"
+29-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:14:9-54
+30        android:supportsRtl="true"
+30-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:15:9-35
+31        android:testOnly="true"
+32        android:theme="@style/AppTheme" >
+32-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:16:9-40
+33        <activity
+33-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:17:9-94
+34            android:name="com.example.myapplication.SelectDateActivity"
+34-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:17:19-53
+35            android:theme="@style/Theme.MyDialog" />
+35-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:17:54-91
+36        <activity android:name="com.example.myapplication.RegisterItemActivity" />
+36-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:18:9-58
+36-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:18:19-55
+37        <activity android:name="com.example.myapplication.ChattingActivity" />
+37-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:19:9-54
+37-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:19:19-51
+38        <activity android:name="com.example.myapplication.ReservationInfoActivity" />
+38-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:20:9-61
+38-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:20:19-58
+39        <activity android:name="com.example.myapplication.PayActivity" />
+39-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:21:9-49
+39-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:21:19-46
+40        <activity android:name="com.example.myapplication.AddCardDetailActivity" />
+40-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:22:9-59
+40-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:22:19-56
+41        <activity android:name="com.example.myapplication.MapsMarkerActivity" />
+41-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:23:9-56
+41-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:23:19-53
+42        <activity android:name="com.example.myapplication.MainActivity" >
+42-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:24:9-30:20
+42-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:24:19-47
+43            <intent-filter>
+43-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:25:13-29:29
+44                <action android:name="android.intent.action.MAIN" />
+44-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:26:17-69
+44-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:26:25-66
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+46-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:28:17-77
+46-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:28:27-74
+47            </intent-filter>
+48        </activity>
+49
+50        <meta-data
+50-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:32:9-34:55
+51            android:name="com.google.android.geo.API_KEY"
+51-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:33:13-58
+52            android:value="@string/google_maps_key" />
+52-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:34:13-52
+53        <meta-data
+53-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:35:9-37:69
+54            android:name="com.google.android.gms.version"
+54-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:36:13-58
+55            android:value="@integer/google_play_services_version" />
+55-->/Users/jihye/Share_Service_Platform_5-/MyApplication5/app/src/main/AndroidManifest.xml:37:13-66
+56        <!-- Needs to be explicitly declared on P+ -->
+57        <uses-library
+57-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+58            android:name="org.apache.http.legacy"
+58-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+59            android:required="false" />
+59-->[com.google.android.gms:play-services-maps:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/71410d59386dba98cbe61d29bc62f196/play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+60
+61        <activity
+61-->[com.google.android.gms:play-services-base:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/291563c6708268cf4683b088770f2b39/play-services-base-17.0.0/AndroidManifest.xml:23:9-26:75
+62            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+62-->[com.google.android.gms:play-services-base:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/291563c6708268cf4683b088770f2b39/play-services-base-17.0.0/AndroidManifest.xml:24:13-79
+63            android:exported="false"
+63-->[com.google.android.gms:play-services-base:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/291563c6708268cf4683b088770f2b39/play-services-base-17.0.0/AndroidManifest.xml:25:13-37
+64            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+64-->[com.google.android.gms:play-services-base:17.0.0] /Users/jihye/.gradle/caches/transforms-2/files-2.1/291563c6708268cf4683b088770f2b39/play-services-base-17.0.0/AndroidManifest.xml:26:13-72
+65    </application>
+66
+67</manifest>
