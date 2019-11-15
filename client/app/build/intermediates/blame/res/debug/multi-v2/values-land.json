@@ -4,17 +4,7 @@
             "outputFile": "/Users/jihye/Share_Service_Platform_5-/client/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
-                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0-rc01.aar/2b209ebd7c8940011c3a1d423e4c88af/res/values-land/values-land.xml",
-                    "from": {
-                        "startLines": "2,3,4",
-                        "startColumns": "4,4,4",
-                        "startOffsets": "55,125,196",
-                        "endColumns": "69,70,67",
-                        "endOffsets": "120,191,259"
-                    }
-                },
-                {
-                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/material-1.0.0-rc01.aar/115c19ce993dcf7b242c7da5fe109aff/res/values-land/values-land.xml",
+                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/material-1.0.0.aar/981eb50bd2c0aa8ea23019ca7f3969bb/res/values-land/values-land.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -30,6 +20,16 @@
                         "endLines": "8",
                         "endColumns": "10",
                         "endOffsets": "431"
+                    }
+                },
+                {
+                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.2.aar/956ad0920ff325b4058fe3488426d631/res/values-land/values-land.xml",
+                    "from": {
+                        "startLines": "2,3,4",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,125,196",
+                        "endColumns": "69,70,67",
+                        "endOffsets": "120,191,259"
                     }
                 }
             ]

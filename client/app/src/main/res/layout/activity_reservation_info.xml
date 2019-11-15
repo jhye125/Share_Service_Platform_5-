@@ -200,10 +200,16 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <ImageView
+                            <RatingBar
                                 android:id="@+id/star"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                style="@style/Widget.AppCompat.RatingBar.Small"
+                                android:numStars="5"
+                                android:layout_margin="4dp"
+                                android:stepSize="0.1"
+                                android:isIndicator="true"
+                                />
 
                             <TextView
                                 android:id="@+id/review_number"
@@ -230,4 +236,5 @@
         android:layout_centerInParent="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
+
 </RelativeLayout>

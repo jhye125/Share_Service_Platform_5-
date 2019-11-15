@@ -4,7 +4,7 @@
             "outputFile": "/Users/jihye/Share_Service_Platform_5-/client/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.0-rc01.aar/2b209ebd7c8940011c3a1d423e4c88af/res/values-v24/values-v24.xml",
+                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/appcompat-1.0.2.aar/956ad0920ff325b4058fe3488426d631/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/33ac02a8cfa1f8d56f0f4d27385394bb/res/values-v24/values-v24.xml",
+                    "source": "/Users/jihye/.gradle/caches/transforms-1/files-1.1/media-1.0.0.aar/4170f60bd9af0abf862c4fc6544198f7/res/values-v24/values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

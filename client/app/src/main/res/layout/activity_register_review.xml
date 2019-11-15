@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <RatingBar
+        android:id="@+id/register_review_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:numStars="5"
+        android:layout_margin="10dp"
+        android:stepSize="0.5"
+        android:isIndicator="false"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/register_review_content"
+        android:layout_width="399dp"
+        android:layout_height="205dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/border"
+        android:hint="   내용 입력"
+        android:inputType="textCapSentences"
+        android:minLines="10"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:textSize="12sp"
+        android:layout_marginBottom="10dp"/>
+
+    <ImageView
+        android:id="@+id/btnregister_review"
+        android:layout_width="111dp"
+        android:layout_height="34dp"
+        android:layout_gravity="center"
+        android:src="@drawable/btn_register_review"/>
+
+</LinearLayout>

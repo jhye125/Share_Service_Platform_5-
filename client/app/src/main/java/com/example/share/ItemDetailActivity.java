@@ -46,8 +46,8 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String MongoDB_IP = "15.164.51.129";
     private int MongoDB_PORT = 27017;
     private String DB_NAME = "local";
-    private String COLLECTION_NAME = "items";
-
+    private String ITEM_COLLECTION = "items";
+    private String USER_COLLECTION= "users";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +83,7 @@ public class ItemDetailActivity extends AppCompatActivity {
         //Connect to MongoDB
         MongoClient mongoClient = new MongoClient(new ServerAddress(MongoDB_IP, MongoDB_PORT)); // failed here?
         DB db = mongoClient.getDB(DB_NAME);
-        DBCollection collection = db.getCollection(COLLECTION_NAME);
+        DBCollection collection = db.getCollection( ITEM_COLLECTION);
 
         BasicDBObject query = new BasicDBObject();
         query.put("_id", new ObjectId(item_id));
@@ -105,12 +105,16 @@ public class ItemDetailActivity extends AppCompatActivity {
         //set all the layout contents
         item_image.setImageBitmap(newImage.getImage(item.getFilepath()));
 
-        //set this according to the database values, TODO
-
+        //owner query
+        String owner_email = dbObj.get("owner_email").toString();
+        DBCollection collection2 = db.getCollection(USER_COLLECTION);
+        BasicDBObject query2 = new BasicDBObject();
+        query2.put("email", owner_email);
+        DBObject dbObj2 = collection.findOne(query);
 
 
         owner_image.setImageResource(R.drawable.owner_sample);
-        owner_name.setText("지혜");
+        owner_name.setText(dbObj2.get("name").toString());
         owner_rating.setText("4.5 / 5");
 
         pay_button = findViewById(R.id.pay);

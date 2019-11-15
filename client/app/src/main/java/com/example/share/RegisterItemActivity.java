@@ -155,7 +155,6 @@ public class RegisterItemActivity extends AppCompatActivity {
             date.setText(selectdate);
         }
 
-
     }
 
     public void register_content_send()
