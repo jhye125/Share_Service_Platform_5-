@@ -3,6 +3,9 @@ package com.example.share.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.CheckBox;
@@ -15,7 +18,15 @@ import android.content.DialogInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.share.Data.Item;
 import com.example.share.R;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -27,12 +38,22 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class LoginActivity extends AppCompatActivity {
     EditText email_input;
     EditText pw_input;
 
     private SharedPreferences pref;
+
+    //mongoDB
+    private String MongoDB_IP = "15.164.51.129";
+    private int MongoDB_PORT = 27017;
+    private String DB_NAME = "local";
+    private String COLLECTION_NAME = "users";
+    private String user_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,12 +184,41 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void LoginCheck(){ // 로그인 성공시 Home Intents 시작
 
+        if (Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        //Connect to MongoDB
+        MongoClient mongoClient = new MongoClient(new ServerAddress(MongoDB_IP, MongoDB_PORT)); // failed here?
+        DB db = mongoClient.getDB(DB_NAME);
+        DBCollection collection = db.getCollection(COLLECTION_NAME);
+
+        //Check Data in Database with query
+        BasicDBObject query = new BasicDBObject();
+        query.put("email",email_input.getText().toString());
+        DBCursor cursor = collection.find(query);
+        while (cursor.hasNext()) {
+
+            DBObject dbo = (BasicDBObject) cursor.next();
+            try {
+
+                user_name = dbo.get("name").toString();
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         pref = getSharedPreferences("pref", AppCompatActivity.MODE_PRIVATE);
         SharedPreferences.Editor email_edit = pref.edit();
-        SharedPreferences.Editor id_edit = pref.edit();
+        SharedPreferences.Editor name_edit = pref.edit();
 
         email_edit.putString("user_email",email_input.getText().toString());
         email_edit.commit();
+        name_edit.putString("user_name",user_name);
+        name_edit.commit();
 
         Intent homeintent = new Intent(this, HomeActivity.class);
         homeintent.putExtra("UserEmail",email_input.getText().toString());

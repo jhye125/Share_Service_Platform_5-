@@ -5831,7 +5831,7 @@ public final class R {
     public static final int mypage_id_box=0x7f0800c2;
     public static final int mypage_picture=0x7f0800c3;
     public static final int mypage_user_email=0x7f0800c4;
-    public static final int mypage_user_id=0x7f0800c5;
+    public static final int mypage_user_name=0x7f0800c5;
     public static final int name=0x7f0800c6;
     public static final int name_box=0x7f0800c7;
     public static final int name_input=0x7f0800c8;

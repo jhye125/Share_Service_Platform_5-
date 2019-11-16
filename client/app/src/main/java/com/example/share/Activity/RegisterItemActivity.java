@@ -2,6 +2,7 @@ package com.example.share.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -80,7 +81,8 @@ public class RegisterItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_item);
         Intent Registerintent = getIntent();
 
-        UserEmail = Registerintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        UserEmail = pref.getString("user_email",null);
 
 
         photo = (ImageView) findViewById(R.id.register_photo);

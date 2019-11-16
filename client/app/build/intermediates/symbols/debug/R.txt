@@ -1420,7 +1420,7 @@ int id mypage_header 0x7f0800c1
 int id mypage_id_box 0x7f0800c2
 int id mypage_picture 0x7f0800c3
 int id mypage_user_email 0x7f0800c4
-int id mypage_user_id 0x7f0800c5
+int id mypage_user_name 0x7f0800c5
 int id name 0x7f0800c6
 int id name_box 0x7f0800c7
 int id name_input 0x7f0800c8

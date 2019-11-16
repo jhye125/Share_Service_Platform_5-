@@ -1421,7 +1421,7 @@ id mypage_header
 id mypage_id_box
 id mypage_picture
 id mypage_user_email
-id mypage_user_id
+id mypage_user_name
 id name
 id name_box
 id name_input
