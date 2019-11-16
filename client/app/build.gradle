@@ -48,5 +48,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
 }
 
-//채
+//채팅
 apply plugin: 'com.google.gms.google-services'
