@@ -1,11 +1,11 @@
 #Internal package file, do not edit.
-#Sat Nov 16 16:23:52 KST 2019
-1.base=C\:\\GitKraken\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+#Sat Nov 16 17:38:39 KST 2019
+1.base=C\:\\Users\\Joohan Park\\Desktop\\CDP1\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 0.baseType=DIRECTORY
 1.baseType=DIRECTORY
 count=2
 1.set=DEX
 0.path=classes.dex
 0.set=DEX
-0.base=C\:\\GitKraken\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+0.base=C\:\\Users\\Joohan Park\\Desktop\\CDP1\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
 1.path=classes.dex

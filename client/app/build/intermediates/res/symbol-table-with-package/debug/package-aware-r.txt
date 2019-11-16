@@ -1313,6 +1313,7 @@ id date_ok_button
 id date_to
 id decor_content_parent
 id default_activity_button
+id delete_item_button
 id design_bottom_sheet
 id design_menu_item_action_area
 id design_menu_item_action_area_stub
@@ -1324,6 +1325,7 @@ id disableHome
 id distance_to_user
 id divider1
 id divider2
+id edit_item_button
 id edit_query
 id email_input
 id end
