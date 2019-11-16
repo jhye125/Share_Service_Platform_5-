@@ -26,6 +26,12 @@
         <activity android:name=".SelectDateActivity"
             android:theme="@style/Theme.MyDialog"/>
         <activity android:name=".MapsMarkerRegiActivity"/>
+        <activity android:name=".ShareListActivity"/>
+        <activity android:name=".BorrowListActivity"/>
+        <activity android:name=".MyPageActivity"/>
+        <activity
+            android:name=".RegisterReviewActivity"
+            android:theme="@style/Theme.MyDialog"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

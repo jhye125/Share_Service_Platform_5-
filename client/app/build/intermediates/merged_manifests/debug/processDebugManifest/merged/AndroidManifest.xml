@@ -48,6 +48,9 @@
             android:name="com.example.share.SelectDateActivity"
             android:theme="@style/Theme.MyDialog" />
         <activity android:name="com.example.share.MapsMarkerRegiActivity" />
+        <activity android:name="com.example.share.ShareListActivity" />
+        <activity android:name="com.example.share.BorrowListActivity" />
+        <activity android:name="com.example.share.MyPageActivity" />
         <activity android:name="com.example.share.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -164,6 +164,8 @@ public class LoginActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("pref", AppCompatActivity.MODE_PRIVATE);
         SharedPreferences.Editor email_edit = pref.edit();
+        SharedPreferences.Editor id_edit = pref.edit();
+
         email_edit.putString("user_email",email_input.getText().toString());
         email_edit.commit();
 

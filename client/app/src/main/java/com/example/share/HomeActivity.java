@@ -5,12 +5,11 @@ import android.view.View;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.share.Data.Item;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -34,12 +33,13 @@ public class HomeActivity extends AppCompatActivity {
         UserEmail = homeintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
 
 
+        etcButton = (ImageButton)findViewById(R.id.etc);
         placeButton = (ImageButton)findViewById(R.id.place);
         toolButton = (ImageButton)findViewById(R.id.tools);
         sound_equipmentButton = (ImageButton)findViewById(R.id.music);
         medical_equimentButton = (ImageButton)findViewById(R.id.medical);
         baby_goodsButton = (ImageButton)findViewById(R.id.child);
-        etcButton = (ImageButton)findViewById(R.id.etc);
+
 
         etcButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +124,8 @@ public class HomeActivity extends AppCompatActivity {
 
                                 break;
                             case R.id.navigation_menu5:
-
+                                Intent Share_Intents = new Intent(getApplicationContext(), MyPageActivity.class);
+                                startActivity(Share_Intents);
                                 break;
                         }
                         return true;

@@ -147,6 +147,7 @@ public class ItemListActivity extends AppCompatActivity {
         //Check Data in Database with query
         BasicDBObject query = new BasicDBObject();
         query.put("category",currentCategory);
+        query.put("reservation",false);
         DBCursor cursor = collection.find(query);
         while (cursor.hasNext()) {
 

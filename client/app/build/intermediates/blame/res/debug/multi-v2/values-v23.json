@@ -1,21 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Joohan Park\\Desktop\\CDP1\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v23\\values-v23.xml",
+            "outputFile": "C:\\K1SS\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v23\\values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Joohan Park\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\a2feba2a934a8fc3b60cda789d9411b9\\res\\values-v23\\values-v23.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,19,32,33,34,35,36",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,190,325,400,487,1277,2079,2206,2311,2426,2533",
-                        "endLines": "2,3,4,5,18,31,32,33,34,35,36",
-                        "endColumns": "134,134,74,86,12,12,126,104,114,106,112",
-                        "endOffsets": "185,320,395,482,1272,2074,2201,2306,2421,2528,2641"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Joohan Park\\.gradle\\caches\\transforms-1\\files-1.1\\cardview-1.0.0-rc01.aar\\2eb0e85d39b961bdd907a4c0d854c2e2\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\cardview-1.0.0-rc01.aar\\2f2a55c4fe1c7e4a4c7d7d1576a38c9b\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -31,6 +20,17 @@
                         "endLines": "39",
                         "endColumns": "12",
                         "endOffsets": "2791"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\PC\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-1.0.0-rc01.aar\\18c15baca9ba0fd0f49cddb15687c2b3\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,19,32,33,34,35,36",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,190,325,400,487,1277,2079,2206,2311,2426,2533",
+                        "endLines": "2,3,4,5,18,31,32,33,34,35,36",
+                        "endColumns": "134,134,74,86,12,12,126,104,114,106,112",
+                        "endOffsets": "185,320,395,482,1272,2074,2201,2306,2421,2528,2641"
                     }
                 }
             ]

@@ -1107,6 +1107,7 @@ drawable avd_show_password
 drawable border
 drawable border_top_bottom
 drawable btn_add
+drawable btn_register_review
 drawable card
 drawable chatting_background_blue
 drawable common_full_open_on_phone
@@ -1181,6 +1182,9 @@ drawable menu_mypage
 drawable menu_pay
 drawable mtrl_snackbar_background
 drawable mtrl_tabs_default_indicator
+drawable mypage_review
+drawable mypage_shared2_ic
+drawable mypage_shred_ic
 drawable navigation_empty_icon
 drawable notification_action_background
 drawable notification_bg
@@ -1266,6 +1270,7 @@ id blocking
 id bottom
 id bottomNavigation
 id btnregister
+id btnregister_review
 id buttonPanel
 id calendar_view
 id cancel_action
@@ -1411,6 +1416,11 @@ id mtrl_internal_children_alpha_tag
 id multiple
 id multiply
 id music
+id mypage_header
+id mypage_id_box
+id mypage_picture
+id mypage_user_email
+id mypage_user_id
 id name
 id name_box
 id name_input
@@ -1451,8 +1461,12 @@ id register_date
 id register_location
 id register_photo
 id register_price
+id register_review_content
+id register_review_star
 id register_title
 id return_btn
+id rev_user_name
+id rev_user_star
 id review_btn
 id review_number
 id right
@@ -1484,6 +1498,9 @@ id select_dialog_listview
 id selected
 id send
 id send_selections
+id share1
+id share2
+id share3
 id shortcut
 id showCustom
 id showHome
@@ -1611,6 +1628,7 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_addcarddetail
+layout activity_borrow_list
 layout activity_bucket_list
 layout activity_chat_list
 layout activity_chatting
@@ -1624,8 +1642,11 @@ layout activity_maps_regi
 layout activity_mypage
 layout activity_pay
 layout activity_register_item
+layout activity_register_review
 layout activity_reservation_info
+layout activity_review
 layout activity_select_date
+layout activity_sharing_itemlist
 layout activity_signup
 layout addcard
 layout alert_dialog
@@ -1669,6 +1690,7 @@ layout notification_template_media
 layout notification_template_media_custom
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout review_item
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
