@@ -1288,7 +1288,13 @@ id center_horizontal
 id center_vertical
 id chains
 id chat_EditText
+id chat_content
+id chat_name
 id chat_username
+id chatlistView
+id chatlist_content
+id chatlist_username
+id chatlist_userphoto
 id checkBox
 id checkbox
 id child
@@ -1416,7 +1422,6 @@ id mtrl_internal_children_alpha_tag
 id multiple
 id multiply
 id music
-id name
 id name_box
 id name_input
 id navigation_header_container
@@ -1467,6 +1472,7 @@ id review_number
 id review_starnum
 id review_starrating
 id review_username
+id review_userphoto
 id right
 id right_icon
 id right_side
@@ -1646,6 +1652,7 @@ layout alert_dialog
 layout alert_dialog_row
 layout calendar_navigation_buttons
 layout card
+layout chatlist_item
 layout chatting_item
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

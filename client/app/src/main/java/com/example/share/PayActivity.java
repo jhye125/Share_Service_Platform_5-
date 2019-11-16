@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.share.Chatting.ChattingActivity;
 import com.example.share.Data.Item;
 
 public class PayActivity extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class PayActivity extends AppCompatActivity {
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ChattingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
                 startActivity(intent);
             }
         });

@@ -11,7 +11,7 @@
         android:orientation="horizontal"
         android:layout_margin="10dp">
         <ImageView
-            android:id="@+id/user_photo"
+            android:id="@+id/review_userphoto"
             android:scaleType="fitXY"
             android:src="@drawable/sample_pro"
             android:layout_width="50dp"

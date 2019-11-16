@@ -2,6 +2,7 @@ package com.example.share.Chatting;
 
 public class ChatDTO {
 
+
     private String userName;
     private String message;
 

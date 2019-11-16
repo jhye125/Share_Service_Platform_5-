@@ -22,12 +22,12 @@
         <activity
             android:name=".ReviewActivity"/>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".ChattingActivity" />
+        <activity android:name=".Chatting.ChattingActivity" />
         <activity android:name=".PayActivity" />
         <activity android:name=".ReservationInfoActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".ChatListActivity" />
+        <activity android:name=".Chatlist.ChatListActivity" />
         <activity android:name=".BucketListActivity" />
         <activity android:name=".ItemListActivity" />
         <activity android:name=".ItemDetailActivity" />
