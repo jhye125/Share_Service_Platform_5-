@@ -36,7 +36,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity android:name="com.example.share.Activity.HomeActivity" />
-        <activity android:name="com.example.share.Activity.ChattingActivity" />
         <activity android:name="com.example.share.Activity.PayActivity" />
         <activity android:name="com.example.share.Activity.ReservationInfoActivity" />
         <activity android:name="com.example.share.Activity.LoginActivity" />
@@ -48,6 +47,7 @@
         <activity android:name="com.example.share.Activity.MapsMarkerActivity" />
         <activity android:name="com.example.share.Activity.AddCardDetailActivity" />
         <activity android:name="com.example.share.Activity.RegisterItemActivity" />
+        <activity android:name="com.example.share.Chatting.ChattingActivity" />
         <activity
             android:name="com.example.share.Activity.SelectDateActivity"
             android:theme="@style/Theme.MyDialog" />

@@ -1,6 +1,7 @@
 package com.example.share.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.share.Chatting.ChattingActivity;
 import com.example.share.Data.Item;
 import com.example.share.MongoDB.FromServerImage;
 import com.example.share.R;
@@ -39,6 +41,10 @@ public class ItemDetailActivity extends AppCompatActivity {
 
     Item item;
     String item_id;
+    ImageView question;
+    ImageView reservation;
+    private String user_name;
+    private String chatroom_name;
 
     //mongoDB
     private String MongoDB_IP = "15.164.51.129";
@@ -46,6 +52,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     private String DB_NAME = "local";
     private String ITEM_COLLECTION = "items";
     private String USER_COLLECTION= "users";
+    private SharedPreferences pref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +60,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        pref = getSharedPreferences("pref", AppCompatActivity.MODE_PRIVATE);
+        user_name = pref.getString("user_name",null);
         //get all the data passed
         item = (Item)intent.getSerializableExtra("item_object");
 
@@ -63,6 +72,8 @@ public class ItemDetailActivity extends AppCompatActivity {
         ImageView item_image = (ImageView)findViewById(R.id.item_detail_item_image);
         TextView item_name = (TextView)findViewById(R.id.item_detail_item_name);
         TextView item_price_per_day = (TextView)findViewById(R.id.item_detail_item_price);
+        question = (ImageView)findViewById(R.id.btn_question);
+        reservation = (ImageView)findViewById(R.id.btn_reservation);
         //item detail, TODO
         TextView item_detail = (TextView)findViewById(R.id.item_detail_item_detail);
         TextView item_location = (TextView)findViewById(R.id.item_detail_item_location);
@@ -114,17 +125,33 @@ public class ItemDetailActivity extends AppCompatActivity {
         owner_image.setImageResource(R.drawable.owner_sample);
         owner_name.setText(dbObj2.get("name").toString());
         owner_rating.setText("4.5 / 5");
+        String owner = dbObj2.get("name").toString();
 
-        pay_button = findViewById(R.id.pay);
+        Log.d("dong",owner+","+user_name);
+        if(owner.compareTo(user_name) ==-1){
+            chatroom_name = owner+"-"+user_name;
+        }else{
+            chatroom_name = user_name+"-"+owner;
+        }
 
-        pay_button.setOnClickListener(new View.OnClickListener() {
+        question.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
-                intent.putExtra("item_object",item);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                intent.putExtra("owner_email",owner_email);
+                intent.putExtra("owner_name",owner);
+
+
                 startActivity(intent);
             }
+        });
 
+        reservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReservationInfoActivity.class);
+                startActivity(intent);
+            }
         });
 
         return;
