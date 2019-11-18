@@ -87,6 +87,7 @@ public class BorrowListActivity extends AppCompatActivity {
     private Date newDateTo;
     private String newCategory;
     private String newFilePath;
+    private String newContent;
     private FromServerImage newImage = new FromServerImage();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +132,7 @@ public class BorrowListActivity extends AppCompatActivity {
                 newDateTo = (Date) dbo.get("available_date_end");
                 newCategory = dbo.get("category").toString();
                 newFilePath = dbo.get("image_path").toString();
-
+                newContent = dbo.get("contents").toString();
                 Log.d("MONGODB", new_id);
                 Log.d("MONGODB", "");
                 Log.d("MONGODB", newName);
@@ -143,7 +144,7 @@ public class BorrowListActivity extends AppCompatActivity {
                 Log.d("MONGODB", newCategory);
                 //Log.d("MONGODB","-");
                 //TODO: change to imagePath
-                items_from_db.add(new Item(new_id, newName, newPPD, newLatitude, newLongitude, newDateFrom, newDateTo, newFilePath));
+                items_from_db.add(new Item(new_id, newName, newPPD, newLatitude, newLongitude, newDateFrom, newDateTo, newFilePath,newCategory,newContent));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

@@ -90,6 +90,7 @@ public class ItemListActivity extends AppCompatActivity {
     private Date newDateTo;
     private String newCategory;
     private String newFilePath;
+    private String newContent;
     private FromServerImage newImage = new FromServerImage();
 
     @Override
@@ -139,21 +140,27 @@ public class ItemListActivity extends AppCompatActivity {
                 newDateTo = (Date) dbo.get("available_date_end");
                 newCategory = dbo.get("category").toString();
                 newFilePath = dbo.get("image_path").toString();
+                newContent = dbo.get("contents").toString();
 
-                Log.d("MONGODB", new_id);
-                Log.d("MONGODB", "");
-                Log.d("MONGODB", newName);
-                Log.d("MONGODB", newPPD);
-                Log.d("MONGODB", "" + newLatitude);
-                Log.d("MONGODB", "" + newLongitude);
-                Log.d("MONGODB", newDateFrom.toString());
-                Log.d("MONGODB", newDateTo.toString());
-                Log.d("MONGODB", newCategory);
-                //Log.d("MONGODB","-");
+                /*
+                    Log.d("MONGODB", new_id);
+                    Log.d("MONGODB", "");
+                    Log.d("MONGODB", newName);
+                    Log.d("MONGODB", newPPD);
+                    Log.d("MONGODB", "" + newLatitude);
+                    Log.d("MONGODB", "" + newLongitude);
+                    Log.d("MONGODB", newDateFrom.toString());
+                    Log.d("MONGODB", newDateTo.toString());
+                    Log.d("MONGODB", newCategory);
+                    Log.d("MONGODB", newFilePath);
+                    Log.d("MONGODB", newContents);
+                    //Log.d("MONGODB","-");
+                 */
+
                 //TODO: change to imagePath
                 if (currentCategory.equals(newCategory)) {
                     items_from_db.add(new Item(new_id, newName, newPPD, newLatitude, newLongitude,
-                            newDateFrom, newDateTo, newFilePath));
+                            newDateFrom, newDateTo, newFilePath,newCategory,newContent));
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();

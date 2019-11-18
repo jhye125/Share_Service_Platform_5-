@@ -14,7 +14,7 @@
             android:id="@+id/edit_item_button"
             android:layout_width="50dp"
             android:layout_height="23dp"
-            android:layout_marginStart="268dp"
+            android:layout_marginStart="230dp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -155,18 +155,24 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             /**Edit Button*/
             //TODO: below asynctask
-//            editBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/edit");
-//                }
-//            });
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(getApplicationContext(), UpdateItemActivity.class);
+                    intent.putExtra("item_object",item);
+
+                    startActivity(intent);
+                    //new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_update");
+                }
+            });
 
             /**Delete Button*/
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/deletion");
+                    new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_delete");
+                    finish();
                 }
             });
         }else{
@@ -218,7 +224,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("_id",item_id);
-                jsonObject.accumulate("executed user",user_email);
+                jsonObject.accumulate("executed_user",user_email);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
@@ -286,9 +292,8 @@ public class ItemDetailActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if (result.equals("true")) {    //delete 성공시 Home Intents 시작 메소드
                 // delete true
-
             }
-            else{   //delete 실패시 에러 메시지 출력
+            else {   //delete 실패시 에러 메시지 출력
                 AlertDialog.Builder alert = new AlertDialog.Builder(ItemDetailActivity.this);
                 alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     @Override

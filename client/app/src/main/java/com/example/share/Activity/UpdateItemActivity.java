@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,12 +23,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.content.CursorLoader;
-
+import com.example.share.Data.Item;
 import com.example.share.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONObject;
 
@@ -40,12 +41,18 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class RegisterItemActivity extends AppCompatActivity {
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
+
+public class UpdateItemActivity extends AppCompatActivity {
 
     String UserEmail;
 
@@ -55,6 +62,7 @@ public class RegisterItemActivity extends AppCompatActivity {
     private final int GET_GALLERY_IMAGE = 200;
     private final int GET_DATE_INFO = 300;
 
+    /** UI components */
     ImageView photo;
     TextView category;
     EditText title;
@@ -64,6 +72,10 @@ public class RegisterItemActivity extends AppCompatActivity {
     EditText content;
     ImageView register;
     List<Map<String, Object>> categorylist;
+
+    /** item info */
+    private Item item;
+    private String item_id;
     String send_category;
     String latitude;
     String longitude;
@@ -71,19 +83,26 @@ public class RegisterItemActivity extends AppCompatActivity {
     String end_date;
     Uri selectedImageUri;
     String path;
+    String item_category_to_show ="";
 
     int[] image = {R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select, R.drawable.select};
     String[] text = {"장소", "공구", "음향기기", "의료", "유아용품", "기타"};
     String[] text_send = {"place", "tool", "sound_equipment", "medical_equipment", "baby_goods", "etc"};
 
+
+    /** util */
+    private SimpleDateFormat sdf;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_item);
         Intent Registerintent = getIntent();
+        item = (Item)Registerintent.getSerializableExtra("item_object");
+        item_id = item.getItem_id();
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         UserEmail = pref.getString("user_email",null);
-
 
         photo = (ImageView) findViewById(R.id.register_photo);
         category = (TextView) findViewById(R.id.register_category);
@@ -100,10 +119,30 @@ public class RegisterItemActivity extends AppCompatActivity {
             Map<String, Object> categoryMap = new HashMap<>();
             categoryMap.put(TAG_IMAGE, image[i]);
             categoryMap.put(TAG_TEXT, text[i]);
-
             categorylist.add(categoryMap);
-
         }
+
+        send_category = item.getCategory(); //set send_category
+        for (int i = 0; i < text.length; i++) {
+            if(text_send[i].equals(send_category)){
+                item_category_to_show = text[i];
+            }
+        }
+
+        category.setText(item_category_to_show);
+        title.setText(item.getItem_name());
+        price.setText(item.getItem_price_per_day());
+
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        start_date = sdf.format(item.getAvailableFrom());
+        end_date = sdf.format(item.getAvailableTo());
+        date.setText(start_date+"~"+end_date);
+
+        String address = getCurrentAddress(new LatLng(item.getLatitude(),item.getLongitude()));
+        latitude = String.valueOf(item.getLatitude());
+        longitude =String.valueOf(item.getLongitude());
+        location.setText(address);
+        content.setText(item.getContent());
 
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,19 +154,15 @@ public class RegisterItemActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register_content_send();
+                updateItem();
             }
         });
 
-
-
     }
 
-
-    public void photosetting()
-    {
+    public void photosetting() {
         Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, GET_GALLERY_IMAGE);
 
     }
@@ -153,11 +188,9 @@ public class RegisterItemActivity extends AppCompatActivity {
             date.setText(selectdate);
         }
 
-
     }
 
-    public void register_content_send()
-    {
+    public void updateItem() {
         String result="false";
 
         if (Build.VERSION.SDK_INT > 9) {
@@ -169,6 +202,7 @@ public class RegisterItemActivity extends AppCompatActivity {
         try {
             //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
             JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("_id",item_id);
             jsonObject.accumulate("name",title.getText().toString());
             jsonObject.accumulate("price_per_date",price.getText().toString());
             jsonObject.accumulate("latitude",latitude);
@@ -177,14 +211,16 @@ public class RegisterItemActivity extends AppCompatActivity {
             jsonObject.accumulate("available_date_end",end_date);
             jsonObject.accumulate("category",send_category);
             jsonObject.accumulate("contents",content.getText().toString());
-            jsonObject.accumulate("owner_email",UserEmail);
+            jsonObject.accumulate("executed_user",UserEmail);
+
+            /** TODO fix this bug */
             jsonObject.accumulate("image_path","admin"+title.getText().toString()+"2019-10-29"+".png");
 
             HttpURLConnection con = null;
             BufferedReader reader = null;
 
             try{
-                URL url = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_insert");
+                URL url = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_update");
                 //연결을 함
                 con = (HttpURLConnection) url.openConnection();
 
@@ -239,7 +275,7 @@ public class RegisterItemActivity extends AppCompatActivity {
         }
         Log.d("전송 요청",result);
         if(result.equals("true")) {
-            android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(RegisterItemActivity.this);
+            android.app.AlertDialog.Builder alert = new android.app.AlertDialog.Builder(UpdateItemActivity.this);
             alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -247,10 +283,9 @@ public class RegisterItemActivity extends AppCompatActivity {
                     finish();
                 }
             });
-            alert.setMessage("물품 등록 완료");
+            alert.setMessage("물품 변경 완료");
             alert.show();
         }
-
 
     }
 
@@ -299,8 +334,6 @@ public class RegisterItemActivity extends AppCompatActivity {
         startActivityForResult(intent,GET_DATE_INFO);
     }
 
-
-
     public void selectLocation(View v) {
         Intent intent = new Intent(getApplicationContext(),MapsMarkerRegiActivity.class);
         startActivityForResult(intent,GET_LOCATION_INFO);
@@ -313,6 +346,40 @@ public class RegisterItemActivity extends AppCompatActivity {
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    public String getCurrentAddress(LatLng latlng) {
+
+        //지오코더... GPS를 주소로 변환
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses;
+
+        try {
+            addresses = geocoder.getFromLocation(
+                    latlng.latitude,
+                    latlng.longitude,
+                    1);
+        } catch (IOException ioException) {
+            //네트워크 문제
+            Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
+            return "지오코더 서비스 사용불가";
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
+            return "잘못된 GPS 좌표";
+
+        }
+
+
+        if (addresses == null || addresses.size() == 0) {
+            Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
+            return "주소 미발견";
+
+        } else {
+            Address address = addresses.get(0);
+            return address.getAddressLine(0);
+        }
+
     }
 
 }
