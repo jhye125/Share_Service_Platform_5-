@@ -28,11 +28,13 @@ public class ChattingActivity extends AppCompatActivity {
 
     private String CHAT_NAME;
     private String USER_NAME;
+    private String user_email;
 
     private ListView chat_view;
     private EditText chat_edit;
     private Button chat_send;
 
+    private String owner_email;
     private String owner_name;
     private TextView chatroom_title;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -53,16 +55,18 @@ public class ChattingActivity extends AppCompatActivity {
 
         // 로그인 화면에서 받아온 채팅방 이름, 유저 이름 저장
         Intent intent = getIntent();
-        owner_name =intent.getStringExtra("owner_name");
+        owner_email =intent.getStringExtra("owner_email");
         //CHAT_NAME = intent.getStringExtra("chat_name");
         pref = getSharedPreferences("pref", AppCompatActivity.MODE_PRIVATE);
 
         USER_NAME = pref.getString("user_name",null);
+        user_email = pref.getString("user_email",null);
+        owner_name = intent.getStringExtra("owner_name");
 
-        if(owner_name.compareTo(USER_NAME) == -1) {
-            CHAT_NAME = owner_name+"-"+USER_NAME;
+        if(owner_email.compareTo(owner_email) == -1) {
+            CHAT_NAME = owner_email+"-"+user_email;
         }else{
-            CHAT_NAME = USER_NAME+"-"+owner_name;
+            CHAT_NAME = user_email+"-"+owner_email;
         }
 
         chatroom_title = (TextView)findViewById(R.id.chat_username);
