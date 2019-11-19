@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.share.Chatting.ChattingActivity;
 import com.example.share.Data.Item;
 import com.example.share.MongoDB.FromServerImage;
 import com.example.share.R;
@@ -53,6 +54,8 @@ public class ItemDetailActivity extends AppCompatActivity {
 
     Item item;
     String item_id;
+    ImageView question;
+    ImageView reservation;
 
     //mongoDB
     private String MongoDB_IP = "15.164.51.129";
@@ -83,6 +86,9 @@ public class ItemDetailActivity extends AppCompatActivity {
         ImageView item_image = (ImageView)findViewById(R.id.item_detail_item_image);
         TextView item_name = (TextView)findViewById(R.id.item_detail_item_name);
         TextView item_price_per_day = (TextView)findViewById(R.id.item_detail_item_price);
+        question = (ImageView)findViewById(R.id.btn_question);
+        reservation = (ImageView)findViewById(R.id.btn_reservation);
+
         //item detail, TODO
         TextView item_detail = (TextView)findViewById(R.id.item_detail_item_detail);
         TextView item_location = (TextView)findViewById(R.id.item_detail_item_location);
@@ -131,22 +137,26 @@ public class ItemDetailActivity extends AppCompatActivity {
         owner_name.setText(dbObj2.get("name").toString());
         owner_rating.setText("4.5 / 5");
 
-        /** Control pay button */
-        pay_button = findViewById(R.id.pay);
-        if(user_email.equals(owner_email)){
-            pay_button.setVisibility(View.INVISIBLE);
-        }else {
-            pay_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ItemDetailActivity.this, PayActivity.class);
-                    intent.putExtra("item_object", item);
-                    startActivity(intent);
-                }
+        question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChattingActivity.class);
+                intent.putExtra("owner_email",owner_email);
+              //  intent.putExtra("owner_name",owner);
 
-            });
-        }
 
+                startActivity(intent);
+            }
+        });
+
+        reservation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReservationInfoActivity.class);
+                intent.putExtra("item_object",item);
+                startActivity(intent);
+            }
+        });
 
         /** Delete and Edit button */
         editBtn = (ImageView)findViewById(R.id.edit_item_button) ;
@@ -155,18 +165,23 @@ public class ItemDetailActivity extends AppCompatActivity {
 
             /**Edit Button*/
             //TODO: below asynctask
-//            editBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/edit");
-//                }
-//            });
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(getApplicationContext(), UpdateItemActivity.class);
+                    intent.putExtra("item_object",item);
+
+                    startActivity(intent);
+                    //new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_update");
+                }
+            });
 
             /**Delete Button*/
             deleteBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/deletion");
+                    new ItemDetailActivity.DeleteTask().execute("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_delete");
                 }
             });
         }else{
@@ -218,7 +233,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                 //JSONObject를 만들고 key value 형식으로 값을 저장해준다.
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.accumulate("_id",item_id);
-                jsonObject.accumulate("executed user",user_email);
+                jsonObject.accumulate("executed_user",user_email);
 
                 HttpURLConnection con = null;
                 BufferedReader reader = null;
@@ -286,6 +301,16 @@ public class ItemDetailActivity extends AppCompatActivity {
             super.onPostExecute(result);
             if (result.equals("true")) {    //delete 성공시 Home Intents 시작 메소드
                 // delete true
+                AlertDialog.Builder alert = new AlertDialog.Builder(ItemDetailActivity.this);
+                alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                        finish();
+                    }
+                });
+                alert.setMessage("삭제 완료");
+                alert.show();
 
             }
             else{   //delete 실패시 에러 메시지 출력
@@ -294,6 +319,7 @@ public class ItemDetailActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();     //닫기
+                        finish();
                     }
                 });
                 alert.setMessage(result);

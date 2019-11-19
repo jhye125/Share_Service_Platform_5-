@@ -7,15 +7,21 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.share.Data.Item;
 import com.example.share.R;
 
 public class ReservationInfoActivity extends AppCompatActivity {
 
     private ImageView pay;
+    private Item item;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_info);
+
+        Intent intent = getIntent();
+        //get all the data passed
+        item = (Item)intent.getSerializableExtra("item_object");
 
         //Intent intent = getIntent();
         //String name = intent.getStringExtra("string");
@@ -26,6 +32,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),PayActivity.class);
+                intent.putExtra("item_object",item);
                 startActivity(intent);
             }
         });

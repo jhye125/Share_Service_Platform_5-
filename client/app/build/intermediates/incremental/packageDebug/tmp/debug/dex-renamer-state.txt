@@ -1,17 +1,7 @@
-<<<<<<< HEAD
-#Sat Nov 16 17:38:39 KST 2019
-base.0=C\:\\Users\\Joohan Park\\Desktop\\CDP1\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+#Tue Nov 19 20:26:02 KST 2019
+base.0=C\:\\GitKraken\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
 path.1=classes.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=C\:\\Users\\Joohan Park\\Desktop\\CDP1\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-=======
-#Mon Nov 18 20:03:14 KST 2019
-base.0=/Users/jihye/Share_Service_Platform_5-/client/app/build/intermediates/transforms/dexMerger/debug/0
-path.1=classes.dex
-renamed.1=classes2.dex
-path.0=classes.dex
-renamed.0=classes.dex
-base.1=/Users/jihye/Share_Service_Platform_5-/client/app/build/intermediates/transforms/dexMerger/debug/1
->>>>>>> 4408ff5fff1ea579e0bcc0121922df781e24f576
+base.1=C\:\\GitKraken\\Share_Service_Platform_5-\\client\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1

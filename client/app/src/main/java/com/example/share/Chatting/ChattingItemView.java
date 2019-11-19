@@ -39,7 +39,7 @@ public class ChattingItemView extends CardView {
     public void init(Context context){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.chatting_item,this,true);
-        name = (TextView)findViewById(R.id.name);
+        name = (TextView)findViewById(R.id.chatlist_username);
         content = (TextView)findViewById(R.id.content);
         imageView = (ImageView)findViewById(R.id.imageView);
         proImage = (ImageView)findViewById(R.id.proImage);

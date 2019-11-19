@@ -34,7 +34,7 @@ public class FromServerImage {
             HttpURLConnection con = null;
             BufferedReader reader = null;
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("file_name", FilePath);
+            jsonObject.accumulate("image_path", FilePath);
 
             //URL url = new URL("http://192.168.25.16:3000/users");
             URL url = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/get_image");

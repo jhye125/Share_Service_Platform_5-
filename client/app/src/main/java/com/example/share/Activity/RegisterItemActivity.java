@@ -2,7 +2,10 @@ package com.example.share.Activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -10,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +35,10 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,6 +55,7 @@ import java.util.Map;
 public class RegisterItemActivity extends AppCompatActivity {
 
     String UserEmail;
+    String UserName;
 
     private static final String TAG_TEXT = "text";
     private static final String TAG_IMAGE = "image";
@@ -80,7 +89,9 @@ public class RegisterItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_item);
         Intent Registerintent = getIntent();
 
-        UserEmail = Registerintent.getExtras().getString("UserEmail");  //LoginActivity로 부터 email 읽어오기
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        UserEmail = pref.getString("user_email",null);
+        UserName = pref.getString("user_name",null);
 
 
         photo = (ImageView) findViewById(R.id.register_photo);
@@ -115,18 +126,13 @@ public class RegisterItemActivity extends AppCompatActivity {
                 register_content_send();
             }
         });
-
-
-
     }
-
 
     public void photosetting()
     {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, GET_GALLERY_IMAGE);
-
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -175,20 +181,30 @@ public class RegisterItemActivity extends AppCompatActivity {
             jsonObject.accumulate("category",send_category);
             jsonObject.accumulate("contents",content.getText().toString());
             jsonObject.accumulate("owner_email",UserEmail);
-            jsonObject.accumulate("image_path","admin"+title.getText().toString()+"2019-10-29"+".png");
+            jsonObject.accumulate("image_path",UserEmail+title.getText().toString()+".jpeg");
+
+            JSONObject jsonObject2 = new JSONObject();
+            File file = new File(path);
+
+            jsonObject2.accumulate("image_path",UserEmail+title.getText().toString()+".jpeg");
+            Bitmap temp = decodeFile(file);
+            jsonObject2.accumulate("data",getStringFromBitmap(temp));
+            Log.d("file path : ",getStringFromBitmap(temp)+"testtesttest",null);
 
             HttpURLConnection con = null;
+            HttpURLConnection con2 = null;
             BufferedReader reader = null;
+            BufferedReader reader2 = null;
 
             try{
                 URL url = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/item_insert");
+                URL url2 = new URL("http://ec2-15-164-51-129.ap-northeast-2.compute.amazonaws.com:3000/set_image");
                 //연결을 함
                 con = (HttpURLConnection) url.openConnection();
 
                 con.setRequestMethod("POST");//POST방식으로 보냄
                 con.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
                 con.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
-
 
                 con.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
                 con.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
@@ -214,6 +230,38 @@ public class RegisterItemActivity extends AppCompatActivity {
                     buffer.append(line);
                 }
                 result = buffer.toString();
+
+                //image transmission 연결
+                con2 = (HttpURLConnection) url2.openConnection();
+
+                con2.setRequestMethod("POST");//POST방식으로 보냄
+                con2.setRequestProperty("Cache-Control", "no-cache");//캐시 설정
+                con2.setRequestProperty("Content-Type", "application/json");//application JSON 형식으로 전송
+
+                con2.setRequestProperty("Accept", "text/html");//서버에 response 데이터를 html로 받음
+                con2.setDoOutput(true);//Outstream으로 post 데이터를 넘겨주겠다는 의미
+                con2.setDoInput(true);//Inputstream으로 서버로부터 응답을 받겠다는 의미
+                con2.connect();
+
+                //서버로 보내기위해서 스트림 만듬
+                OutputStream outStream2 = con2.getOutputStream();
+                //버퍼를 생성하고 넣음
+                BufferedWriter writer2 = new BufferedWriter(new OutputStreamWriter(outStream2));
+                writer2.write(jsonObject2.toString());
+                writer2.flush();
+                writer2.close();//버퍼를 받아줌
+
+                //서버로 부터 데이터를 받음
+                InputStream stream2 = con2.getInputStream();
+                reader2 = new BufferedReader(new InputStreamReader(stream2));
+
+                StringBuffer buffer2 = new StringBuffer();
+
+                String line2 = "";
+                while((line2 = reader2.readLine()) != null){
+                    buffer2.append(line2);
+                }
+                result = buffer2.toString();
 
             } catch (MalformedURLException e){
                 e.printStackTrace();
@@ -314,7 +362,37 @@ public class RegisterItemActivity extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
+    private Bitmap decodeFile(File f) {
+        try {
+            // Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
+            // The new size we want to scale to
+            final int REQUIRED_SIZE=600;
 
+            // Find the correct scale value. It should be the power of 2.
+            int scale = 1;
+            while(o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+                    o.outHeight / scale / 2 >= REQUIRED_SIZE) {
+                scale *= 2;
+            }
 
+            // Decode with inSampleSize
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+        } catch (FileNotFoundException e) {}
+        return null;
+    }
+
+    private String getStringFromBitmap(Bitmap bitmapPicture) {
+        String encodedImage;
+        ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+        bitmapPicture.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayBitmapStream);
+        byte[] b = byteArrayBitmapStream.toByteArray();
+        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encodedImage;
+    }
 }
