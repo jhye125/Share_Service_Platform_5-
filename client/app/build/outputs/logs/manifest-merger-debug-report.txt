@@ -198,7 +198,7 @@ activity#com.example.share.Activity.SignUpActivity
 ADDED from /Users/jihye/Share_Service_Platform_5-/client/app/src/main/AndroidManifest.xml:17:9-61
 	android:name
 		ADDED from /Users/jihye/Share_Service_Platform_5-/client/app/src/main/AndroidManifest.xml:17:19-58
-activity#com.example.share.Activity.ChatListActivity
+activity#com.example.share.Chatting.ChatListActivity
 ADDED from /Users/jihye/Share_Service_Platform_5-/client/app/src/main/AndroidManifest.xml:18:9-63
 	android:name
 		ADDED from /Users/jihye/Share_Service_Platform_5-/client/app/src/main/AndroidManifest.xml:18:19-60

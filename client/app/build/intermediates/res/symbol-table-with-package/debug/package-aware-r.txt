@@ -1300,6 +1300,7 @@ id chat_username
 id chatlist_content
 id chatlist_username
 id chatlist_userphoto
+id chatroomlistview
 id chattinglistView
 id checkBox
 id checkbox

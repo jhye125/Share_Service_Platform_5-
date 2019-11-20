@@ -40,7 +40,7 @@
         <activity android:name="com.example.share.Activity.ReservationInfoActivity" />
         <activity android:name="com.example.share.Activity.LoginActivity" />
         <activity android:name="com.example.share.Activity.SignUpActivity" />
-        <activity android:name="com.example.share.Activity.ChatListActivity" />
+        <activity android:name="com.example.share.Chatting.ChatListActivity" />
         <activity android:name="com.example.share.Activity.BucketListActivity" />
         <activity android:name="com.example.share.Activity.ItemListActivity" />
         <activity android:name="com.example.share.Activity.ItemDetailActivity" />

@@ -122,17 +122,18 @@ public class ItemDetailActivity extends AppCompatActivity {
         DBObject dbObj2 = collection2.findOne(query2);
 
 
+        Log.d("jihye",dbObj2.get("name").toString()+"");
         owner_image.setImageResource(R.drawable.owner_sample);
         owner_name.setText(dbObj2.get("name").toString());
         owner_rating.setText("4.5 / 5");
         String owner = dbObj2.get("name").toString();
 
         Log.d("dong",owner+","+user_name);
-        if(owner.compareTo(user_name) ==-1){
+       /* if(owner.compareTo(user_name) ==-1){
             chatroom_name = owner+"-"+user_name;
         }else{
             chatroom_name = user_name+"-"+owner;
-        }
+        }*/
 
         question.setOnClickListener(new View.OnClickListener() {
             @Override

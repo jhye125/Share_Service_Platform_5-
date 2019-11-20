@@ -15,7 +15,7 @@
         <activity android:name=".Activity.ReservationInfoActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.SignUpActivity" />
-        <activity android:name=".Activity.ChatListActivity" />
+        <activity android:name=".Chatting.ChatListActivity" />
         <activity android:name=".Activity.BucketListActivity" />
         <activity android:name=".Activity.ItemListActivity" />
         <activity android:name=".Activity.ItemDetailActivity"/>
