@@ -70,16 +70,20 @@ public class ChattingActivity extends AppCompatActivity {
         String userE = user_email.substring(0,idx1);
         String owerE = owner_email.substring(0,idx2);
 
-
-        if(owerE.compareTo(userE) == -1) {
+        Log.d("jihye","owner:"+owerE );
+        Log.d("jihye","user:"+userE );
+        if(owerE.compareTo(userE)<0) {
             CHAT_NAME = owerE+"-"+userE;
+            Log.d("jihye","ownerE<userE" );
         }else{
             CHAT_NAME = userE+"-"+owerE;
+            Log.d("jihye","ownerE>=userE" );
         }
 
         Log.d("jihye",CHAT_NAME);
         chatroom_title = (TextView)findViewById(R.id.chat_username);
         chatroom_title.setText(owner_name);
+
 
         // 채팅 방 입장
 

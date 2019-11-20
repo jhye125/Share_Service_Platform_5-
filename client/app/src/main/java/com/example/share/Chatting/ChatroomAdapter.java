@@ -57,7 +57,7 @@ public class ChatroomAdapter extends BaseAdapter {
         name = (TextView)convertView.findViewById(R.id.chatlist_username);
         content = (TextView)convertView.findViewById(R.id.chatlist_content);
 
-        name.setText(myItem.getroomName());
+        name.setText(myItem.getRoomName());
         content.setText(myItem.getMessage());
 
         return convertView;
