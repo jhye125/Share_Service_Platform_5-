@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -25,8 +26,10 @@ public class HomeActivity extends AppCompatActivity {
     private ImageButton sound_equipmentButton;
     private ImageButton medical_equimentButton;
     private ImageButton baby_goodsButton;
+    private Button revBtn;
 
     private String UserEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +37,14 @@ public class HomeActivity extends AppCompatActivity {
         Intent homeintent = getIntent();
 
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        UserEmail = pref.getString("user_email",null);
+        UserEmail = pref.getString("user_email", null);
 
-        etcButton = (ImageButton)findViewById(R.id.etc);
-        placeButton = (ImageButton)findViewById(R.id.place);
-        toolButton = (ImageButton)findViewById(R.id.tools);
-        sound_equipmentButton = (ImageButton)findViewById(R.id.music);
-        medical_equimentButton = (ImageButton)findViewById(R.id.medical);
-        baby_goodsButton = (ImageButton)findViewById(R.id.child);
+        etcButton = (ImageButton) findViewById(R.id.etc);
+        placeButton = (ImageButton) findViewById(R.id.place);
+        toolButton = (ImageButton) findViewById(R.id.tools);
+        sound_equipmentButton = (ImageButton) findViewById(R.id.music);
+        medical_equimentButton = (ImageButton) findViewById(R.id.medical);
+        baby_goodsButton = (ImageButton) findViewById(R.id.child);
 
 
         etcButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +108,7 @@ public class HomeActivity extends AppCompatActivity {
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch(item.getItemId()) {
+                        switch (item.getItemId()) {
                             case R.id.navigation_menu1:
                                 Intent ChatList_Intents = new Intent(getApplicationContext(), ChatListActivity.class);  //메시지 activity 실행 수정필요
                                 startActivity(ChatList_Intents);
@@ -128,6 +131,17 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-    }
 
+        //review 등록
+        revBtn = (Button) findViewById(R.id.btnreview);
+        revBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, RegisterReviewActivity.class);
+                startActivity(intent);
+            }
+
+        });
+
+    }
 }
