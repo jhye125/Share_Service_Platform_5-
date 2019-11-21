@@ -55,6 +55,7 @@
         <activity android:name="com.example.share.Activity.ShareListActivity" />
         <activity android:name="com.example.share.Activity.BorrowListActivity" />
         <activity android:name="com.example.share.Activity.MyPageActivity" />
+        <activity android:name="com.example.share.Activity.ReviewActivity" />
         <activity
             android:name="com.example.share.Activity.RegisterReviewActivity"
             android:theme="@style/Theme.MyDialog" />

@@ -29,6 +29,7 @@
         <activity android:name=".Activity.ShareListActivity"/>
         <activity android:name=".Activity.BorrowListActivity"/>
         <activity android:name=".Activity.MyPageActivity"/>
+        <activity android:name=".Activity.ReviewActivity"/>
         <activity
             android:name=".Activity.RegisterReviewActivity"
             android:theme="@style/Theme.MyDialog"/>

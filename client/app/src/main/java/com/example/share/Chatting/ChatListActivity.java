@@ -38,7 +38,6 @@ public class ChatListActivity extends AppCompatActivity {
     private String MongoDB_IP = "15.164.51.129";
     private int MongoDB_PORT = 27017;
     private String DB_NAME = "local";
-    private String ITEM_COLLECTION = "items";
     private String USER_COLLECTION= "users";
 
     @Override
@@ -83,7 +82,6 @@ public class ChatListActivity extends AppCompatActivity {
 
                 MongoClient mongoClient = new MongoClient(new ServerAddress(MongoDB_IP, MongoDB_PORT)); // failed here?
                 DB db = mongoClient.getDB(DB_NAME);
-                DBCollection collection = db.getCollection(ITEM_COLLECTION);
                 DBCollection collection2 = db.getCollection(USER_COLLECTION);
                 BasicDBObject query2 = new BasicDBObject();
 

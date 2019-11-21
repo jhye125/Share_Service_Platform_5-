@@ -62,7 +62,7 @@ public class MyPageActivity extends AppCompatActivity {
         review_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MyPageActivity.this, ItemListActivity.class);
+                Intent intent = new Intent(MyPageActivity.this, ReviewActivity.class);
                 startActivity(intent);
             }
         });

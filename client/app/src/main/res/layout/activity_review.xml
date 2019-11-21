@@ -77,7 +77,7 @@
             android:orientation="vertical">
 
             <ListView
-                android:id="@+id/listView"
+                android:id="@+id/reviewlistView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:transcriptMode="alwaysScroll"

@@ -1477,12 +1477,14 @@ id register_price
 id register_review_content
 id register_review_star
 id register_title
+id rev_content
 id rev_user_name
 id rev_user_star
 id review_number
 id review_starnum
 id review_starrating
 id review_username
+id reviewlistView
 id right
 id right_icon
 id right_side
